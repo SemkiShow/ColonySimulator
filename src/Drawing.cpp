@@ -7,22 +7,9 @@
 #include "UI.hpp"
 #include <algorithm>
 #include <ctime>
-#include <string>
-#include <unordered_map>
 #include <vector>
 
-std::unordered_map<char, int> hexMap{
-    {'0', 0}, {'1', 1}, {'2', 2},  {'3', 3},  {'4', 4},  {'5', 5},  {'6', 6},  {'7', 7},
-    {'8', 8}, {'9', 9}, {'a', 10}, {'b', 11}, {'c', 12}, {'d', 13}, {'e', 14}, {'f', 15}};
-inline Color ColorFromHex(const std::string& hexIn)
-{
-    std::string hex = hexIn;
-    std::transform(hexIn.begin(), hexIn.end(), hex.begin(), ::tolower);
-    unsigned char r = 16 * hexMap[hex[1]] + hexMap[hex[2]],
-                  g = 16 * hexMap[hex[3]] + hexMap[hex[4]],
-                  b = 16 * hexMap[hex[5]] + hexMap[hex[6]];
-    return {r, g, b, 255};
-}
+inline Color rgb(unsigned char r, unsigned char g, unsigned char b) { return {r, g, b, 255}; }
 
 struct Biome
 {
@@ -31,10 +18,10 @@ struct Biome
     Biome(double startLevel, const Color& color) : startLevel(startLevel), color(color) {}
 };
 
-std::vector<Biome> biomes = {{-1, ColorFromHex("#0000ff")},    {-0.5, ColorFromHex("#0088ffff")},
-                             {0, ColorFromHex("#61daffff")},   {0.1, ColorFromHex("#fbfe91ff")},
-                             {0.2, ColorFromHex("#21ab2aff")}, {0.5, ColorFromHex("#b8b8cdff")},
-                             {0.6, ColorFromHex("#ffffffff")}};
+std::vector<Biome> biomes = {{-1, rgb(0, 0, 255)},     {-0.5, rgb(0, 136, 255)},
+                             {0, rgb(97, 218, 255)},   {0.1, rgb(251, 254, 145)},
+                             {0.2, rgb(33, 171, 42)},  {0.5, rgb(184, 184, 205)},
+                             {0.6, rgb(255, 255, 255)}};
 
 Vector2 windowSize{16 * 50 * 2, 9 * 50 * 2};
 Vector2 perlinOffset = {0, 0};
@@ -92,8 +79,10 @@ void DrawFrame()
         SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), vec,
                        SHADER_UNIFORM_VEC2);
     }
+#if !defined(PLATFORM_WEB)
     windowSize.x /= GetWindowScaleDPI().x;
     windowSize.y /= GetWindowScaleDPI().y;
+#endif
 
     {
         float vec[2] = {perlinOffset.x, perlinOffset.y};
