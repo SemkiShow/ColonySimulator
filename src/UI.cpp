@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Drawing.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
 #include <raygui.h>
@@ -24,8 +25,8 @@ void DrawCheckBox(const char* text, bool* value)
 void DrawSettings(bool* isOpen)
 {
     if (!*isOpen) return;
-    DrawRectangleRounded(Rectangle{UI_SPACING, UI_SPACING, (float)GetScreenWidth() - UI_SPACING * 2,
-                                   (float)GetScreenHeight() - UI_SPACING * 2},
+    DrawRectangleRounded(Rectangle{UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
+                                   windowSize.y - UI_SPACING * 2},
                          0.1f, 1, Color{128, 128, 128, 128});
     nextElementPositionY = UI_SPACING * 2;
     DrawCheckBox("vsync", &vsync);
@@ -34,10 +35,13 @@ void DrawSettings(bool* isOpen)
 
 void DrawUI()
 {
+    BeginDrawing();
+
     if (showFPS) DrawFPS(0, 0);
 
-    if (GuiButton(Rectangle{(float)GetScreenWidth() - 30, 0, 30, 30}, "#142#"))
-        isSettings = !isSettings;
+    if (GuiButton(Rectangle{windowSize.x - 30, 0, 30, 30}, "#142#")) isSettings = !isSettings;
 
     DrawSettings(&isSettings);
+
+    EndDrawing();
 }

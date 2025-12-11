@@ -22,7 +22,7 @@ inline Color ColorFromHex(const std::string& hexIn)
                   g = 16 * hexMap[hex[3]] + hexMap[hex[4]],
                   b = 16 * hexMap[hex[5]] + hexMap[hex[6]];
     return {r, g, b, 255};
-}   
+}
 
 struct Biome
 {
@@ -31,7 +31,7 @@ struct Biome
     Biome(double startLevel, const Color& color) : startLevel(startLevel), color(color) {}
 };
 
-std::vector<Biome> biomes = {{-1, ColorFromHex("#0000ff")},    {-0.7, ColorFromHex("#0088ffff")},
+std::vector<Biome> biomes = {{-1, ColorFromHex("#0000ff")},    {-0.5, ColorFromHex("#0088ffff")},
                              {0, ColorFromHex("#61daffff")},   {0.1, ColorFromHex("#fbfe91ff")},
                              {0.2, ColorFromHex("#21ab2aff")}, {0.5, ColorFromHex("#b8b8cdff")},
                              {0.6, ColorFromHex("#ffffffff")}};
@@ -86,20 +86,30 @@ void DrawFrame()
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uScale"), &scale,
                    SHADER_UNIFORM_FLOAT);
 
-    windowSize = {GetRenderWidth() * 1.0f, GetRenderHeight() * 1.0f};
-    float res[2] = {windowSize.x, windowSize.y};
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), res,
-                   SHADER_UNIFORM_VEC2);
+    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
+    {
+        float vec[2] = {windowSize.x, windowSize.y};
+        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), vec,
+                       SHADER_UNIFORM_VEC2);
+    }
+    windowSize.x /= GetWindowScaleDPI().x;
+    windowSize.y /= GetWindowScaleDPI().y;
 
-    float offset[2] = {perlinOffset.x, perlinOffset.y};
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), &offset,
-                   SHADER_UNIFORM_VEC2);
+    {
+        float vec[2] = {perlinOffset.x, perlinOffset.y};
+        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), &vec,
+                       SHADER_UNIFORM_VEC2);
+    }
+
+    {
+        float vec[2] = {mapSize.x, mapSize.y};
+        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uMapSize"), &vec,
+                       SHADER_UNIFORM_VEC2);
+    }
 
     BeginShaderMode(biomeShader);
     DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
     EndShaderMode();
-
-    BeginDrawing();
 
     DrawUI();
 
@@ -125,6 +135,4 @@ void DrawFrame()
         else
             SetWindowState(FLAG_VSYNC_HINT);
     }
-
-    EndDrawing();
 }

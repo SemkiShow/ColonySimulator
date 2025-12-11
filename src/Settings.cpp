@@ -11,6 +11,7 @@ bool showFPS = true;
 double perlinScale = 0.01;
 double panSensitivity = 500;
 double wheelSensitivity = 0.1;
+Vector2 mapSize = {300, 300};
 
 std::vector<std::string> Split(std::string input, char delimiter = ' ')
 {
@@ -36,6 +37,8 @@ void Save()
     file << "vsync=" << (vsync ? "true" : "false") << '\n';
     file << "show-fps=" << (showFPS ? "true" : "false") << '\n';
     file << "perlin-scale=" << perlinScale << '\n';
+    file << "mapSizeX=" << mapSize.x << '\n';
+    file << "mapSizeY=" << mapSize.y << '\n';
     file.close();
 }
 
@@ -50,6 +53,8 @@ void Load()
         if (label == "vsync") vsync = value == "true";
         if (label == "show-fps") showFPS = value == "true";
         if (label == "perlin-scale") perlinScale = stod(value);
+        if (label == "mapSizeX") mapSize.x = stof(value);
+        if (label == "mapSizeY") mapSize.y = stof(value);
     }
     file.close();
 }

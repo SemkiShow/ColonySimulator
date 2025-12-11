@@ -4,6 +4,7 @@ uniform float uScale;
 uniform vec2 uResolution;
 uniform float uSeed;
 uniform vec2 uOffset;
+uniform vec2 uMapSize;
 
 uniform float uBiomeStart[8];
 uniform vec4 uBiomeColor[8];
@@ -46,6 +47,11 @@ float perlin(vec2 p)
     return mix(nx0, nx1, v);
 }
 
+float getPerlin(vec2 v)
+{
+    return (0.3 * perlin(v) + 2 * perlin(0.1 * v) + 3.5 * perlin(0.05 * v)) / 4.20;
+}
+
 vec4 applyBiomes(float v)
 {
     vec4 color = uBiomeColor[0];
@@ -66,8 +72,15 @@ out vec4 fragColor;
 
 void main()
 {
-    vec2 uv = gl_FragCoord.xy * uScale;
+    vec2 uv = (gl_FragCoord.xy - uResolution / 2) * uScale + uOffset;
 
-    float n = perlin(uv + uOffset);
+    if (uv.x < -uMapSize.x / 2 || uv.x >= uMapSize.x / 2 || uv.y < -uMapSize.y / 2 ||
+        uv.y >= uMapSize.y / 2)
+    {
+        fragColor = vec4(0, 0, 0, 1);
+        return;
+    }
+
+    float n = getPerlin(uv);
     fragColor = applyBiomes(n);
 }

@@ -4,11 +4,14 @@
 
 #pragma once
 
+#include <raylib.h>
+
 extern bool vsync;
 extern bool showFPS;
 extern double perlinScale;
 extern double panSensitivity;
 extern double wheelSensitivity;
+extern Vector2 mapSize;
 
 void Save();
 void Load();
