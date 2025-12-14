@@ -180,7 +180,7 @@ void DrawFrame()
     if (wheelMove < 0) perlinScale -= wheelSensitivity * wheelMove * deltaTime;
     perlinScale = std::max(0.0, perlinScale);
 
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         std::cout << "Mouse pressed!\n";
         Vector2 v = GetMousePosition();

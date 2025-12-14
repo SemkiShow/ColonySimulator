@@ -28,6 +28,12 @@ int main()
 
     GuiSetFont(GetFontDefault());
 
+    BeginDrawing();
+
+    DrawText("Loading map...", 0, windowSize.y - 24, 24, WHITE);
+
+    EndDrawing();
+
     InitGPU();
 
 #if defined(PLATFORM_WEB)
