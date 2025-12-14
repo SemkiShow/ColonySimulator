@@ -21,7 +21,7 @@ Every set period of time (around a second), a growth tick happens, which increas
 
 ### Island resources
 
-Every island has the following 2 resources in random quantities depending on the island's area: wood and iron. Wood quantities can increase (trees grow), while iron is not renewable. You can extract resources from the island and add them to your capital quicker by sending more people to islands.
+Every island has the following 2 resources in random quantities depending on the island's area: wood and iron. Wood quantities can increase (trees grow), while iron is not renewable. You can extract resources from the island and add them to your capital quicker by sending more people to islands. The amount of resources depends on the island's size and increases with distance.
 
 ### Indicators
 

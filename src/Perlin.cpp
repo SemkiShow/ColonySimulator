@@ -5,6 +5,7 @@
 #include "Perlin.hpp"
 
 float perlinSeed = 0;
+Vector2 perlinOffset = {0, 0};
 
 float Fract(float x) { return x - floorf(x); }
 
@@ -12,8 +13,7 @@ float Fade(float t) { return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f); }
 
 float RandPerlin(Vector2 p)
 {
-    float val = Vector2DotProduct(p, {127.1f, 311.7f}) + perlinSeed;
-    return Fract(sinf(val) * 43758.5453123f);
+    return Fract(sinf(Vector2DotProduct(p, {127.1f, 311.7f}) + perlinSeed) * 43758.5453123f);
 }
 
 Vector2 Gradient(Vector2 p)
@@ -25,7 +25,7 @@ Vector2 Gradient(Vector2 p)
 float Perlin(Vector2 p)
 {
     Vector2 i0 = {floor(p.x), floor(p.y)};
-    Vector2 f0 = Vector2Subtract(p, i0);
+    Vector2 f0 = {Fract(p.x), Fract(p.y)};
 
     Vector2 i1 = Vector2Add(i0, {1.0f, 1.0f});
 

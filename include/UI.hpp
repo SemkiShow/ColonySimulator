@@ -4,4 +4,6 @@
 
 #pragma once
 
+extern bool showIslandsBoxes;
+
 void DrawUI();

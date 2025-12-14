@@ -1,14 +1,21 @@
+// SPDX-FileCopyrightText: 2025 SemkiShow
+//
+// SPDX-License-Identifier: GPL-3.0-only
+
 #version 330
 
 uniform float uScale;
 uniform vec2 uResolution;
-uniform float uSeed;
 uniform vec2 uOffset;
+
+uniform float uSeed;
 uniform vec2 uMapSize;
 
 uniform float uBiomeStart[8];
 uniform vec4 uBiomeColor[8];
 uniform int uBiomeCount;
+
+float lerp(float start, float end, float amount) { return start + amount * (end - start); }
 
 float fade(float t) { return t * t * t * (t * (t * 6 - 15) + 10); }
 
@@ -40,10 +47,10 @@ float perlin(vec2 p)
     float u = fade(f0.x);
     float v = fade(f0.y);
 
-    float nx0 = mix(n00, n10, u);
-    float nx1 = mix(n01, n11, u);
+    float nx0 = lerp(n00, n10, u);
+    float nx1 = lerp(n01, n11, u);
 
-    return mix(nx0, nx1, v);
+    return lerp(nx0, nx1, v);
 }
 
 float getPerlin(vec2 v)

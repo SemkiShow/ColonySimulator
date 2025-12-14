@@ -3,31 +3,20 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing.hpp"
+#include "Island.hpp"
+#include "Perlin.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
 #include <algorithm>
 #include <ctime>
-#include <vector>
+#include <iostream>
 
-inline Color rgb(unsigned char r, unsigned char g, unsigned char b) { return {r, g, b, 255}; }
-
-struct Biome
-{
-    float startLevel;
-    Color color;
-    Biome(double startLevel, const Color& color) : startLevel(startLevel), color(color) {}
-};
-
-std::vector<Biome> biomes = {{-1, rgb(0, 0, 255)},     {-0.5, rgb(0, 136, 255)},
-                             {0, rgb(97, 218, 255)},   {0.1, rgb(251, 254, 145)},
-                             {0.2, rgb(33, 171, 42)},  {0.5, rgb(184, 184, 205)},
-                             {0.6, rgb(255, 255, 255)}};
-
-Vector2 windowSize{16 * 50 * 2, 9 * 50 * 2};
-Vector2 perlinOffset = {0, 0};
+Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
-Shader biomeShader;
 bool lastVsync = vsync;
+
+Shader biomeShader;
+Shader islandShader;
 
 void InitGPU()
 {
@@ -37,8 +26,8 @@ void InitGPU()
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
                    SHADER_UNIFORM_INT);
 
-    float seed = GetTime();
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &seed,
+    // perlinSeed = GetTime();
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &perlinSeed,
                    SHADER_UNIFORM_FLOAT);
 
     {
@@ -63,44 +52,121 @@ void InitGPU()
         SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeColor"), colors,
                         SHADER_UNIFORM_VEC4, biomeCount);
     }
+
+    BuildIslands();
+
+    islandShader = LoadShader(0, "resources/Island.fs");
+
+    int islandsCount = islands.size();
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uIslandsCount"), &islandsCount,
+                   SHADER_UNIFORM_INT);
+
+    Vector2 islandStarts[512], islandEnds[512];
+    for (size_t i = 0; i < islands.size(); i++)
+    {
+        islandStarts[i] = islands[i].p1;
+        islandEnds[i] = islands[i].p2;
+    }
+    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandStarts"),
+                    (float*)&islandStarts, SHADER_UNIFORM_VEC2, islandsCount);
+    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandEnds"),
+                    (float*)&islandEnds, SHADER_UNIFORM_VEC2, islandsCount);
 }
 
 void DrawFrame()
 {
+    BeginDrawing();
+
     ClearBackground(BLACK);
 
     float scale = perlinScale;
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uScale"), &scale,
                    SHADER_UNIFORM_FLOAT);
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uScale"), &scale,
+                   SHADER_UNIFORM_FLOAT);
 
     windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
-    {
-        float vec[2] = {windowSize.x, windowSize.y};
-        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), vec,
-                       SHADER_UNIFORM_VEC2);
-    }
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), (float*)&windowSize,
+                   SHADER_UNIFORM_VEC2);
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uResolution"),
+                   (float*)&windowSize, SHADER_UNIFORM_VEC2);
 #if !defined(PLATFORM_WEB)
-    windowSize.x /= GetWindowScaleDPI().x;
-    windowSize.y /= GetWindowScaleDPI().y;
+    windowSize /= GetWindowScaleDPI();
 #endif
 
-    {
-        float vec[2] = {perlinOffset.x, perlinOffset.y};
-        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), &vec,
-                       SHADER_UNIFORM_VEC2);
-    }
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), (float*)&perlinOffset,
+                   SHADER_UNIFORM_VEC2);
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uOffset"), (float*)&perlinOffset,
+                   SHADER_UNIFORM_VEC2);
 
-    {
-        float vec[2] = {mapSize.x, mapSize.y};
-        SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uMapSize"), &vec,
-                       SHADER_UNIFORM_VEC2);
-    }
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uMapSize"), (float*)&mapSize,
+                   SHADER_UNIFORM_VEC2);
+
+    Vector2 mousePosition = GetMousePosition();
+    mousePosition.y = windowSize.y - mousePosition.y;
+    mousePosition -= windowSize / 2;
+    mousePosition *= GetWindowScaleDPI();
+    mousePosition *= perlinScale;
+    mousePosition += perlinOffset;
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uMouse"), (float*)&mousePosition,
+                   SHADER_UNIFORM_VEC2);
 
     BeginShaderMode(biomeShader);
     DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
     EndShaderMode();
 
+    if (showIslandsBoxes)
+    {
+        float h = windowSize.y;
+        for (int y = 0; y < windowSize.y; y++)
+        {
+            for (int x = 0; x < windowSize.x; x++)
+            {
+                Vector2 uv = {x * 1.0f, h - y * 1.0f};
+                uv -= windowSize / 2;
+                uv *= GetWindowScaleDPI();
+                uv *= perlinScale;
+                uv += perlinOffset;
+
+                if (uv.x < -mapSize.x / 2 || uv.x >= mapSize.x / 2 || uv.y < -mapSize.y / 2 ||
+                    uv.y >= mapSize.y / 2)
+                {
+                    DrawPixel(x, y, BLACK);
+                    continue;
+                }
+
+                float v = GetPerlin(uv);
+
+                Color color = biomes[0].color;
+
+                for (size_t k = 1; k < biomes.size(); k++)
+                {
+                    if (v >= biomes[k].startLevel)
+                    {
+                        float t = (v - biomes[k - 1].startLevel) /
+                                  (biomes[k].startLevel - biomes[k - 1].startLevel);
+                        color = ColorLerp(biomes[k - 1].color, biomes[k].color, t);
+                    }
+                }
+
+                DrawPixel(x, y, color);
+            }
+        }
+
+        // for (auto& point: points)
+        // {
+        //     DrawPixel(point.first.x * GetWindowScaleDPI().x, h - point.first.y *
+        //     GetWindowScaleDPI().y, point.second);
+        // }
+
+    }
+    BeginShaderMode(islandShader);
+    DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
+    EndShaderMode();
+
     DrawUI();
+
+    EndDrawing();
 
     double deltaTime = GetTime() - timer;
 
@@ -113,6 +179,25 @@ void DrawFrame()
     if (wheelMove > 0) perlinScale -= wheelSensitivity * wheelMove * deltaTime;
     if (wheelMove < 0) perlinScale -= wheelSensitivity * wheelMove * deltaTime;
     perlinScale = std::max(0.0, perlinScale);
+
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+    {
+        std::cout << "Mouse pressed!\n";
+        Vector2 v = GetMousePosition();
+        v.y = windowSize.y - v.y;
+        v -= windowSize / 2;
+        v *= GetWindowScaleDPI();
+        v *= perlinScale;
+        v += perlinOffset;
+        for (auto& island: islands)
+        {
+            if (v.x >= island.p1.x && v.x <= island.p2.x && v.y >= island.p1.y &&
+                v.y <= island.p2.y)
+            {
+                std::cout << island.ironCount << '\n';
+            }
+        }
+    }
 
     timer = GetTime();
 
