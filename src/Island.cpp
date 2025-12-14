@@ -90,27 +90,4 @@ void BuildIslands(float stepSize)
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
-
-#ifdef DEBUG
-    // Generate debug colors
-    std::vector<Color> colors(counter);
-    for (size_t i = 0; i < counter; i++)
-    {
-        colors[i] = {static_cast<unsigned char>(rand() % 255),
-                     static_cast<unsigned char>(rand() % 255),
-                     static_cast<unsigned char>(rand() % 255), 255};
-    }
-
-    // Add debug points
-    for (size_t i = 0; i < maxY; i++)
-    {
-        for (size_t j = 0; j < maxX; j++)
-        {
-            if (map[i][j] == INT_MAX) continue;
-            int idx = map[i][j];
-            if (islandAreas[idx] < minIslandArea) continue;
-            points.push_back({{j * stepSize, i * stepSize}, colors[idx]});
-        }
-    }
-#endif
 }

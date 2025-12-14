@@ -7,11 +7,7 @@
 #include "UI.hpp"
 #include <raygui.h>
 
-#ifdef DEBUG
 bool showIslandsBoxes = true;
-#else
-bool showIslandsBoxes = false;
-#endif
 
 #define UI_SPACING 30
 #define ELEMENT_SIZE 30
@@ -46,11 +42,9 @@ void DrawUI()
     if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE, 0, ELEMENT_SIZE, ELEMENT_SIZE}, "#142#"))
         isSettings = !isSettings;
 
-#ifdef DEBUG
     if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE * 2, 0, ELEMENT_SIZE, ELEMENT_SIZE},
                   "#140#"))
         showIslandsBoxes = !showIslandsBoxes;
-#endif
 
     DrawSettings(&isSettings);
 }

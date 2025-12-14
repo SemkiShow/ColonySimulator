@@ -6,8 +6,6 @@
 
 #include <raymath.h>
 
-// #define DEBUG
-
 extern bool vsync;
 extern bool showFPS;
 extern double perlinScale;

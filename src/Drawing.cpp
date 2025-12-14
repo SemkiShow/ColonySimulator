@@ -117,52 +117,10 @@ void DrawFrame()
 
     if (showIslandsBoxes)
     {
-        float h = windowSize.y;
-        for (int y = 0; y < windowSize.y; y++)
-        {
-            for (int x = 0; x < windowSize.x; x++)
-            {
-                Vector2 uv = {x * 1.0f, h - y * 1.0f};
-                uv -= windowSize / 2;
-                uv *= GetWindowScaleDPI();
-                uv *= perlinScale;
-                uv += perlinOffset;
-
-                if (uv.x < -mapSize.x / 2 || uv.x >= mapSize.x / 2 || uv.y < -mapSize.y / 2 ||
-                    uv.y >= mapSize.y / 2)
-                {
-                    DrawPixel(x, y, BLACK);
-                    continue;
-                }
-
-                float v = GetPerlin(uv);
-
-                Color color = biomes[0].color;
-
-                for (size_t k = 1; k < biomes.size(); k++)
-                {
-                    if (v >= biomes[k].startLevel)
-                    {
-                        float t = (v - biomes[k - 1].startLevel) /
-                                  (biomes[k].startLevel - biomes[k - 1].startLevel);
-                        color = ColorLerp(biomes[k - 1].color, biomes[k].color, t);
-                    }
-                }
-
-                DrawPixel(x, y, color);
-            }
-        }
-
-        // for (auto& point: points)
-        // {
-        //     DrawPixel(point.first.x * GetWindowScaleDPI().x, h - point.first.y *
-        //     GetWindowScaleDPI().y, point.second);
-        // }
-
+        BeginShaderMode(islandShader);
+        DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
+        EndShaderMode();
     }
-    BeginShaderMode(islandShader);
-    DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
-    EndShaderMode();
 
     DrawUI();
 
@@ -189,13 +147,14 @@ void DrawFrame()
         v *= GetWindowScaleDPI();
         v *= perlinScale;
         v += perlinOffset;
-        for (auto& island: islands)
+        for (size_t i = 0; i < islands.size(); i++)
         {
-            if (v.x >= island.p1.x && v.x <= island.p2.x && v.y >= island.p1.y &&
-                v.y <= island.p2.y)
+            if (v.x >= islands[i].p1.x && v.x <= islands[i].p2.x && v.y >= islands[i].p1.y &&
+                v.y <= islands[i].p2.y)
             {
-                std::cout << island.ironCount << '\n';
+                std::cout << "Clicked on island with id: " << i << '\n';
             }
+            
         }
     }
 

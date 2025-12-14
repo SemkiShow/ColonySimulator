@@ -32,7 +32,7 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 ### v1.0.0 (MVP)
 
 - [x] World generation
-- [ ] Island extraction from the map
+- [x] Island extraction from the map
 - [ ] Colonize the island by clicking it
 - [ ] Empire's resources counters
 - [ ] Draw a lock on top of uncolonized islands
