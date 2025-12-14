@@ -25,7 +25,7 @@ vec4 drawIslands(vec2 uv)
     bool found = false;
     for (int i = 0; i < uIslandsCount; i++)
     {
-        if (inside(uv, i)/*  && inside(uMouse, i) */)
+        if (inside(uv, i) && inside(uMouse, i))
         {
             found = true;
             break;

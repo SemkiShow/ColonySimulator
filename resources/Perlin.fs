@@ -19,7 +19,22 @@ float lerp(float start, float end, float amount) { return start + amount * (end 
 
 float fade(float t) { return t * t * t * (t * (t * 6 - 15) + 10); }
 
-float rand(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7)) + uSeed) * 43758.5453123); }
+float rand(vec2 p)
+{
+    const float OFFSET = 100000.0;
+
+    uint ix = uint(floor(p.x + OFFSET)) & 0xFFFFu;
+    uint iy = uint(floor(p.y + OFFSET)) & 0xFFFFu;
+    uint s = uint(floor(uSeed + 1000.0));
+
+    uint n = ix * 73856093u + iy * 19349669u + s * 83492791u;
+
+    n = ((n >> 16u) ^ n) * 0x45d9f3bu;
+    n = ((n >> 16u) ^ n) * 0x45d9f3bu;
+    n = (n >> 16u) ^ n;
+
+    return float(n) * (1.0 / 4294967296.0);
+}
 
 vec2 gradient(vec2 p)
 {

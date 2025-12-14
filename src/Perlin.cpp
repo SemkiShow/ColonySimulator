@@ -13,7 +13,19 @@ float Fade(float t) { return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f); }
 
 float RandPerlin(Vector2 p)
 {
-    return Fract(sinf(Vector2DotProduct(p, {127.1f, 311.7f}) + perlinSeed) * 43758.5453123f);
+    const float OFFSET = 100000.0f; 
+
+    unsigned int ix = (unsigned int)floorf(p.x + OFFSET) & 0xFFFFu;
+    unsigned int iy = (unsigned int)floorf(p.y + OFFSET) & 0xFFFFu;
+    unsigned int s = (unsigned int)floorf(perlinSeed + 1000.0f);
+
+    unsigned int n = ix * 73856093u + iy * 19349669u + s * 83492791u; 
+    
+    n = ((n >> 16u) ^ n) * 0x45d9f3bu;
+    n = ((n >> 16u) ^ n) * 0x45d9f3bu;
+    n = (n >> 16u) ^ n;
+
+    return (float)n * (1.0f / 4294967296.0f);
 }
 
 Vector2 Gradient(Vector2 p)

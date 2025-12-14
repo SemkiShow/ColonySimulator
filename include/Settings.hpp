@@ -6,7 +6,7 @@
 
 #include <raymath.h>
 
-#define DEBUG
+// #define DEBUG
 
 extern bool vsync;
 extern bool showFPS;
