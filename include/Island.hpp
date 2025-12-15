@@ -11,22 +11,26 @@ struct Biome
 {
     float startLevel;
     Color color;
-    Biome(double startLevel, const Color& color) : startLevel(startLevel), color(color) {}
+    Biome(float startLevel, const Color& color) : startLevel(startLevel), color(color) {}
 };
 
-#define TREE_COEFFICIENT 2
-#define TREE_GROWTH_COEFFICIENT 0.5
-#define IRON_COEFFICIENT 0.5
+#define WOOD_COLONIZE_K 0.02f
+#define IRON_COLONIZE_K 0.005f
+#define WOOD_K 0.02f
+#define WOOD_GROWTH_K 0.005f
+#define IRON_K 0.005f
 
 struct Island
 {
     Vector2 p1 = {0, 0}, p2 = {0, 0};
     float area = 0;
-    int treeCount = 0, ironCount = 0;
+    int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0;
     bool colonized = false;
 
-    Island(Vector2 p1, Vector2 p2, float area, int treeCount, int ironCount)
-        : p1(p1), p2(p2), area(area), treeCount(treeCount), ironCount(ironCount)
+    Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
+           int woodGrowth, int ironCount)
+        : p1(p1), p2(p2), area(area), woodColonize(woodColonize), ironColonize(ironColonize),
+          woodCount(woodCount), woodGrowth(woodGrowth), ironCount(ironCount)
     {
     }
 };

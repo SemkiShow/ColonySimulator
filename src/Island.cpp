@@ -85,9 +85,24 @@ void BuildIslands(float stepSize)
         Vector2 center = {(corner.second.x + corner.first.x) / 2,
                           (corner.second.y + corner.first.y) / 2};
         float distance = Vector2Distance(center, {0, 0});
-        islands.emplace_back(corner.first, corner.second, islandAreas[i] * stepSize * stepSize,
-                             distance * TREE_COEFFICIENT, distance * IRON_COEFFICIENT);
+        float area = islandAreas[i] * stepSize * stepSize;
+        float cost = distance * area;
+        islands.emplace_back(corner.first, corner.second, area, cost * WOOD_COLONIZE_K,
+                             cost * IRON_COLONIZE_K, cost * WOOD_K, cost * WOOD_GROWTH_K,
+                             cost * IRON_K);
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
+
+    // Set the closest island to center as colonized
+    // [TODO]: Make at actually work
+    // int minDistanceIslandIdx = 0;
+    // for (size_t i = 0; i < islands.size(); i++)
+    // {
+    //     const auto &island = islands[i], &minIsland = islands[minDistanceIslandIdx];
+    //     if (abs(Vector2Distance(Vector2{0, 0}, (island.p2 - island.p1) / 2)) <
+    //         abs(Vector2Distance(Vector2{0, 0}, (minIsland.p2 - minIsland.p1) / 2)))
+    //         minDistanceIslandIdx = i;
+    // }
+    // islands[minDistanceIslandIdx].colonized = true;
 }

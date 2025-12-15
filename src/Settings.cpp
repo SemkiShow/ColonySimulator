@@ -8,9 +8,9 @@
 
 bool vsync = true;
 bool showFPS = true;
-double perlinScale = 0.01;
-double panSensitivity = 500;
-double wheelSensitivity = 0.1;
+float perlinScale = 0.01;
+float panSensitivity = 500;
+float wheelSensitivity = 0.3f;
 Vector2 mapSize = {300, 300};
 
 std::vector<std::string> Split(std::string input, char delimiter = ' ')
@@ -52,7 +52,7 @@ void Load()
         value = Split(buf, '=')[1];
         if (label == "vsync") vsync = value == "true";
         if (label == "show-fps") showFPS = value == "true";
-        if (label == "perlin-scale") perlinScale = stod(value);
+        if (label == "perlin-scale") perlinScale = stof(value);
         if (label == "mapSizeX") mapSize.x = stof(value);
         if (label == "mapSizeY") mapSize.y = stof(value);
     }

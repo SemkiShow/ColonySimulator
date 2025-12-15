@@ -8,9 +8,9 @@
 
 extern bool vsync;
 extern bool showFPS;
-extern double perlinScale;
-extern double panSensitivity;
-extern double wheelSensitivity;
+extern float perlinScale;
+extern float panSensitivity;
+extern float wheelSensitivity;
 extern Vector2 mapSize;
 
 void Save();
