@@ -13,6 +13,7 @@
 
 Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
+double growthTimer = 0;
 bool lastVsync = vsync;
 
 Shader biomeShader;
@@ -41,6 +42,66 @@ inline Vector2 GlslToRaylib(Vector2 v)
     v.x -= perlinOffset.x / perlinScale / GetWindowScaleDPI().x;
     v.y += perlinOffset.y / perlinScale / GetWindowScaleDPI().y;
     return v;
+}
+
+void InitGPU()
+{
+    lockTexture = LoadTexture("resources/lock.png");
+    woodTexture = LoadTexture("resources/wooden_log.png");
+    ironTexture = LoadTexture("resources/iron_ingot.png");
+    humanTexture = LoadTexture("resources/human.png");
+
+    biomeShader = LoadShader(0, "resources/Perlin.fs");
+
+    int biomeCount = (int)biomes.size();
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
+                   SHADER_UNIFORM_INT);
+
+    // perlinSeed = time(0);
+    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &perlinSeed,
+                   SHADER_UNIFORM_FLOAT);
+
+    {
+        float starts[8];
+        for (size_t i = 0; i < biomes.size(); i++)
+            starts[i] = biomes[i].startLevel;
+
+        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeStart"), starts,
+                        SHADER_UNIFORM_FLOAT, biomeCount);
+    }
+
+    {
+        float colors[8 * 4];
+        for (size_t i = 0; i < biomes.size(); i++)
+        {
+            colors[i * 4 + 0] = biomes[i].color.r / 255.0f;
+            colors[i * 4 + 1] = biomes[i].color.g / 255.0f;
+            colors[i * 4 + 2] = biomes[i].color.b / 255.0f;
+            colors[i * 4 + 3] = 1.0f;
+        }
+
+        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeColor"), colors,
+                        SHADER_UNIFORM_VEC4, biomeCount);
+    }
+
+    BuildIslands();
+
+    islandShader = LoadShader(0, "resources/Island.fs");
+
+    int islandsCount = islands.size();
+    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uIslandsCount"), &islandsCount,
+                   SHADER_UNIFORM_INT);
+
+    Vector2 islandStarts[512], islandEnds[512];
+    for (size_t i = 0; i < islands.size(); i++)
+    {
+        islandStarts[i] = islands[i].p1;
+        islandEnds[i] = islands[i].p2;
+    }
+    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandStarts"),
+                    (float*)&islandStarts, SHADER_UNIFORM_VEC2, islandsCount);
+    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandEnds"),
+                    (float*)&islandEnds, SHADER_UNIFORM_VEC2, islandsCount);
 }
 
 void DrawStats(const Island& island, Color color)
@@ -117,8 +178,7 @@ void DrawResources()
     auto GetTextOffset = [&](const Texture& texture, float textureScale) -> Vector2
     {
         Vector2 newOffset = offset;
-        newOffset.x +=
-            fmax(woodTexture.width * woodScale, ironTexture.width * ironScale) + margin;
+        newOffset.x += fmax(woodTexture.width * woodScale, ironTexture.width * ironScale) + margin;
         newOffset.y += (texture.height * textureScale - textScale) / 2;
         return newOffset;
     };
@@ -130,8 +190,7 @@ void DrawResources()
         0.25f, 16, {0, 0, 0, 127});
 
     // Draw wood
-    DrawTextureEx(woodTexture, offset, 0, woodScale,
-                  WHITE);
+    DrawTextureEx(woodTexture, offset, 0, woodScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(woodTexture, woodScale);
         DrawText(std::to_string(woodTotal).c_str(), textOffset.x, textOffset.y, textScale, WHITE);
@@ -147,64 +206,12 @@ void DrawResources()
     offset.y += ironTexture.height * ironScale + margin;
 }
 
-void InitGPU()
+void GrowthTick()
 {
-    lockTexture = LoadTexture("resources/lock.png");
-    woodTexture = LoadTexture("resources/wooden_log.png");
-    ironTexture = LoadTexture("resources/iron_ingot.png");
-    humanTexture = LoadTexture("resources/human.png");
-
-    biomeShader = LoadShader(0, "resources/Perlin.fs");
-
-    int biomeCount = (int)biomes.size();
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
-                   SHADER_UNIFORM_INT);
-
-    // perlinSeed = time(0);
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &perlinSeed,
-                   SHADER_UNIFORM_FLOAT);
-
+    for (auto& island: islands)
     {
-        float starts[8];
-        for (size_t i = 0; i < biomes.size(); i++)
-            starts[i] = biomes[i].startLevel;
-
-        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeStart"), starts,
-                        SHADER_UNIFORM_FLOAT, biomeCount);
+        island.GrowthTick();
     }
-
-    {
-        float colors[8 * 4];
-        for (size_t i = 0; i < biomes.size(); i++)
-        {
-            colors[i * 4 + 0] = biomes[i].color.r / 255.0f;
-            colors[i * 4 + 1] = biomes[i].color.g / 255.0f;
-            colors[i * 4 + 2] = biomes[i].color.b / 255.0f;
-            colors[i * 4 + 3] = 1.0f;
-        }
-
-        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeColor"), colors,
-                        SHADER_UNIFORM_VEC4, biomeCount);
-    }
-
-    BuildIslands();
-
-    islandShader = LoadShader(0, "resources/Island.fs");
-
-    int islandsCount = islands.size();
-    SetShaderValue(islandShader, GetShaderLocation(islandShader, "uIslandsCount"), &islandsCount,
-                   SHADER_UNIFORM_INT);
-
-    Vector2 islandStarts[512], islandEnds[512];
-    for (size_t i = 0; i < islands.size(); i++)
-    {
-        islandStarts[i] = islands[i].p1;
-        islandEnds[i] = islands[i].p2;
-    }
-    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandStarts"),
-                    (float*)&islandStarts, SHADER_UNIFORM_VEC2, islandsCount);
-    SetShaderValueV(islandShader, GetShaderLocation(islandShader, "uIslandEnds"),
-                    (float*)&islandEnds, SHADER_UNIFORM_VEC2, islandsCount);
 }
 
 void DrawFrame()
@@ -284,10 +291,19 @@ void DrawFrame()
                 v.y <= islands[i].p2.y)
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
-                islands[i].Colonize();
+                if (islands[i].colonized)
+                    islands[i].peopleCount++;
+                else
+                    islands[i].Colonize();
                 break;
             }
         }
+    }
+
+    if (GetTime() - growthTimer > GROWTH_PERIOD)
+    {
+        growthTimer = GetTime();
+        GrowthTick();
     }
 
     timer = GetTime();

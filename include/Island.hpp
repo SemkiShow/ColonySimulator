@@ -21,11 +21,16 @@ struct Biome
 #define IRON_K 0.005f
 #define PEOPLE_K 0.005f
 
+#define GROWTH_PERIOD 1
+#define WOOD_GET_K 3
+#define IRON_GET_K 1
+
 struct Island
 {
     Vector2 p1 = {0, 0}, p2 = {0, 0};
     float area = 0;
-    int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0;
+    int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0,
+        peopleCount = 0;
     bool colonized = false;
 
     Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
@@ -36,6 +41,8 @@ struct Island
     }
 
     void Colonize();
+    void SendPeople(int count);
+    void GrowthTick();
 };
 
 extern std::vector<Biome> biomes;

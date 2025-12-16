@@ -27,6 +27,35 @@ void Island::Colonize()
     colonized = true;
     woodTotal -= woodColonize;
     ironTotal -= ironColonize;
+    SendPeople(1);
+}
+
+void Island::SendPeople(int count)
+{
+    int maxPeopleIslandId = 0;
+    for (size_t i = 0; i < islands.size(); i++)
+    {
+        if (islands[i].peopleCount > islands[maxPeopleIslandId].peopleCount) maxPeopleIslandId = i;
+    }
+    if (islands[maxPeopleIslandId].peopleCount < count) return;
+    islands[maxPeopleIslandId].peopleCount -= count;
+    peopleCount += count;
+}
+
+void Island::GrowthTick()
+{
+    if (!colonized) return;
+    woodCount += woodGrowth;
+    {
+        int delta = fmin(woodCount, WOOD_GET_K * peopleCount);
+        woodCount -= delta;
+        woodTotal += delta;
+    }
+    {
+        int delta = fmin(ironCount, IRON_GET_K * peopleCount);
+        ironCount -= delta;
+        ironTotal += delta;
+    }
 }
 
 #define LAND_START biomes[3].startLevel
@@ -122,4 +151,5 @@ void BuildIslands(float stepSize)
     woodTotal = cost * WOOD_K;
     ironTotal = cost * IRON_K;
     peopleTotal = cost * PEOPLE_K;
+    minIsland.peopleCount = peopleTotal;
 }
