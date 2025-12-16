@@ -37,8 +37,8 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 - [x] Empire's resources counters
 - [x] Draw a lock on top of uncolonized islands
 - [x] Set a price to colonize an island
-- [ ] Colonized islands wood growth
-- [ ] People on islands extract resources and add to the capital
+- [x] Colonized islands wood growth
+- [x] People on islands extract resources and add to the capital
 
 ### Additional features (DO NOT implement before MVP is reached)
 

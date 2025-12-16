@@ -180,7 +180,7 @@ void DrawStats(const Island& island, Color color)
 void DrawResources()
 {
     // Constants
-    const float margin = 10, woodScale = 0.03f, ironScale = 0.03f, humanScale = 0.01f,
+    const float margin = 10, woodScale = 0.03f, ironScale = 0.03f, humanScale = 0.015f,
                 textScale = 24;
 
     // Calculate the offset
@@ -218,7 +218,7 @@ void DrawResources()
     offset.y += ironTexture.height * ironScale + margin;
 
     // Draw people
-    DrawTextureEx(humanTexture, offset + Vector2{humanTexture.width * humanScale, 0}, 0, humanScale,
+    DrawTextureEx(humanTexture, offset + Vector2{humanTexture.width * humanScale / 2, 0}, 0, humanScale,
                   WHITE);
     {
         Vector2 textOffset = GetTextOffset(humanTexture, humanScale);

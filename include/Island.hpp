@@ -30,7 +30,7 @@ struct Island
     Vector2 p1 = {0, 0}, p2 = {0, 0};
     float area = 0;
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0,
-        peopleCount = 0;
+        peopleCount = 0, woodMax = 0;
     bool colonized = false;
 
     Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
@@ -38,6 +38,7 @@ struct Island
         : p1(p1), p2(p2), area(area), woodColonize(woodColonize), ironColonize(ironColonize),
           woodCount(woodCount), woodGrowth(woodGrowth), ironCount(ironCount)
     {
+        woodMax = woodCount;
     }
 
     void Colonize();

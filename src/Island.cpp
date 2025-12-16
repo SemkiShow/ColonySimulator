@@ -32,7 +32,7 @@ void Island::Colonize()
 
 void Island::SendPeople(int count)
 {
-    int maxPeopleIslandId = 0;
+    int maxPeopleIslandId = (&islands[0] == this ? 1 : 0);
     for (size_t i = 0; i < islands.size(); i++)
     {
         if (&islands[i] == this) continue;
@@ -47,6 +47,7 @@ void Island::GrowthTick()
 {
     if (!colonized) return;
     woodCount += woodGrowth;
+    woodCount = fmin(woodCount, woodMax);
     {
         int delta = fmin(woodCount, WOOD_GET_K * peopleCount);
         woodCount -= delta;

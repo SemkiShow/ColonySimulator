@@ -7,7 +7,7 @@
 #include "UI.hpp"
 #include <raygui.h>
 
-bool showIslandsBoxes = true;
+bool showIslandsBoxes = false;
 
 #define UI_SPACING 30
 #define ELEMENT_SIZE 30
