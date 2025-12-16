@@ -34,6 +34,8 @@ struct Island
           woodCount(woodCount), woodGrowth(woodGrowth), ironCount(ironCount)
     {
     }
+
+    void Colonize();
 };
 
 extern std::vector<Biome> biomes;

@@ -21,6 +21,14 @@ std::vector<std::pair<Vector2, Color>> points;
 
 int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
 
+void Island::Colonize()
+{
+    if (colonized || woodTotal < woodColonize || ironTotal < ironColonize) return;
+    colonized = true;
+    woodTotal -= woodColonize;
+    ironTotal -= ironColonize;
+}
+
 #define LAND_START biomes[3].startLevel
 
 void BuildIslands(float stepSize)

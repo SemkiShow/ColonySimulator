@@ -284,6 +284,7 @@ void DrawFrame()
                 v.y <= islands[i].p2.y)
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
+                islands[i].Colonize();
                 break;
             }
         }
