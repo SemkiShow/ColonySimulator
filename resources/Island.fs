@@ -16,8 +16,11 @@ uniform int uIslandsCount;
 
 bool inside(vec2 v, int i)
 {
-    return v.x >= uIslandStarts[i].x && v.x <= uIslandEnds[i].x && v.y >= uIslandStarts[i].y &&
-           v.y <= uIslandEnds[i].y;
+    vec2 offset = vec2(4, 2);
+    vec2 center = (uIslandStarts[i] + uIslandEnds[i]) / 2 - offset;
+    vec2 boxSize = vec2(17, 15);
+    return v.x >= center.x - boxSize.x / 2 && v.x <= center.x + boxSize.x / 2 &&
+           v.y >= center.y - boxSize.y / 2 && v.y <= center.y + boxSize.y / 2;
 }
 
 vec4 drawIslands(vec2 uv)

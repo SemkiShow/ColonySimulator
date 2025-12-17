@@ -308,8 +308,11 @@ void DrawFrame()
         Vector2 v = RaylibToGlsl(GetMousePosition());
         for (size_t i = 0; i < islands.size(); i++)
         {
-            if (v.x >= islands[i].p1.x && v.x <= islands[i].p2.x && v.y >= islands[i].p1.y &&
-                v.y <= islands[i].p2.y)
+            Vector2 offset{4, 2};
+            Vector2 center = (islands[i].p1 + islands[i].p2) / 2 - offset;
+            const Vector2 boxSize = Vector2{17, 15};
+            if (v.x >= center.x - boxSize.x / 2 && v.x <= center.x + boxSize.x / 2 &&
+                v.y >= center.y - boxSize.y / 2 && v.y <= center.y + boxSize.y / 2)
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
                 if (islands[i].colonized)
