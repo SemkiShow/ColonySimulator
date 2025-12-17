@@ -150,8 +150,6 @@ void BuildIslands(float stepSize)
     auto& minIsland = islands[minDistanceIslandIdx];
     float distance = Vector2Distance(Vector2{0, 0}, (minIsland.p2 + minIsland.p1) / 2);
     float cost = distance * minIsland.area;
-    woodTotal = cost * WOOD_K;
-    ironTotal = cost * IRON_K;
     peopleTotal = cost * PEOPLE_K;
     minIsland.peopleCount = peopleTotal;
 }

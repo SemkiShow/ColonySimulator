@@ -44,3 +44,4 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 
 - [ ] Ships flowing through the sea to the target island
 - [ ] Animated people walking
+- [ ] Each island has taxes. If the taxes are too high, people stop bringing resources. If the taxes are low, the extraction efficiency increases

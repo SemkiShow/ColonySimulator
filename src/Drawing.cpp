@@ -104,7 +104,7 @@ void InitGPU()
                     (float*)&islandEnds, SHADER_UNIFORM_VEC2, islandsCount);
 }
 
-void DrawStats(const Island& island, Color color)
+void DrawStats(const Island& island)
 {
     // Do not draw anything if the scale is too small
     float scale = 0.01f / perlinScale;
@@ -126,7 +126,7 @@ void DrawStats(const Island& island, Color color)
     // Draw lock
     if (!island.colonized)
     {
-        DrawTextureEx(lockTexture, center + offset, 0, lockScale, color);
+        DrawTextureEx(lockTexture, center + offset, 0, lockScale, WHITE);
         offset.y += lockTexture.height * lockScale + margin;
     }
 
@@ -218,8 +218,8 @@ void DrawResources()
     offset.y += ironTexture.height * ironScale + margin;
 
     // Draw people
-    DrawTextureEx(humanTexture, offset + Vector2{humanTexture.width * humanScale / 2, 0}, 0, humanScale,
-                  WHITE);
+    DrawTextureEx(humanTexture, offset + Vector2{humanTexture.width * humanScale / 2, 0}, 0,
+                  humanScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
         DrawText(std::to_string(peopleTotal).c_str(), textOffset.x, textOffset.y, textScale, WHITE);
@@ -281,7 +281,7 @@ void DrawFrame()
 
     for (size_t i = 0; i < islands.size(); i++)
     {
-        DrawStats(islands[i], ColorFromHSV(i * 360.0f / islands.size(), 1, 1));
+        DrawStats(islands[i]);
     }
 
     DrawResources();
