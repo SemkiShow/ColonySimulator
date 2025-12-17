@@ -143,7 +143,8 @@ void DrawStats(const Island& island)
     DrawRectangleRounded({center.x + offset.x - lockTexture.width * lockScale / 2,
                           center.y + offset.y - margin / 2, lockTexture.width * lockScale * 2,
                           woodTexture.height * woodScale + ironTexture.height * ironScale +
-                              humanTexture.height * humanScale + margin * 3},
+                              margin * 2 +
+                              (island.colonized ? humanTexture.height * humanScale + margin : 0)},
                          0.25f, 16, {0, 0, 0, 127});
 
     // Draw wood
@@ -167,14 +168,18 @@ void DrawStats(const Island& island)
     offset.y += ironTexture.height * ironScale + margin;
 
     // Draw people
-    DrawTextureEx(humanTexture, center + offset - Vector2{humanTexture.width * humanScale / 2, 0},
-                  0, humanScale, WHITE);
+    if (island.colonized)
     {
-        Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
-        DrawText(std::to_string(island.peopleCount).c_str(), textOffset.x, textOffset.y, textScale,
-                 WHITE);
+        DrawTextureEx(humanTexture,
+                      center + offset - Vector2{humanTexture.width * humanScale / 2, 0}, 0,
+                      humanScale, WHITE);
+        {
+            Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
+            DrawText(std::to_string(island.peopleCount).c_str(), textOffset.x, textOffset.y,
+                     textScale, WHITE);
+        }
+        offset.y += humanTexture.height * humanScale + margin;
     }
-    offset.y += humanTexture.height * humanScale + margin;
 }
 
 void DrawResources()

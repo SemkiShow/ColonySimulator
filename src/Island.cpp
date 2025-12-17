@@ -140,16 +140,17 @@ void BuildIslands(float stepSize)
     for (size_t i = 0; i < islands.size(); i++)
     {
         const auto &island = islands[i], &minIsland = islands[minDistanceIslandIdx];
-        if (abs(Vector2Distance(Vector2{0, 0}, (island.p2 + island.p1) / 2)) <
-            abs(Vector2Distance(Vector2{0, 0}, (minIsland.p2 + minIsland.p1) / 2)))
+        if (abs(Vector2Distance(Vector2{0, 0}, (island.p1 + island.p2) / 2)) <
+            abs(Vector2Distance(Vector2{0, 0}, (minIsland.p1 + minIsland.p2) / 2)))
             minDistanceIslandIdx = i;
     }
     islands[minDistanceIslandIdx].colonized = true;
 
     // Set start resources
-    auto& minIsland = islands[minDistanceIslandIdx];
-    float distance = Vector2Distance(Vector2{0, 0}, (minIsland.p2 + minIsland.p1) / 2);
-    float cost = distance * minIsland.area;
+    auto& startIsland = islands[minDistanceIslandIdx];
+    float distance = Vector2Distance(Vector2{0, 0}, (startIsland.p1 + startIsland.p2) / 2);
+    float cost = distance * startIsland.area;
     peopleTotal = cost * PEOPLE_K;
-    minIsland.peopleCount = peopleTotal;
+    startIsland.peopleCount = peopleTotal;
+    startIsland.ironCount *= 3;
 }
