@@ -40,8 +40,16 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 - [x] Colonized islands wood growth
 - [x] People on islands extract resources and add to the capital
 
-### Additional features (DO NOT implement before MVP is reached)
+### v1.1.0
+
+- [ ] Each island has taxes. If the taxes are too high, people stop bringing resources. If the taxes are low, the extraction efficiency increases
+- [ ] Population grows with time
+
+### v1.2.0
 
 - [ ] Ships flowing through the sea to the target island
 - [ ] Animated people walking
-- [ ] Each island has taxes. If the taxes are too high, people stop bringing resources. If the taxes are low, the extraction efficiency increases
+
+### Joke features (probably not worth implementing)
+
+- [ ] When the cursor is placed on snow (the peak of a mountain), a text appears saying "Snow (obviously)" as a reference to that one Geography lesson

@@ -57,7 +57,8 @@ void InitGPU()
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
                    SHADER_UNIFORM_INT);
 
-    perlinSeed = time(0);
+    srand(time(0));
+    perlinSeed = rand();
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &perlinSeed,
                    SHADER_UNIFORM_FLOAT);
 
@@ -140,12 +141,15 @@ void DrawStats(const Island& island)
     };
 
     // Draw a dark background for better text visibility
-    DrawRectangleRounded({center.x + offset.x - lockTexture.width * lockScale / 2,
-                          center.y + offset.y - margin / 2, lockTexture.width * lockScale * 2,
-                          woodTexture.height * woodScale + ironTexture.height * ironScale +
-                              margin * 2 +
-                              (island.colonized ? humanTexture.height * humanScale + margin : 0)},
-                         0.25f, 16, {0, 0, 0, 127});
+    {
+        Rectangle rec = {center.x + offset.x - lockTexture.width * lockScale / 2,
+                         center.y + offset.y - margin / 2, lockTexture.width * lockScale * 2,
+                         woodTexture.height * woodScale + ironTexture.height * ironScale +
+                             margin * 2 +
+                             (island.colonized ? humanTexture.height * humanScale + margin : 0)};
+        DrawRectangleRounded(rec, 0.25f, 16, {0, 0, 0, 127});
+        if (!island.colonized) DrawRectangleRoundedLinesEx(rec, 0.25f, 16, 3, RED);
+    }
 
     // Draw wood
     DrawTextureEx(woodTexture, center + offset - Vector2{woodTexture.width * woodScale / 2, 0}, 0,

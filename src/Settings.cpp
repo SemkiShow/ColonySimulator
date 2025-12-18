@@ -8,7 +8,7 @@
 
 bool vsync = true;
 bool showFPS = true;
-float perlinScale = 0.01;
+float perlinScale = 0.1;
 float panSensitivity = 500;
 float wheelSensitivity = 0.3f;
 Vector2 mapSize = {300, 300};
