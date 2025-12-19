@@ -295,6 +295,17 @@ void DrawFrame()
 
     DrawResources();
 
+    // Joke feature: Snow (obviously)
+    {
+        auto mouse = GetMousePosition();
+        auto glslMouse = RaylibToGlsl(mouse);
+        if (GetPerlin(glslMouse) >= biomes[6].startLevel)
+        {
+            DrawRectangleRounded({mouse.x - 3, mouse.y - 3, 200, 30}, 0.25f, 16, {0, 0, 0, 127});
+            DrawText("Snow (obviously)", mouse.x, mouse.y, 24, WHITE);
+        }
+    }
+
     DrawUI();
 
     EndDrawing();
