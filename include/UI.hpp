@@ -5,5 +5,6 @@
 #pragma once
 
 extern bool showIslandsBoxes;
+extern int islandEditIdx;
 
 void DrawUI();

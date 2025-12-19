@@ -49,12 +49,12 @@ void Island::GrowthTick()
     woodCount += woodGrowth;
     woodCount = fmin(woodCount, woodMax);
     {
-        int delta = fmin(woodCount, WOOD_GET_K * peopleCount);
+        int delta = fmin(woodCount, WOOD_GET_K * peopleCount * taxes / 100);
         woodCount -= delta;
         woodTotal += delta;
     }
     {
-        int delta = fmin(ironCount, IRON_GET_K * peopleCount);
+        int delta = fmin(ironCount, IRON_GET_K * peopleCount * taxes / 100);
         ironCount -= delta;
         ironTotal += delta;
     }

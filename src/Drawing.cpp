@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <ctime>
 #include <iostream>
+#include <raygui.h>
 
 Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
@@ -105,15 +106,18 @@ void InitGPU()
                     (float*)&islandEnds, SHADER_UNIFORM_VEC2, islandsCount);
 }
 
-void DrawStats(const Island& island)
+void DrawStats(int islandIdx)
 {
+    auto island = islands[islandIdx];
+
     // Do not draw anything if the scale is too small
     float scale = 0.01f / perlinScale;
     if (scale < 0.05f) return;
 
     // Constants
     const float margin = 100 * scale, lockScale = 0.5f * scale, woodScale = 0.15f * scale,
-                ironScale = 0.15f * scale, humanScale = 0.075f * scale, textScale = 120 * scale;
+                ironScale = 0.15f * scale, humanScale = 0.075f * scale, textScale = 120 * scale,
+                buttonScale = 300 * scale;
 
     // Calculate the center point of the island
     Vector2 center = GlslToRaylib((island.p2 + island.p1) / 2);
@@ -141,15 +145,12 @@ void DrawStats(const Island& island)
     };
 
     // Draw a dark background for better text visibility
-    {
-        Rectangle rec = {center.x + offset.x - lockTexture.width * lockScale / 2,
-                         center.y + offset.y - margin / 2, lockTexture.width * lockScale * 2,
-                         woodTexture.height * woodScale + ironTexture.height * ironScale +
-                             margin * 2 +
-                             (island.colonized ? humanTexture.height * humanScale + margin : 0)};
-        DrawRectangleRounded(rec, 0.25f, 16, {0, 0, 0, 127});
-        if (!island.colonized) DrawRectangleRoundedLinesEx(rec, 0.25f, 16, 3, RED);
-    }
+    Rectangle rec = {center.x + offset.x - lockTexture.width * lockScale / 2,
+                     center.y + offset.y - margin / 2, lockTexture.width * lockScale * 2,
+                     woodTexture.height * woodScale + ironTexture.height * ironScale + margin * 2 +
+                         (island.colonized ? humanTexture.height * humanScale + margin : 0)};
+    DrawRectangleRounded(rec, 0.25f, 16, {0, 0, 0, 127});
+    if (!island.colonized) DrawRectangleRoundedLinesEx(rec, 0.25f, 16, 3, RED);
 
     // Draw wood
     DrawTextureEx(woodTexture, center + offset - Vector2{woodTexture.width * woodScale / 2, 0}, 0,
@@ -183,6 +184,15 @@ void DrawStats(const Island& island)
                      textScale, WHITE);
         }
         offset.y += humanTexture.height * humanScale + margin;
+    }
+
+    // Draw taxes button
+    if (island.colonized)
+    {
+        auto buttonRec = rec;
+        buttonRec.width = buttonRec.height = buttonScale;
+        buttonRec.x += rec.width;
+        if (GuiButton(buttonRec, "#142#")) islandEditIdx = islandIdx;
     }
 }
 
@@ -290,7 +300,7 @@ void DrawFrame()
 
     for (size_t i = 0; i < islands.size(); i++)
     {
-        DrawStats(islands[i]);
+        DrawStats(i);
     }
 
     DrawResources();

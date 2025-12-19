@@ -32,6 +32,7 @@ struct Island
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0,
         peopleCount = 0, woodMax = 0;
     bool colonized = false;
+    int taxes = 50;
 
     Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
            int woodGrowth, int ironCount)
