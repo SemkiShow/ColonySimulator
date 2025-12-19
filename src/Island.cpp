@@ -49,14 +49,24 @@ void Island::GrowthTick()
     woodCount += woodGrowth;
     woodCount = fmin(woodCount, woodMax);
     {
-        int delta = fmin(woodCount, WOOD_GET_K * peopleCount * taxes / 100);
+        int delta = fmin(woodCount, K_WOOD_GET * peopleCount * taxes / 100 * efficiency / 100);
         woodCount -= delta;
         woodTotal += delta;
     }
     {
-        int delta = fmin(ironCount, IRON_GET_K * peopleCount * taxes / 100);
+        int delta = fmin(ironCount, K_IRON_GET * peopleCount * taxes / 100 * efficiency / 100);
         ironCount -= delta;
         ironTotal += delta;
+    }
+    if (taxes < 50)
+    {
+        efficiency += rand() % (taxes + 50) / K_EFFICIENCY;
+        efficiency = fmin(100, efficiency);
+    }
+    if (taxes > 50)
+    {
+        efficiency -= rand() % (50 - taxes) / K_EFFICIENCY;
+        efficiency = fmax(0, efficiency);
     }
 }
 
@@ -128,9 +138,9 @@ void BuildIslands(float stepSize)
         float distance = Vector2Distance(center, {0, 0});
         float area = islandAreas[i] * stepSize * stepSize;
         float cost = distance * area;
-        islands.emplace_back(corner.first, corner.second, area, cost * WOOD_COLONIZE_K,
-                             cost * IRON_COLONIZE_K, cost * WOOD_K, cost * WOOD_GROWTH_K,
-                             cost * IRON_K);
+        islands.emplace_back(corner.first, corner.second, area, cost * K_WOOD_COLONIZE,
+                             cost * K_IRON_COLONIZE, cost * K_WOOD, cost * K_WOOD_GROWTH,
+                             cost * K_IRON);
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
@@ -150,7 +160,8 @@ void BuildIslands(float stepSize)
     auto& startIsland = islands[minDistanceIslandIdx];
     float distance = Vector2Distance(Vector2{0, 0}, (startIsland.p1 + startIsland.p2) / 2);
     float cost = distance * startIsland.area;
-    peopleTotal = cost * PEOPLE_K;
+    peopleTotal = cost * K_PEOPLE;
+    peopleTotal = fmax(2, peopleTotal);
     startIsland.peopleCount = peopleTotal;
     startIsland.ironCount *= 3;
 }

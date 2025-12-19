@@ -14,16 +14,17 @@ struct Biome
     Biome(float startLevel, const Color& color) : startLevel(startLevel), color(color) {}
 };
 
-#define WOOD_COLONIZE_K 0.05f
-#define IRON_COLONIZE_K 0.004f
-#define WOOD_K 0.02f
-#define WOOD_GROWTH_K 0.002f
-#define IRON_K 0.005f
-#define PEOPLE_K 0.001f
+#define K_WOOD_COLONIZE 0.05f
+#define K_IRON_COLONIZE 0.004f
+#define K_WOOD 0.02f
+#define K_WOOD_GROWTH 0.002f
+#define K_IRON 0.005f
+#define K_PEOPLE 0.001f
 
 #define GROWTH_PERIOD 1
-#define WOOD_GET_K 3
-#define IRON_GET_K 1
+#define K_WOOD_GET 3
+#define K_IRON_GET 1
+#define K_EFFICIENCY 5
 
 struct Island
 {
@@ -32,7 +33,7 @@ struct Island
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0,
         peopleCount = 0, woodMax = 0;
     bool colonized = false;
-    int taxes = 50;
+    int taxes = 50, efficiency = 50;
 
     Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
            int woodGrowth, int ironCount)
