@@ -14,7 +14,7 @@ bool showIslandsBoxes = false;
 #define UI_SPACING 30
 #define ELEMENT_SIZE 30
 #define ELEMENT_SPACING 10
-#define SLIDER_WIDTH (float)GetScreenWidth() - 270
+#define SLIDER_WIDTH windowSize.x - 270
 
 bool isSettings = false;
 int islandEditIdx = -1;
