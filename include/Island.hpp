@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <atomic>
 #include <raylib.h>
 #include <vector>
 
@@ -34,7 +35,7 @@ struct Island
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, ironCount = 0,
         peopleCount = 0, woodMax = 0;
     bool colonized = false;
-    int taxes = DEFAULT_TAXES, efficiency = 100;
+    int taxes = DEFAULT_TAXES, efficiency = 50;
 
     Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
            int woodGrowth, int ironCount)
@@ -57,4 +58,4 @@ extern int woodTotal;
 extern int ironTotal;
 extern int peopleTotal;
 
-void BuildIslands(float stepSize = 0.1f);
+void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);

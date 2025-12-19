@@ -72,7 +72,7 @@ void Island::GrowthTick()
 
 #define LAND_START biomes[3].startLevel
 
-void BuildIslands(float stepSize)
+void BuildIslands(std::atomic<bool>& finished, float stepSize)
 {
     islands.clear();
 
@@ -164,4 +164,6 @@ void BuildIslands(float stepSize)
     peopleTotal = fmax(2, peopleTotal);
     startIsland.peopleCount = peopleTotal;
     startIsland.ironCount *= 3;
+
+    finished = true;
 }

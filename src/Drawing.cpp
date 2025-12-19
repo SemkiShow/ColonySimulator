@@ -86,8 +86,6 @@ void InitGPU()
                         SHADER_UNIFORM_VEC4, biomeCount);
     }
 
-    BuildIslands();
-
     islandShader = LoadShader(0, "resources/Island.fs");
 
     int islandsCount = islands.size();
