@@ -57,6 +57,7 @@ int main()
 #endif
 
     Save();
+    FreeResources();
     CloseWindow();
 
     return 0;

@@ -369,3 +369,14 @@ void DrawFrame()
             SetWindowState(FLAG_VSYNC_HINT);
     }
 }
+
+void FreeResources()
+{
+    UnloadShader(biomeShader);
+    UnloadShader(islandShader);
+    
+    UnloadTexture(lockTexture);
+    UnloadTexture(woodTexture);
+    UnloadTexture(ironTexture);
+    UnloadTexture(humanTexture);
+}

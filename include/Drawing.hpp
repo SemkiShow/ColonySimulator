@@ -10,3 +10,4 @@ extern Vector2 windowSize;
 
 void InitGPU();
 void DrawFrame();
+void FreeResources();
