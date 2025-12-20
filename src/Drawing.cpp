@@ -4,17 +4,14 @@
 
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
+#include "Drawing/MainMenu.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include <ctime>
 #include <raygui.h>
 
-enum class Menu
-{
-    Main,
-    Game
-} currentMenu = Menu::Game;
+Menu currentMenu = Menu::Main;
 
 Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
@@ -108,8 +105,6 @@ void InitGPU()
     }
 
     islandShader = LoadShader(0, "resources/Island.fs");
-
-    ReloadIslandShaderValues();
 }
 
 void DrawFrame()
@@ -118,8 +113,16 @@ void DrawFrame()
 
     ClearBackground(BLACK);
 
+    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
+#if !defined(PLATFORM_WEB)
+    windowSize /= GetWindowScaleDPI();
+#endif
+
     switch (currentMenu)
     {
+    case Menu::Main:
+        DrawMainMenu();
+        break;
     case Menu::Game:
         DrawGameMenu();
         break;

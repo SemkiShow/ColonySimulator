@@ -14,6 +14,12 @@
 
 double growthTimer = 0;
 
+void OpenGameMenu()
+{
+    if (islands.empty()) LoadMap();
+    currentMenu = Menu::Game;
+}
+
 void DrawStats(int islandIdx)
 {
     auto island = islands[islandIdx];

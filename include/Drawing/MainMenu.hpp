@@ -4,8 +4,4 @@
 
 #pragma once
 
-extern bool showIslandsBoxes;
-extern int islandEditIdx;
-
-void DrawGameUI();
-void DrawMainUI();
+void DrawMainMenu();

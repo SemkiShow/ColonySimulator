@@ -3,10 +3,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing.hpp"
-#include "Island.hpp"
 #include "Settings.hpp"
 #include <raygui.h>
-#include <thread>
 
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
@@ -29,21 +27,6 @@ int main()
     SetExitKey(-1);
 
     GuiSetFont(GetFontDefault());
-
-    std::atomic<bool> finished(false);
-    std::thread initThread(BuildIslands, std::ref(finished), 0.1f);
-    initThread.detach();
-
-    while (!finished)
-    {
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-
-        DrawText("Loading map...", 0, GetRenderHeight() / GetWindowScaleDPI().y - 24, 24, WHITE);
-
-        EndDrawing();
-    }
 
     InitGPU();
 

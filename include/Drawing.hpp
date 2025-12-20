@@ -6,11 +6,27 @@
 
 #include <raylib.h>
 
+enum class Menu
+{
+    Main,
+    Game
+};
+extern Menu currentMenu;
+
 extern Vector2 windowSize;
+
+extern Shader biomeShader;
+extern Shader islandShader;
+
+extern Texture lockTexture;
+extern Texture woodTexture;
+extern Texture ironTexture;
+extern Texture humanTexture;
 
 Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
 
+void ReloadIslandShaderValues();
 void InitGPU();
 void DrawFrame();
 void FreeResources();

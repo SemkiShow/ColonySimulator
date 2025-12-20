@@ -2,12 +2,15 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Drawing.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include <cfloat>
 #include <climits>
 #include <iostream>
+#include <raygui.h>
+#include <thread>
 #include <unordered_map>
 
 inline Color rgb(unsigned char r, unsigned char g, unsigned char b) { return {r, g, b, 255}; }
@@ -71,10 +74,12 @@ void Island::GrowthTick()
 }
 
 #define LAND_START biomes[3].startLevel
+float loadingPercent = 0;
 
 void BuildIslands(std::atomic<bool>& finished, float stepSize)
 {
     islands.clear();
+    loadingPercent = 0;
 
     // Find islands
     size_t maxX = ceil(mapSize.x / stepSize) + 1, maxY = ceil(mapSize.y / stepSize) + 1;
@@ -98,6 +103,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
             }
             if (map[i][j] == INT_MAX) map[i][j] = counter++;
         }
+        loadingPercent += 1.0f / maxY / 2;
     }
     std::cout << "Total island count: " << counter - same.size() << '\n';
 
@@ -123,6 +129,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
             corner.second.x = fmax(corner.second.x, j * stepSize - mapSize.x / 2);
             corner.second.y = fmax(corner.second.y, i * stepSize - mapSize.y / 2);
         }
+        loadingPercent += 1.0f / maxY / 2;
     }
 
     // Add large enough islands to the main vector
@@ -166,4 +173,29 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
     startIsland.ironCount *= 3;
 
     finished = true;
+}
+
+void LoadMap()
+{
+    std::atomic<bool> finished(false);
+    std::thread initThread(BuildIslands, std::ref(finished), 0.1f);
+    initThread.detach();
+
+    while (!finished)
+    {
+        BeginDrawing();
+
+        ClearBackground(BLACK);
+
+        DrawText("Loading map...", 0, GetRenderHeight() / GetWindowScaleDPI().y - 24, 24, WHITE);
+
+        Rectangle progressRec = {windowSize.x, windowSize.y, windowSize.x / 2, 24};
+        progressRec.x -= progressRec.width;
+        progressRec.y -= progressRec.height;
+        GuiProgressBar(progressRec, "", "", &loadingPercent, 0, 1);
+
+        EndDrawing();
+    }
+
+    ReloadIslandShaderValues();
 }

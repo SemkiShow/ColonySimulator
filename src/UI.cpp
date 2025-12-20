@@ -3,18 +3,23 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing.hpp"
+#include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
+#include <iostream>
 #include <raygui.h>
 #include <string>
 
 bool showIslandsBoxes = false;
 
-#define UI_SPACING 30
-#define ELEMENT_SIZE 30
-#define ELEMENT_SPACING 10
-#define SLIDER_WIDTH windowSize.x - 270
+Vector2 startWindowSize = windowSize;
+#define UI_SPACING 30 * windowSize.y / startWindowSize.y
+#define ELEMENT_SIZE_X 30 * windowSize.x / startWindowSize.x
+#define ELEMENT_SIZE_Y 30 * windowSize.y / startWindowSize.y
+#define ELEMENT_SPACING 10 * windowSize.y / startWindowSize.y
+#define SLIDER_WIDTH (windowSize.x - 270) * windowSize.x / startWindowSize.x
+#define BUTTON_WIDTH ELEMENT_SIZE_X * 10
 
 bool isSettings = false;
 int islandEditIdx = -1;
@@ -23,21 +28,38 @@ float nextElementPositionY = UI_SPACING * 2;
 
 void DrawCheckBox(const char* text, bool* value)
 {
-    GuiCheckBox(Rectangle{UI_SPACING * 2, nextElementPositionY, ELEMENT_SIZE, ELEMENT_SIZE}, text,
-                value);
-    nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
+    GuiCheckBox(Rectangle{UI_SPACING * 2, nextElementPositionY, ELEMENT_SIZE_X, ELEMENT_SIZE_Y},
+                text, value);
+    nextElementPositionY += ELEMENT_SIZE_Y + ELEMENT_SPACING;
 }
 
 void DrawSliderInt(const char* leftText, const char* rightText, int* value, float minValue,
                    float maxValue)
 {
     float valueFloat = *value;
-    GuiSlider({UI_SPACING * 2, nextElementPositionY, SLIDER_WIDTH, ELEMENT_SIZE}, leftText,
+    GuiSlider({UI_SPACING * 2, nextElementPositionY, SLIDER_WIDTH, ELEMENT_SIZE_Y}, leftText,
               rightText, &valueFloat, minValue, maxValue);
     *value = valueFloat;
     DrawText(std::to_string(*value).c_str(), (SLIDER_WIDTH + UI_SPACING * 2) / 2.f,
              nextElementPositionY + 5, 24, WHITE);
-    nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
+    nextElementPositionY += ELEMENT_SIZE_Y + ELEMENT_SPACING;
+}
+
+void DrawTextCentered(const char* text, int fontSize)
+{
+    fontSize = fontSize * windowSize.y / startWindowSize.y;
+    DrawText(text, (windowSize.x - MeasureText(text, fontSize)) / 2, nextElementPositionY,
+             fontSize, WHITE);
+    nextElementPositionY += fontSize + ELEMENT_SPACING;
+}
+
+int DrawButtonCentered(const char* text)
+{
+    int res = GuiButton({windowSize.x / 2 - BUTTON_WIDTH / 2.0f, nextElementPositionY, BUTTON_WIDTH,
+                         ELEMENT_SIZE_Y},
+                        text);
+    nextElementPositionY += ELEMENT_SIZE_Y + ELEMENT_SPACING;
+    return res;
 }
 
 void DrawSettings()
@@ -48,6 +70,14 @@ void DrawSettings()
     nextElementPositionY = rec.y + UI_SPACING;
     DrawCheckBox("vsync", &vsync);
     DrawCheckBox("show-fps", &showFPS);
+
+    {
+        auto buttonRec = rec;
+        buttonRec.width = ELEMENT_SIZE_X;
+        buttonRec.height = ELEMENT_SIZE_Y;
+        buttonRec.x += rec.width - UI_SPACING;
+        if (GuiButton(buttonRec, "#113#")) isSettings = false;
+    }
 }
 
 void EditIsland()
@@ -59,7 +89,8 @@ void EditIsland()
 
     {
         auto buttonRec = rec;
-        buttonRec.width = buttonRec.height = ELEMENT_SIZE;
+        buttonRec.width = ELEMENT_SIZE_X;
+        buttonRec.height = ELEMENT_SIZE_Y;
         buttonRec.x += rec.width - UI_SPACING;
         if (GuiButton(buttonRec, "#113#")) islandEditIdx = -1;
     }
@@ -72,7 +103,8 @@ void DrawGameUI()
 {
     if (showFPS) DrawFPS(0, 0);
 
-    if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE, 0, ELEMENT_SIZE, ELEMENT_SIZE}, "#142#"))
+    if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE_X, 0, ELEMENT_SIZE_X, ELEMENT_SIZE_Y},
+                  "#142#"))
         isSettings = !isSettings;
 
     // if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE * 2, 0, ELEMENT_SIZE, ELEMENT_SIZE},
@@ -80,6 +112,21 @@ void DrawGameUI()
     //     showIslandsBoxes = !showIslandsBoxes;
 
     if (islandEditIdx != -1) EditIsland();
+
+    if (isSettings) DrawSettings();
+}
+
+void DrawMainUI()
+{
+    if (showFPS) DrawFPS(0, 0);
+
+    nextElementPositionY = UI_SPACING;
+
+    DrawTextCentered("Colony Simulator", 48);
+    nextElementPositionY += (ELEMENT_SIZE_Y + ELEMENT_SPACING) * 2;
+    if (DrawButtonCentered("Play")) OpenGameMenu();
+    if (DrawButtonCentered("Settings")) isSettings = !isSettings;
+    if (DrawButtonCentered("About")) std::cout << "[TODO]: Add an about menu\n";
 
     if (isSettings) DrawSettings();
 }

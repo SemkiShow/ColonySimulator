@@ -59,3 +59,4 @@ extern int ironTotal;
 extern int peopleTotal;
 
 void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);
+void LoadMap();
