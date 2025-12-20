@@ -187,9 +187,12 @@ void LoadMap()
 
         ClearBackground(BLACK);
 
-        DrawText("Loading map...", 0, GetRenderHeight() / GetWindowScaleDPI().y - 24, 24, WHITE);
+        UpdateWindowSize();
 
-        Rectangle progressRec = {windowSize.x, windowSize.y, windowSize.x / 2, 24};
+        float fontSize = 24;
+        DrawText("Loading map...", 0, windowSize.y - fontSize, fontSize, WHITE);
+
+        Rectangle progressRec = {windowSize.x, windowSize.y, windowSize.x / 2, fontSize};
         progressRec.x -= progressRec.width;
         progressRec.y -= progressRec.height;
         GuiProgressBar(progressRec, "", "", &loadingPercent, 0, 1);

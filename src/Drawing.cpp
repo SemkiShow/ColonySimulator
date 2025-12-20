@@ -45,6 +45,14 @@ Vector2 GlslToRaylib(Vector2 v)
     return v;
 }
 
+void UpdateWindowSize()
+{
+    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
+#if !defined(PLATFORM_WEB)
+    windowSize /= GetWindowScaleDPI();
+#endif
+}
+
 void ReloadIslandShaderValues()
 {
     int islandsCount = islands.size();
@@ -113,10 +121,7 @@ void DrawFrame()
 
     ClearBackground(BLACK);
 
-    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
-#if !defined(PLATFORM_WEB)
-    windowSize /= GetWindowScaleDPI();
-#endif
+    UpdateWindowSize();
 
     switch (currentMenu)
     {
