@@ -52,15 +52,15 @@ void Island::GrowthTick()
     if (!colonized) return;
     woodCount += woodGrowth;
     woodCount = fmin(woodCount, woodMax);
-    if (peopleCount >= 2) addPeopleFraction += peopleGrowth * sqrtf(peopleCount) * efficiency / 100;
-    if (addPeopleFraction >= 1)
+    if (peopleCount >= 2)
     {
-        int addPeople = (int)addPeopleFraction;
-        addPeopleFraction -= addPeople;
-        int oldPeopleCount = peopleCount;
-        peopleCount += addPeople;
-        peopleCount = fmin(peopleCount, peopleMax);
-        peopleTotal += peopleCount - oldPeopleCount;
+        addPeopleFraction += peopleGrowth * sqrt(peopleCount) * efficiency / 100;
+
+        int delta = addPeopleFraction;
+        delta = fmin(delta, peopleMax - peopleCount);
+        addPeopleFraction -= delta;
+        peopleCount += delta;
+        peopleTotal += delta;
     }
     {
         int delta = fmin(woodCount, K_WOOD_GET * peopleCount * taxes / 100 * efficiency / 100);
