@@ -241,6 +241,14 @@ void ProcessPlayerInput(double deltaTime)
     if (IsKeyDown(KEY_LEFT)) perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
     if (IsKeyDown(KEY_RIGHT)) perlinOffset.x += panSensitivity * perlinScale * deltaTime;
 
+    if (IsKeyPressed(KEY_ESCAPE))
+    {
+        if (isSettings)
+            isSettings = false;
+        else
+            currentMenu = Menu::Pause;
+    }
+
     float wheelMove = GetMouseWheelMove();
     if (wheelMove > 0) perlinScale -= wheelSensitivity * wheelMove * deltaTime;
     if (wheelMove < 0) perlinScale -= wheelSensitivity * wheelMove * deltaTime;

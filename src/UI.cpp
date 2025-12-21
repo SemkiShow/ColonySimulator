@@ -74,9 +74,9 @@ void DrawSettings()
 
     {
         auto buttonRec = rec;
-        buttonRec.width = ELEMENT_SIZE;
-        buttonRec.height = ELEMENT_SIZE;
-        buttonRec.x += rec.width - UI_SPACING;
+        buttonRec.width = ELEMENT_SIZE * windowSize.x / startWindowSize.x;
+        buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
+        buttonRec.x += rec.width - buttonRec.width;
         if (GuiButton(buttonRec, "#113#")) isSettings = false;
     }
 }
@@ -129,4 +129,25 @@ void DrawMainUI()
     if (DrawButtonCentered("About")) std::cout << "[TODO]: Add an about menu\n";
 
     if (isSettings) DrawSettings();
+}
+
+void DrawPauseUI()
+{
+    if (isSettings)
+    {
+        DrawSettings();
+        return;
+    }
+
+    Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
+                     windowSize.y - UI_SPACING * 2};
+    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    nextElementPositionY = rec.y + UI_SPACING;
+    if (DrawButtonCentered("Return to game")) OpenGameMenu();
+    if (DrawButtonCentered("Save game")) std::cout << "[TODO]: Add progress saving\n";
+    if (DrawButtonCentered("Go to the main menu"))
+    {
+        // Save progress
+        currentMenu = Menu::Main;
+    }
 }

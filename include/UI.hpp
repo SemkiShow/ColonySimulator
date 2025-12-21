@@ -7,5 +7,8 @@
 extern bool showIslandsBoxes;
 extern int islandEditIdx;
 
+extern bool isSettings;
+
 void DrawGameUI();
 void DrawMainUI();
+void DrawPauseUI();

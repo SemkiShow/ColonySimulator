@@ -5,6 +5,7 @@
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
 #include "Drawing/MainMenu.hpp"
+#include "Drawing/PauseMenu.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
@@ -130,6 +131,10 @@ void DrawFrame()
         break;
     case Menu::Game:
         DrawGameMenu();
+        break;
+    case Menu::Pause:
+        DrawGameMenu();
+        DrawPauseMenu();
         break;
     default:
         break;

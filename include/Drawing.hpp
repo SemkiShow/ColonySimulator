@@ -9,7 +9,9 @@
 enum class Menu
 {
     Main,
-    Game
+    Game,
+    Pause,
+    Settings
 };
 extern Menu currentMenu;
 
