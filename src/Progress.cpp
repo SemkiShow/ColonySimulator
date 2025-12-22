@@ -7,6 +7,7 @@
 #include "Drawing.hpp"
 #include "Perlin.hpp"
 #include <ctime>
+#include <stdexcept>
 
 std::vector<SaveSlot> saveSlots(MAX_SAVE_SLOTS);
 int currentSlot = -1;
@@ -93,7 +94,15 @@ void SaveProgress()
 
 void LoadProgress()
 {
-    JSON json = JSON::Load("saves.json");
+    JSON json;
+    try
+    {
+        json = JSON::Load("saves.json");
+    }
+    catch (const std::runtime_error& e)
+    {
+        json.Save("saves.json");
+    }
 
     // The version isn't needed yet
     // int version = json["version"].GetInt();
