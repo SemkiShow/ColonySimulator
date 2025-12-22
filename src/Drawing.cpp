@@ -85,11 +85,6 @@ void InitGPU()
     SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
                    SHADER_UNIFORM_INT);
 
-    srand(time(0));
-    perlinSeed = rand();
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uSeed"), &perlinSeed,
-                   SHADER_UNIFORM_FLOAT);
-
     {
         float starts[8];
         for (size_t i = 0; i < biomes.size(); i++)
@@ -112,7 +107,6 @@ void InitGPU()
         SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeColor"), colors,
                         SHADER_UNIFORM_VEC4, biomeCount);
     }
-
     islandShader = LoadShader(0, "resources/Island.fs");
 }
 

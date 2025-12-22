@@ -16,7 +16,6 @@ double growthTimer = 0;
 
 void OpenGameMenu()
 {
-    if (islands.empty()) LoadMap();
     currentMenu = Menu::Game;
 }
 

@@ -5,6 +5,7 @@
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
+#include "Progress.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
 #include <iostream>
@@ -19,9 +20,14 @@ Vector2 startWindowSize = windowSize;
 #define ELEMENT_SPACING 10
 #define SLIDER_WIDTH windowSize.x - 270
 #define BUTTON_WIDTH ELEMENT_SIZE * 10 * windowSize.x / startWindowSize.x
-#define FONT_SIZE 24
+#define BUTTON_SIZE ELEMENT_SIZE * windowSize.x / startWindowSize.x
+#define FONT_SIZE 24 * windowSize.y / startWindowSize.y
 
 bool isSettings = false;
+bool isLoadMap = false;
+bool isEmptySlot = false;
+int slotToEmpty = -1;
+bool isSaveGame = false;
 int islandEditIdx = -1;
 
 float nextElementPositionY = UI_SPACING * 2;
@@ -41,7 +47,7 @@ void DrawSliderInt(const char* leftText, const char* rightText, int* value, floa
               rightText, &valueFloat, minValue, maxValue);
     *value = valueFloat;
     DrawText(std::to_string(*value).c_str(), (SLIDER_WIDTH + UI_SPACING * 2) / 2.f,
-             nextElementPositionY + 5, FONT_SIZE, WHITE);
+             nextElementPositionY + 5, ELEMENT_SIZE - 5, WHITE);
     nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
 }
 
@@ -78,6 +84,68 @@ void DrawSettings()
         buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
         buttonRec.x += rec.width - buttonRec.width;
         if (GuiButton(buttonRec, "#113#")) isSettings = false;
+    }
+}
+
+void DrawLoadMap()
+{
+    Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
+                     windowSize.y - UI_SPACING * 2};
+    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    nextElementPositionY = rec.y + UI_SPACING;
+    for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
+    {
+        float posX = UI_SPACING * 2;
+        if (saveSlots[i].seed == -1)
+        {
+            if (GuiButton({posX, nextElementPositionY, BUTTON_SIZE, BUTTON_SIZE}, "+"))
+            {
+                BuildMap();
+                SaveToSlot(i);
+            }
+            posX += (BUTTON_SIZE + ELEMENT_SPACING) * 2;
+        }
+        else
+        {
+            if (GuiButton({posX, nextElementPositionY, BUTTON_SIZE, BUTTON_SIZE}, "#131#"))
+            {
+                LoadFromSlot(i);
+                OpenGameMenu();
+                isLoadMap = false;
+            }
+            posX += BUTTON_SIZE + ELEMENT_SPACING;
+            if (GuiButton({posX, nextElementPositionY, BUTTON_SIZE, BUTTON_SIZE}, "#143#"))
+            {
+                isEmptySlot = true;
+                slotToEmpty = i;
+            }
+            posX += BUTTON_SIZE + ELEMENT_SPACING;
+        }
+        DrawText(saveSlots[i].name.c_str(), posX, nextElementPositionY, FONT_SIZE, WHITE);
+        nextElementPositionY += BUTTON_SIZE + ELEMENT_SPACING;
+    }
+
+    {
+        auto buttonRec = rec;
+        buttonRec.width = ELEMENT_SIZE * windowSize.x / startWindowSize.x;
+        buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
+        buttonRec.x += rec.width - buttonRec.width;
+        if (GuiButton(buttonRec, "#113#")) isLoadMap = false;
+    }
+
+    if (isEmptySlot)
+    {
+        int res = GuiMessageBox(
+            rec, "Warning",
+            ("Are you sure you want to empty " + saveSlots[slotToEmpty].name + "?")
+                .c_str(),
+            "Yes;No");
+        if (res >= 0)
+        {
+            if (res == 1) EmptySlot(slotToEmpty);
+            isEmptySlot = false;
+            slotToEmpty = -1;
+        }
     }
 }
 
@@ -124,11 +192,12 @@ void DrawMainUI()
 
     DrawTextCentered("Colony Simulator", 48);
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
-    if (DrawButtonCentered("Play")) OpenGameMenu();
+    if (DrawButtonCentered("Play")) isLoadMap = true;
     if (DrawButtonCentered("Settings")) isSettings = !isSettings;
     if (DrawButtonCentered("About")) std::cout << "[TODO]: Add an about menu\n";
 
     if (isSettings) DrawSettings();
+    if (isLoadMap) DrawLoadMap();
 }
 
 void DrawPauseUI()
@@ -144,10 +213,18 @@ void DrawPauseUI()
     DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
     nextElementPositionY = rec.y + UI_SPACING;
     if (DrawButtonCentered("Return to game")) OpenGameMenu();
-    if (DrawButtonCentered("Save game")) std::cout << "[TODO]: Add progress saving\n";
-    if (DrawButtonCentered("Go to the main menu"))
+    if (DrawButtonCentered("Save game")) SaveProgress();
+    if (DrawButtonCentered("Go to the main menu")) isSaveGame = true;
+
+    if (isSaveGame)
     {
-        // Save progress
-        currentMenu = Menu::Main;
+        int res =
+            GuiMessageBox(rec, "Info", "Would you like to save the game before exiting?", "Yes;No");
+        if (res >= 0)
+        {
+            if (res == 1) SaveProgress();
+            currentMenu = Menu::Main;
+            isSaveGame = false;
+        }
     }
 }

@@ -1,5 +1,5 @@
-// SPDX-FileCopyrightText: 2025 SemkiShow
 // SPDX-FileCopyrightText: 2025 Jaraslau Zaitsau
+// SPDX-FileCopyrightText: 2025 SemkiShow
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
@@ -21,7 +21,6 @@ std::vector<Biome> biomes = {{-1, rgb(0, 0, 255)},     {-0.5, rgb(0, 136, 255)},
                              {0.2, rgb(33, 171, 42)},  {0.5, rgb(184, 184, 205)},
                              {0.6, rgb(255, 255, 255)}};
 std::vector<Island> islands;
-std::vector<std::pair<Vector2, Color>> points;
 
 int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
 
@@ -83,6 +82,60 @@ void Island::GrowthTick()
         efficiency -= rand() % (taxes - DEFAULT_TAXES) / K_EFFICIENCY;
         efficiency = fmax(0, efficiency);
     }
+}
+
+JSON Island::ToJSON()
+{
+    JSON json = JSON::array_t{};
+
+    json["p1"].format = JSONFormat::Inline;
+    json["p1"].push_back(p1.x);
+    json["p1"].push_back(p1.y);
+
+    json["p2"].format = JSONFormat::Inline;
+    json["p2"].push_back(p2.x);
+    json["p2"].push_back(p2.y);
+
+    json["area"] = area;
+    json["woodColonize"] = woodColonize;
+    json["ironColonize"] = ironColonize;
+    json["woodCount"] = woodCount;
+    json["woodGrowth"] = woodGrowth;
+    json["woodMax"] = woodMax;
+    json["ironCount"] = ironCount;
+    json["peopleCount"] = peopleCount;
+    json["peopleMax"] = peopleMax;
+    json["peopleGrowth"] = peopleGrowth;
+    json["addPeopleFraction"] = addPeopleFraction;
+    json["colonized"] = colonized;
+    json["taxes"] = taxes;
+    json["efficiency"] = efficiency;
+
+    return json;
+}
+
+Island Island::LoadJSON(JSON& json)
+{
+    Island island;
+    island.p1 = {static_cast<float>(json["p1"][0].GetDouble()),
+                 static_cast<float>(json["p1"][1].GetDouble())};
+    island.p2 = {static_cast<float>(json["p2"][0].GetDouble()),
+                 static_cast<float>(json["p2"][1].GetDouble())};
+    island.area = json["area"].GetDouble();
+    island.woodColonize = json["woodColonize"].GetInt();
+    island.ironColonize = json["ironColonize"].GetInt();
+    island.woodCount = json["woodCount"].GetInt();
+    island.woodGrowth = json["woodGrowth"].GetInt();
+    island.woodMax = json["woodMax"].GetInt();
+    island.ironCount = json["ironCount"].GetInt();
+    island.peopleCount = json["peopleCount"].GetInt();
+    island.peopleMax = json["peopleMax"].GetInt();
+    island.peopleGrowth = json["peopleGrowth"].GetDouble();
+    island.addPeopleFraction = json["addPeopleFraction"].GetDouble();
+    island.colonized = json["colonized"].GetBool();
+    island.taxes = json["taxes"].GetInt();
+    island.efficiency = json["efficiency"].GetInt();
+    return island;
 }
 
 #define LAND_START biomes[3].startLevel
@@ -187,8 +240,15 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
     finished = true;
 }
 
-void LoadMap()
+void BuildMap()
 {
+    // Generate a random seed
+    srand(time(0));
+    perlinSeed = rand();
+
+    // Reset variables
+    woodTotal = ironTotal = peopleTotal = 0;
+
     std::atomic<bool> finished(false);
     std::thread initThread(BuildIslands, std::ref(finished), 0.1f);
     initThread.detach();

@@ -8,7 +8,7 @@ uniform float uScale;
 uniform vec2 uResolution;
 uniform vec2 uOffset;
 
-uniform float uSeed;
+uniform int uSeed;
 uniform vec2 uMapSize;
 
 uniform float uBiomeStart[8];

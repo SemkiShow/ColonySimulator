@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing.hpp"
+#include "Progress.hpp"
 #include "Settings.hpp"
 #include <raygui.h>
 
@@ -13,6 +14,7 @@
 int main()
 {
     Load();
+    LoadProgress();
 
 #if !defined(PLATFORM_WEB)
     int flags = 0;
@@ -40,6 +42,7 @@ int main()
 #endif
 
     Save();
+    SaveProgress();
     FreeResources();
     CloseWindow();
 
