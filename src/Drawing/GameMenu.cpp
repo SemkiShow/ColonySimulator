@@ -224,15 +224,10 @@ void DrawGameMenu()
 
 void ProcessPlayerInput(double deltaTime)
 {
-    if (IsKeyDown(KEY_UP)) perlinOffset.y += panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_DOWN)) perlinOffset.y -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_LEFT)) perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_RIGHT)) perlinOffset.x += panSensitivity * perlinScale * deltaTime;
-
-    if (IsKeyDown(KEY_W)) perlinOffset.y += panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_S)) perlinOffset.y -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_A)) perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_D)) perlinOffset.x += panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) perlinOffset.y += panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) perlinOffset.y -= panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) perlinOffset.x += panSensitivity * perlinScale * deltaTime;
 
     if (IsKeyPressed(KEY_ESCAPE))
     {
