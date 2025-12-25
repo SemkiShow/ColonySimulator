@@ -207,6 +207,7 @@ void DrawMainUI()
     if (DrawButtonCentered("Play")) isLoadMap = true;
     if (DrawButtonCentered("Settings")) isSettings = !isSettings;
     if (DrawButtonCentered("About")) std::cout << "[TODO]: Add an about menu\n";
+    if (DrawButtonCentered("Exit")) exitRequested = true;
 
     if (isSettings) DrawSettings();
     if (isLoadMap) DrawLoadMap();

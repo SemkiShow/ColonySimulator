@@ -9,8 +9,11 @@
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "raylib.h"
 #include <ctime>
 #include <raygui.h>
+
+bool exitRequested = false;
 
 Menu currentMenu = Menu::Main;
 
@@ -137,6 +140,7 @@ void DrawFrame()
     double deltaTime = GetTime() - timer;
 
     if (currentMenu == Menu::Game) ProcessPlayerInput(deltaTime);
+    if (WindowShouldClose()) exitRequested = true;
 
     timer = GetTime();
 
