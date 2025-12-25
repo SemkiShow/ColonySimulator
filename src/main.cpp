@@ -27,7 +27,7 @@ int main()
 
     InitGPU();
 
-    while (!WindowShouldClose())
+    while (!shouldClose && !WindowShouldClose())
     {
         DrawFrame();
     }

@@ -12,6 +12,8 @@
 #include <ctime>
 #include <raygui.h>
 
+bool shouldClose = false;
+
 Menu currentMenu = Menu::Main;
 
 Vector2 windowSize{16 * 50, 9 * 50};

@@ -205,7 +205,7 @@ void DrawMainUI()
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
     if (DrawButtonCentered("Play")) isLoadMap = true;
     if (DrawButtonCentered("Settings")) isSettings = !isSettings;
-    if (DrawButtonCentered("Exit")) CloseWindow();
+    if (DrawButtonCentered("Exit")) shouldClose = true;
 
     if (isSettings) DrawSettings();
     if (isLoadMap) DrawLoadMap();
