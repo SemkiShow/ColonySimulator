@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
+#include "Drawing.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
@@ -224,12 +224,16 @@ void DrawGameMenu()
 
 void ProcessPlayerInput(double deltaTime)
 {
-    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) perlinOffset.y += panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) perlinOffset.y -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
-    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) perlinOffset.x += panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
+        perlinOffset.y += panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
+        perlinOffset.y -= panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A))
+        perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
+        perlinOffset.x += panSensitivity * perlinScale * deltaTime;
 
-    if (IsKeyPressed(KEY_ESCAPE))
+    if (IsKeyPressed(KEY_ESCAPE) || !IsWindowFocused() || IsWindowMinimized() || IsWindowHidden())
     {
         if (isSettings)
             isSettings = false;
@@ -247,7 +251,8 @@ void ProcessPlayerInput(double deltaTime)
         mousePressedStart = GetMousePosition();
     }
 
-    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && Vector2Distance(GetMousePosition(), mousePressedStart) == 0)
+    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) &&
+        Vector2Distance(GetMousePosition(), mousePressedStart) == 0)
     {
         std::cout << "Mouse pressed!\n";
         Vector2 v = RaylibToGlsl(GetMousePosition());

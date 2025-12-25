@@ -16,6 +16,7 @@ int main()
     if (vsync) flags |= FLAG_VSYNC_HINT;
     flags |= FLAG_WINDOW_HIGHDPI;
     flags |= FLAG_WINDOW_RESIZABLE;
+    flags |= FLAG_WINDOW_ALWAYS_RUN;
     SetConfigFlags(flags);
     GuiSetStyle(DEFAULT, TEXT_SIZE, 24);
 
