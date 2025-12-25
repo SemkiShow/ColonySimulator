@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+shopt -s globstar
 executable_name=ColonySimulator
 
 # Compiling for Linux
