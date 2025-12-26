@@ -7,6 +7,7 @@
 #include <raymath.h>
 
 float GetPerlin(Vector2 v);
+bool InsideMap(Vector2 pos);
 
 extern int perlinSeed;
 extern float perlinScale;

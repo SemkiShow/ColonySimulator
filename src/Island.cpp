@@ -182,7 +182,6 @@ float loadingPercent = 0;
 
 void BuildIslands(std::atomic<bool>& finished, float stepSize)
 {
-    islands.clear();
     loadingPercent = 0;
 
     // Find islands
@@ -239,6 +238,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
     // Add large enough islands to the main vector
     int minIslandArea = 125 / stepSize / stepSize;
     int passed = 0;
+    islands.clear();
     for (size_t i = 0; i < counter; i++)
     {
         if (islandAreas[i] < minIslandArea) continue;
@@ -252,6 +252,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
         islands.emplace_back(corner.first, corner.second, area, cost * K_WOOD_COLONIZE,
                              cost * K_IRON_COLONIZE, cost * K_WOOD, cost * K_WOOD_GROWTH,
                              cost * K_IRON, area * K_PEOPLE_GROWTH, area * K_PEOPLE_MAX);
+        islands.back().index = islands.size() - 1;
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
@@ -287,7 +288,6 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
 void BuildMap()
 {
     // Generate a random seed
-    srand(time(0));
     perlinSeed = rand();
 
     // Reset variables

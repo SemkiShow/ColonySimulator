@@ -173,7 +173,11 @@ void EditIsland()
         buttonRec.width = ELEMENT_SIZE;
         buttonRec.height = ELEMENT_SIZE;
         buttonRec.x += rec.width - UI_SPACING;
-        if (GuiButton(buttonRec, "#113#")) islandEditIdx = -1;
+        if (GuiButton(buttonRec, "#113#"))
+        {
+            islandEditIdx = -1;
+            return;
+        }
     }
 
     auto& island = islands[islandEditIdx];

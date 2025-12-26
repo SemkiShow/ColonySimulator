@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Perlin.hpp"
+#include "Settings.hpp"
 
 int perlinSeed = 0;
 float perlinScale = 0.12f;
@@ -14,14 +15,14 @@ float Fade(float t) { return t * t * t * (t * (t * 6.0f - 15.0f) + 10.0f); }
 
 float RandPerlin(Vector2 p)
 {
-    const float OFFSET = 100000.0f; 
+    const float OFFSET = 100000.0f;
 
     unsigned int ix = (unsigned int)floorf(p.x + OFFSET) & 0xFFFFu;
     unsigned int iy = (unsigned int)floorf(p.y + OFFSET) & 0xFFFFu;
     unsigned int s = (unsigned int)floorf(perlinSeed + 1000.0f);
 
-    unsigned int n = ix * 73856093u + iy * 19349669u + s * 83492791u; 
-    
+    unsigned int n = ix * 73856093u + iy * 19349669u + s * 83492791u;
+
     n = ((n >> 16u) ^ n) * 0x45d9f3bu;
     n = ((n >> 16u) ^ n) * 0x45d9f3bu;
     n = (n >> 16u) ^ n;
@@ -66,4 +67,10 @@ float GetPerlin(Vector2 v)
     return (0.3f * Perlin(v) + 2.0f * Perlin(Vector2Scale(v, 0.1f)) +
             3.5f * Perlin(Vector2Scale(v, 0.05f))) /
            4.20f;
+}
+
+bool InsideMap(Vector2 pos)
+{
+    return pos.x > -mapSize.x / 2 && pos.x < mapSize.x / 2 && pos.y > -mapSize.y / 2 &&
+           pos.y < mapSize.y / 2;
 }

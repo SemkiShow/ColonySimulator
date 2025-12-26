@@ -15,12 +15,21 @@ std::vector<Human> people;
 void Human::MoveToTarget(double deltaTime)
 {
     Vector2 delta = Vector2Rotate({speed, 0}, rotation) * deltaTime;
-    while (GetPerlin(pos + delta) < LAND_START)
+    bool found = false;
+    for (size_t i = 0; i < 5; i++)
     {
+        if (GetPerlin(pos + delta) >= LAND_START && InsideMap(pos + delta))
+        {
+            found = true;
+            break;
+        }
         rotation = GetRandomFloat(0, 360);
         delta = Vector2Rotate({speed, 0}, rotation) * deltaTime;
     }
-    pos += delta;
+    if (found)
+        pos += delta;
+    else
+        pos = islands[islandIdx].GetRandomPoint();
 
     angle += angleMultiplier * rotationSpeed * deltaTime;
     if (angle < MIN_ANGLE) angleMultiplier = 1;

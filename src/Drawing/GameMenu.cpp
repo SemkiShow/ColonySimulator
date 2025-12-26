@@ -198,7 +198,7 @@ void DrawGameMenu()
 
     for (auto& human: people)
     {
-        human.MoveToTarget(GetFrameTime());
+        if (currentMenu == Menu::Game) human.MoveToTarget(GetFrameTime());
         float scale = 0.0005f / perlinScale;
         Vector2 pos = GlslToRaylib(human.pos);
         DrawTexturePro(humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},

@@ -6,10 +6,12 @@
 #include "Drawing.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
+#include <ctime>
 #include <raygui.h>
 
 int main()
 {
+    srand(time(0));
     Load();
     LoadProgress();
 
