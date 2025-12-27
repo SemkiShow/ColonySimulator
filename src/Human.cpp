@@ -26,10 +26,7 @@ void Human::MoveToTarget(double deltaTime)
         rotation = GetRandomFloat(0, 360);
         delta = Vector2Rotate({speed, 0}, rotation) * deltaTime;
     }
-    if (found)
-        pos += delta;
-    else
-        pos = islands[islandIdx].GetRandomPoint();
+    if (found) pos += delta;
 
     angle += angleMultiplier * rotationSpeed * deltaTime;
     if (angle < MIN_ANGLE) angleMultiplier = 1;
