@@ -13,7 +13,6 @@
 #include <climits>
 #include <iostream>
 #include <raygui.h>
-#include <thread>
 #include <unordered_map>
 
 #define K_WOOD_COLONIZE 0.05f
@@ -178,12 +177,8 @@ Island Island::LoadJSON(JSON& json)
     return island;
 }
 
-float loadingPercent = 0;
-
-void BuildIslands(std::atomic<bool>& finished, float stepSize)
+void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float stepSize)
 {
-    loadingPercent = 0;
-
     // Find islands
     size_t maxX = ceil(mapSize.x / stepSize) + 1, maxY = ceil(mapSize.y / stepSize) + 1;
     std::vector<std::vector<int>> map(maxY, std::vector<int>(maxX, INT_MAX));
@@ -206,7 +201,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
             }
             if (map[i][j] == INT_MAX) map[i][j] = counter++;
         }
-        loadingPercent += 1.0f / maxY / 2;
+        loadingPercent += 1.0f / maxY / 2 * 100;
     }
     std::cout << "Total island count: " << counter - same.size() << '\n';
 
@@ -232,7 +227,7 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
             corner.second.x = fmax(corner.second.x, j * stepSize - mapSize.x / 2);
             corner.second.y = fmax(corner.second.y, i * stepSize - mapSize.y / 2);
         }
-        loadingPercent += 1.0f / maxY / 2;
+        loadingPercent += 1.0f / maxY / 2 * 100;
     }
 
     // Add large enough islands to the main vector
@@ -287,31 +282,12 @@ void BuildIslands(std::atomic<bool>& finished, float stepSize)
 
 void BuildMap()
 {
-    // Reset variables
-    woodTotal = ironTotal = peopleTotal = 0;
-
-    std::atomic<bool> finished(false);
-    std::thread initThread(BuildIslands, std::ref(finished), 0.1f);
-    initThread.detach();
-
-    while (!finished)
+    auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-
-        UpdateWindowSize();
-
-        float fontSize = 24;
-        DrawText("Loading map...", 0, windowSize.y - fontSize, fontSize, WHITE);
-
-        Rectangle progressRec = {windowSize.x, windowSize.y, windowSize.x / 2, fontSize};
-        progressRec.x -= progressRec.width;
-        progressRec.y -= progressRec.height;
-        GuiProgressBar(progressRec, "", "", &loadingPercent, 0, 1);
-
-        EndDrawing();
-    }
-
-    ReloadIslandShaderValues();
+        label = "Loading map...";
+        woodTotal = ironTotal = peopleTotal = 0;
+        BuildIslands(loadingPercent, finished, 0.1f);
+        ReloadIslandShaderValues();
+    };
+    ShowLoadingScreen(true, func);
 }

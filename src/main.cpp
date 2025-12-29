@@ -12,8 +12,6 @@
 int main()
 {
     srand(time(0));
-    Load();
-    LoadProgress();
 
     int flags = 0;
     if (vsync) flags |= FLAG_VSYNC_HINT;
@@ -28,6 +26,18 @@ int main()
 
     GuiSetFont(GetFontDefault());
 
+    {
+        auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
+        {
+            label = "Loading progress...";
+            loadingPercent = 0;
+            Load();
+            LoadProgress();
+            finished = true;
+        };
+        ShowLoadingScreen(false, func);
+    }
+
     InitGPU();
 
     while (!shouldClose && !WindowShouldClose())
@@ -35,8 +45,17 @@ int main()
         DrawFrame();
     }
 
-    Save();
-    SaveProgress();
+    {
+        auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
+        {
+            label = "Saving progress...";
+            loadingPercent = 0;
+            Save();
+            SaveProgress();
+            finished = true;
+        };
+        ShowLoadingScreen(false, func);
+    }
     FreeResources();
     CloseWindow();
 
