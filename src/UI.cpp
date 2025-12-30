@@ -3,7 +3,6 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI.hpp"
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
@@ -11,8 +10,9 @@
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
-#include "raylib.h"
+#include "UI.hpp"
 #include <raygui.h>
+#include <raylib.h>
 #include <string>
 
 bool showIslandsBoxes = false;
@@ -28,8 +28,7 @@ Vector2 startWindowSize = windowSize;
 #define FONT_SIZE 24 * windowSize.y / startWindowSize.y
 #define TEXT_OFFSET 5
 #define BUTTON_SPACING ELEMENT_SPACING * 3
-
-const Color MENU_BACKGROUND = Color{127, 127, 127, 191};
+#define MENU_BACKGROUND Color{127, 127, 127, 127}
 
 float nextElementPositionY = UI_SPACING * 2;
 
@@ -150,10 +149,10 @@ void DrawAbout()
     DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
-    DrawTextCentered("Colony Simulator", 32);
-    DrawTextCentered("Head Developer: SemkiShow", 24);
-    DrawTextCentered("Developer: jaraslauzaitsau", 24);
-    DrawTextCentered("This game is licensed under GPL-3.0-only", 20);
+    DrawTextCentered("Colony Simulator", 64);
+    DrawTextCentered("Head Developer: SemkiShow", 32);
+    DrawTextCentered("Developer: jaraslauzaitsau", 32);
+    DrawTextCentered("This game is licensed under GPL v3.0", 24);
 
     {
         auto buttonRec = rec;
