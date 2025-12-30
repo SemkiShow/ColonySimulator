@@ -29,6 +29,8 @@ Texture woodTexture;
 Texture ironTexture;
 Texture humanTexture;
 
+Font myFont;
+
 Vector2 RaylibToGlsl(Vector2 v)
 {
     v.y = windowSize.y - v.y;
@@ -79,6 +81,12 @@ void InitGPU()
     woodTexture = LoadTexture("resources/wooden_log.png");
     ironTexture = LoadTexture("resources/iron_ingot.png");
     humanTexture = LoadTexture("resources/human.png");
+
+    const char* symbols =
+        "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?ęóąśłżźćńĘÓĄŚŁŻŹĆŃ";
+    int codepointCount = 0;
+    int* codepoints = LoadCodepoints(symbols, &codepointCount);
+    myFont = LoadFontEx("resources/JetBrainsMono-Bold.ttf", 512, codepoints, codepointCount);
 
     biomeShader = LoadShader(0, "resources/Perlin.fs");
 
@@ -171,4 +179,6 @@ void FreeResources()
     UnloadTexture(woodTexture);
     UnloadTexture(ironTexture);
     UnloadTexture(humanTexture);
+
+    UnloadFont(myFont);
 }

@@ -38,7 +38,8 @@ void ShowLoadingScreen(bool showProgressbar, Func&& f, Args&&... args)
         UpdateWindowSize();
 
         float fontSize = 24;
-        DrawText(label.c_str(), 0, windowSize.y - fontSize, fontSize, WHITE);
+        DrawTextEx(myFont, label.c_str(), {0, windowSize.y - fontSize}, fontSize, myFontSpacing,
+                   WHITE);
 
         if (showProgressbar)
         {

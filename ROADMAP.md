@@ -56,7 +56,7 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 
 - [ ] Ships flowing through the sea to the target island
 - [x] Animated people walking
-- [ ] Translations
+- [x] Translations
 - [ ] Approximate island shapes more accurately, than a rectangle
 - [x] World customization on creation (slot name, seed, map size, etc.)
 - [ ] Replace raygui with a custom UI library

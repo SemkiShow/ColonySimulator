@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Languages.hpp"
 #include "Settings.hpp"
 #include <fstream>
 #include <vector>
@@ -37,6 +38,7 @@ void Save()
     file << "show-fps=" << (showFPS ? "true" : "false") << '\n';
     file << "pan-sensitivity=" << panSensitivity << '\n';
     file << "wheel-sensitivity=" << wheelSensitivity << '\n';
+    file << "language=" << currentLanguage << '\n';
     file.close();
 }
 
@@ -52,6 +54,10 @@ void Load()
         if (label == "show-fps") showFPS = value == "true";
         if (label == "pan-sensitivity") panSensitivity = stof(value);
         if (label == "wheel-sensitivity") wheelSensitivity = stof(value);
+        if (label == "language") currentLanguage = value;
     }
     file.close();
+
+    GetAllLanguages();
+    ReloadLabels();
 }

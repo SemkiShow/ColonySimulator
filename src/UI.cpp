@@ -6,6 +6,7 @@
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
+#include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
@@ -19,7 +20,7 @@ Vector2 startWindowSize = windowSize;
 #define UI_SPACING 30
 #define ELEMENT_SIZE 30
 #define ELEMENT_SPACING 10
-#define SLIDER_TEXT_WIDTH 150
+#define SLIDER_TEXT_WIDTH (windowSize.x - UI_SPACING * 4) / 3
 #define SLIDER_WIDTH (windowSize.x - UI_SPACING * 4 - SLIDER_TEXT_WIDTH)
 #define BUTTON_WIDTH ELEMENT_SIZE * 10 * windowSize.x / startWindowSize.x
 #define BUTTON_SIZE ELEMENT_SIZE* windowSize.x / startWindowSize.x
@@ -54,8 +55,9 @@ void DrawSlider(const char* leftText, const char* rightText, float* value, float
 {
     GuiSlider({UI_SPACING * 2, nextElementPositionY, SLIDER_WIDTH, ELEMENT_SIZE}, leftText,
               rightText, value, minValue, maxValue);
-    DrawText(std::to_string(*value).c_str(), (SLIDER_WIDTH + UI_SPACING * 2) / 2.f,
-             nextElementPositionY + TEXT_OFFSET, ELEMENT_SIZE - 5, WHITE);
+    DrawTextEx(myFont, std::to_string(*value).c_str(),
+               {(SLIDER_WIDTH + UI_SPACING * 2) / 2.f, nextElementPositionY + TEXT_OFFSET},
+               ELEMENT_SIZE - 5, myFontSpacing, WHITE);
     nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
 }
 
@@ -66,16 +68,19 @@ void DrawSliderInt(const char* leftText, const char* rightText, int* value, floa
     GuiSlider({UI_SPACING * 2, nextElementPositionY, SLIDER_WIDTH, ELEMENT_SIZE}, leftText,
               rightText, &valueFloat, minValue, maxValue);
     *value = valueFloat;
-    DrawText(std::to_string(*value).c_str(), (SLIDER_WIDTH + UI_SPACING * 2) / 2.f,
-             nextElementPositionY + TEXT_OFFSET, ELEMENT_SIZE - TEXT_OFFSET, WHITE);
+    DrawTextEx(myFont, std::to_string(*value).c_str(),
+               {(SLIDER_WIDTH + UI_SPACING * 2) / 2.f, nextElementPositionY + TEXT_OFFSET},
+               ELEMENT_SIZE - TEXT_OFFSET, myFontSpacing, WHITE);
     nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
 }
 
 void DrawTextCentered(const char* text, int fontSize)
 {
     fontSize = fontSize * windowSize.y / startWindowSize.y;
-    DrawText(text, (windowSize.x - MeasureText(text, fontSize)) / 2, nextElementPositionY, fontSize,
-             WHITE);
+    DrawTextEx(myFont, text,
+               {(windowSize.x - MeasureTextEx(myFont, text, fontSize, myFontSpacing).x) / 2,
+                nextElementPositionY},
+               fontSize, myFontSpacing, WHITE);
     nextElementPositionY += fontSize + ELEMENT_SPACING * windowSize.y / startWindowSize.y;
 }
 
@@ -97,17 +102,33 @@ void DrawValueBox(const char* text, int* value, int minValue, int maxValue)
     nextElementPositionY += ELEMENT_SIZE + ELEMENT_SPACING;
 }
 
+void DrawLanguageButtons(float posX)
+{
+    for (auto& lang: languages)
+    {
+        if (GuiButton({posX, nextElementPositionY, ELEMENT_SIZE, ELEMENT_SIZE}, lang.c_str()))
+        {
+            currentLanguage = lang;
+            ReloadLabels();
+        }
+        posX += ELEMENT_SIZE + ELEMENT_SPACING;
+    }
+    DrawTextEx(myFont, labels["language"].c_str(), {posX, nextElementPositionY},
+               ELEMENT_SIZE - TEXT_OFFSET, myFontSpacing, WHITE);
+}
+
 void DrawSettings()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
     nextElementPositionY = rec.y + UI_SPACING;
 
-    DrawCheckBox("vsync", &vsync);
-    DrawCheckBox("show-fps", &showFPS);
-    DrawSlider("", "pan-sensitivity", &panSensitivity, 100, 1000);
-    DrawSlider("", "wheel-sensitivity", &wheelSensitivity, 0.05f, 10);
+    DrawCheckBox(labels["vsync"].c_str(), &vsync);
+    DrawCheckBox(labels["show-fps"].c_str(), &showFPS);
+    DrawSlider("", labels["pan-sensitivity"].c_str(), &panSensitivity, 100, 1000);
+    DrawSlider("", labels["wheel-sensitivity"].c_str(), &wheelSensitivity, 0.05f, 10);
+    DrawLanguageButtons(rec.x + UI_SPACING);
 
     {
         auto buttonRec = rec;
@@ -122,7 +143,7 @@ void DrawLoadMap()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
     nextElementPositionY = rec.y + UI_SPACING;
     for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
     {
@@ -158,7 +179,8 @@ void DrawLoadMap()
             }
             posX += BUTTON_SIZE + ELEMENT_SPACING;
         }
-        DrawText(saveSlots[i].name.c_str(), posX, nextElementPositionY, FONT_SIZE, WHITE);
+        DrawTextEx(myFont, saveSlots[i].name.c_str(), {posX, nextElementPositionY}, FONT_SIZE,
+                   myFontSpacing, WHITE);
         nextElementPositionY += BUTTON_SIZE + ELEMENT_SPACING;
     }
 
@@ -172,11 +194,11 @@ void DrawLoadMap()
 
     if (isEmptySlot)
     {
-        int res = GuiMessageBox(
-            rec, "Warning",
-            ("Are you sure you want to empty " + std::string(saveSlots[slotToEmpty].name) + "?")
-                .c_str(),
-            "Yes;No");
+        int res = GuiMessageBox(rec, labels["Warning"].c_str(),
+                                (labels["Are you sure you want to empty"] + " " +
+                                 std::string(saveSlots[slotToEmpty].name) + "?")
+                                    .c_str(),
+                                labels["Yes;No"].c_str());
         if (res >= 0)
         {
             if (res == 1) EmptySlot(slotToEmpty);
@@ -190,7 +212,7 @@ void EditIsland()
 {
     Rectangle rec = {UI_SPACING, windowSize.y / 2, windowSize.x - UI_SPACING * 2, windowSize.y / 3};
     rec.y -= rec.height / 2;
-    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
     nextElementPositionY = rec.y + UI_SPACING;
 
     {
@@ -206,7 +228,7 @@ void EditIsland()
     }
 
     auto& island = islands[islandEditIdx];
-    DrawSliderInt("", "Taxes", &island.taxes, 0, 100);
+    DrawSliderInt("", labels["Taxes"].c_str(), &island.taxes, 0, 100);
 }
 
 void DrawGameUI()
@@ -229,16 +251,16 @@ void DrawNewWorld()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
     nextElementPositionY = rec.y + UI_SPACING;
 
     Vector2 lastMapSize = slotMapSize;
 
-    DrawValueBox("seed", &slotSeed, 0, 100);
-    DrawCheckBox("square map", &squareMap);
-    DrawSlider("", "map size x", &slotMapSize.x, 50, 1000);
-    DrawSlider("", "map size y", &slotMapSize.y, 50, 1000);
-    if (DrawButtonCentered("Create map"))
+    DrawValueBox(labels["seed"].c_str(), &slotSeed, 0, 100);
+    DrawCheckBox(labels["square map"].c_str(), &squareMap);
+    DrawSlider("", labels["map size x"].c_str(), &slotMapSize.x, 50, 1000);
+    DrawSlider("", labels["map size y"].c_str(), &slotMapSize.y, 50, 1000);
+    if (DrawButtonCentered(labels["Create map"].c_str()))
     {
         isNewWorld = false;
         perlinSeed = slotSeed;
@@ -268,11 +290,11 @@ void DrawMainUI()
 
     nextElementPositionY = UI_SPACING;
 
-    DrawTextCentered("Colony Simulator", 48);
+    DrawTextCentered(labels["Colony Simulator"].c_str(), 48);
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
-    if (DrawButtonCentered("Play")) isLoadMap = true;
-    if (DrawButtonCentered("Settings")) isSettings = !isSettings;
-    if (DrawButtonCentered("Exit")) shouldClose = true;
+    if (DrawButtonCentered(labels["Play"].c_str())) isLoadMap = true;
+    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = !isSettings;
+    if (DrawButtonCentered(labels["Exit"].c_str())) shouldClose = true;
 
     if (isSettings)
         DrawSettings();
@@ -292,16 +314,17 @@ void DrawPauseUI()
 
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{128, 128, 128, 128});
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
     nextElementPositionY = rec.y + UI_SPACING;
-    if (DrawButtonCentered("Return to game")) OpenGameMenu();
-    if (DrawButtonCentered("Save game")) SaveProgress();
-    if (DrawButtonCentered("Go to the main menu")) isSaveGame = true;
+    if (DrawButtonCentered(labels["Return to game"].c_str())) OpenGameMenu();
+    if (DrawButtonCentered(labels["Save game"].c_str())) SaveProgress();
+    if (DrawButtonCentered(labels["Go to the main menu"].c_str())) isSaveGame = true;
 
     if (isSaveGame)
     {
-        int res =
-            GuiMessageBox(rec, "Info", "Would you like to save the game before exiting?", "Yes;No");
+        int res = GuiMessageBox(rec, labels["Info"].c_str(),
+                                labels["Would you like to save the game before exiting?"].c_str(),
+                                labels["Yes;No"].c_str());
         if (res >= 0)
         {
             if (res == 1) SaveProgress();

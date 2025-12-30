@@ -30,8 +30,8 @@ fi
 # Profile build
 if [ "$1" == "-p" ] || [ "$1" == "--profile" ]; then
     clear
-    cmake -B build_profile -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -pg"
-    cmake --build build_profile -j${nproc}
+    cmake -B build_profile -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_FLAGS="-fno-omit-frame-pointer"
+    cmake --build build_profile -j$(nproc)
     perf record --call-graph dwarf ./build_profile/bin/$executable_name
     hotspot perf.data
 fi
@@ -39,8 +39,8 @@ fi
 # Memory leak build
 if [ "$1" == "-m" ] || [ "$1" == "--memory-leak" ]; then
     clear
-    cmake -B build_memory_leak -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-fsanitize=address"
-    cmake --build build_memory_leak -j${nproc}
+    cmake -B build_memory_leak -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_FLAGS="-fsanitize=address"
+    cmake --build build_memory_leak -j$(nproc)
     ./build_memory_leak/bin/$executable_name
 fi
 

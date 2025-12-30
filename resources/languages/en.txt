@@ -1,0 +1,25 @@
+vsync
+show-fps
+pan-sensitivity
+wheel-sensitivity
+Warning
+Are you sure you want to empty
+Yes;No
+Taxes
+seed
+square map
+map size x
+map size y
+Create map
+Colony Simulator
+Play
+Settings
+Exit
+Return to game
+Save game
+Go to the main menu
+Info
+Would you like to save the game before exiting?
+Empty slot
+Slot
+language

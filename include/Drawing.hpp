@@ -28,6 +28,9 @@ extern Texture woodTexture;
 extern Texture ironTexture;
 extern Texture humanTexture;
 
+extern Font myFont;
+const float myFontSpacing = 1;
+
 Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
 

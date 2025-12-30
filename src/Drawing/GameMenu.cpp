@@ -30,7 +30,7 @@ void DrawStats(int islandIdx)
 
     // Constants
     const float margin = 100 * scale, lockScale = 0.5f * scale, woodScale = 0.15f * scale,
-                ironScale = 0.15f * scale, humanScale = 0.075f * scale, textScale = 120 * scale,
+                ironScale = 0.15f * scale, humanScale = 0.075f * scale, textScale = 175 * scale,
                 buttonScale = 300 * scale;
 
     // Calculate the center point of the island
@@ -71,8 +71,10 @@ void DrawStats(int islandIdx)
                   woodScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(woodTexture, woodScale);
-        DrawText(std::to_string(island.colonized ? island.woodCount : island.woodColonize).c_str(),
-                 textOffset.x, textOffset.y, textScale, WHITE);
+        DrawTextEx(
+            myFont,
+            std::to_string(island.colonized ? island.woodCount : island.woodColonize).c_str(),
+            textOffset, textScale, myFontSpacing, WHITE);
     }
     offset.y += woodTexture.height * woodScale + margin;
 
@@ -81,8 +83,10 @@ void DrawStats(int islandIdx)
                   ironScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(ironTexture, ironScale);
-        DrawText(std::to_string(island.colonized ? island.ironCount : island.ironColonize).c_str(),
-                 textOffset.x, textOffset.y, textScale, WHITE);
+        DrawTextEx(
+            myFont,
+            std::to_string(island.colonized ? island.ironCount : island.ironColonize).c_str(),
+            textOffset, textScale, myFontSpacing, WHITE);
     }
     offset.y += ironTexture.height * ironScale + margin;
 
@@ -94,8 +98,8 @@ void DrawStats(int islandIdx)
                       humanScale, WHITE);
         {
             Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
-            DrawText(std::to_string(island.peopleCount).c_str(), textOffset.x, textOffset.y,
-                     textScale, WHITE);
+            DrawTextEx(myFont, std::to_string(island.peopleCount).c_str(), textOffset, textScale,
+                       myFontSpacing, WHITE);
         }
         offset.y += humanTexture.height * humanScale + margin;
     }
@@ -138,7 +142,8 @@ void DrawResources()
     DrawTextureEx(woodTexture, offset, 0, woodScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(woodTexture, woodScale);
-        DrawText(std::to_string(woodTotal).c_str(), textOffset.x, textOffset.y, textScale, WHITE);
+        DrawTextEx(myFont, std::to_string(woodTotal).c_str(), textOffset, textScale, myFontSpacing,
+                   WHITE);
     }
     offset.y += woodTexture.height * woodScale + margin;
 
@@ -146,7 +151,8 @@ void DrawResources()
     DrawTextureEx(ironTexture, offset, 0, ironScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(ironTexture, ironScale);
-        DrawText(std::to_string(ironTotal).c_str(), textOffset.x, textOffset.y, textScale, WHITE);
+        DrawTextEx(myFont, std::to_string(ironTotal).c_str(), textOffset, textScale, myFontSpacing,
+                   WHITE);
     }
     offset.y += ironTexture.height * ironScale + margin;
 
@@ -155,7 +161,8 @@ void DrawResources()
                   humanScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
-        DrawText(std::to_string(peopleTotal).c_str(), textOffset.x, textOffset.y, textScale, WHITE);
+        DrawTextEx(myFont, std::to_string(peopleTotal).c_str(), textOffset, textScale,
+                   myFontSpacing, WHITE);
     }
     offset.y += humanTexture.height * humanScale + margin;
 }
@@ -227,8 +234,12 @@ void DrawGameMenu()
         auto glslMouse = RaylibToGlsl(mouse);
         if (GetPerlin(glslMouse) >= biomes[6].startLevel)
         {
-            DrawRectangleRounded({mouse.x - 3, mouse.y - 3, 200, 30}, 0.25f, 16, {0, 0, 0, 127});
-            DrawText("Snow (obviously)", mouse.x, mouse.y, 24, WHITE);
+            float fontSize = 24;
+            const char* text = "Snow (obviously)";
+            DrawRectangleRounded({mouse.x - 3, mouse.y - 3,
+                                  MeasureTextEx(myFont, text, fontSize, myFontSpacing).x + 6, 30},
+                                 0.25f, 16, {0, 0, 0, 127});
+            DrawTextEx(myFont, text, mouse, fontSize, myFontSpacing, WHITE);
         }
     }
 

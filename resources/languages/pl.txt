@@ -1,0 +1,25 @@
+Synchronizacja pionowa
+Pokaż FPS
+Czułość przesuwania
+Czułość kółka myszy
+Ostrzeżenie
+Czy na pewno chcesz opróżnić
+Tak;Nie
+Podatki
+Seed
+Kwadratowa mapa
+Rozmiar mapy X
+Rozmiar mapy Y
+Utwórz mapę
+Symulator Kolonii
+Graj
+Ustawienia
+Wyjście
+Wróć do gry
+Zapisz grę
+Przejdź do menu głównego
+Informacje
+Czy chcesz zapisać grę przed wyjściem?
+Pusty slot
+Slot
+Język
