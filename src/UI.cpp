@@ -12,6 +12,7 @@
 #include "Settings.hpp"
 #include "UI.hpp"
 #include <raygui.h>
+#include <raylib.h>
 #include <string>
 
 bool showIslandsBoxes = false;
@@ -27,10 +28,12 @@ Vector2 startWindowSize = windowSize;
 #define FONT_SIZE 24 * windowSize.y / startWindowSize.y
 #define TEXT_OFFSET 5
 #define BUTTON_SPACING ELEMENT_SPACING * 3
+#define MENU_BACKGROUND Color{127, 127, 127, 127}
 
 float nextElementPositionY = UI_SPACING * 2;
 
 bool isSettings = false;
+bool isAbout = false;
 bool isLoadMap = false;
 bool isEmptySlot = false;
 bool isNewWorld = false;
@@ -121,7 +124,7 @@ void DrawSettings()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     DrawCheckBox(labels["vsync"].c_str(), &vsync);
@@ -139,11 +142,32 @@ void DrawSettings()
     }
 }
 
+void DrawAbout()
+{
+    Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
+                     windowSize.y - UI_SPACING * 2};
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
+    nextElementPositionY = rec.y + UI_SPACING;
+
+    DrawTextCentered("Colony Simulator", 64);
+    DrawTextCentered("Head Developer: SemkiShow", 32);
+    DrawTextCentered("Developer: jaraslauzaitsau", 32);
+    DrawTextCentered("This game is licensed under GPL v3.0", 24);
+
+    {
+        auto buttonRec = rec;
+        buttonRec.width = ELEMENT_SIZE * windowSize.x / startWindowSize.x;
+        buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
+        buttonRec.x += rec.width - buttonRec.width;
+        if (GuiButton(buttonRec, "#113#")) isAbout = false;
+    }
+}
+
 void DrawLoadMap()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
     for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
     {
@@ -211,7 +235,7 @@ void EditIsland()
 {
     Rectangle rec = {UI_SPACING, windowSize.y / 2, windowSize.x - UI_SPACING * 2, windowSize.y / 3};
     rec.y -= rec.height / 2;
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     {
@@ -250,7 +274,7 @@ void DrawNewWorld()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     Vector2 lastMapSize = slotMapSize;
@@ -292,11 +316,14 @@ void DrawMainUI()
     DrawTextCentered(labels["Colony Simulator"].c_str(), 48);
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
     if (DrawButtonCentered(labels["Play"].c_str())) isLoadMap = true;
-    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = !isSettings;
+    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = true;
+    if (DrawButtonCentered(labels["About"].c_str())) isAbout = true;
     if (DrawButtonCentered(labels["Exit"].c_str())) shouldClose = true;
 
     if (isSettings)
         DrawSettings();
+    else if (isAbout)
+        DrawAbout();
     else if (isNewWorld)
         DrawNewWorld();
     else if (isLoadMap)
@@ -313,7 +340,7 @@ void DrawPauseUI()
 
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
     if (DrawButtonCentered(labels["Return to game"].c_str())) OpenGameMenu();
     if (DrawButtonCentered(labels["Save game"].c_str())) SaveProgress();

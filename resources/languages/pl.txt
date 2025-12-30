@@ -14,6 +14,7 @@ Utwórz mapę
 Symulator Kolonii
 Graj
 Ustawienia
+O grze
 Wyjście
 Wróć do gry
 Zapisz grę
