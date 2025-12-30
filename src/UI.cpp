@@ -3,6 +3,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "UI.hpp"
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
@@ -10,7 +11,7 @@
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
-#include "UI.hpp"
+#include "raylib.h"
 #include <raygui.h>
 #include <string>
 
@@ -31,6 +32,7 @@ Vector2 startWindowSize = windowSize;
 float nextElementPositionY = UI_SPACING * 2;
 
 bool isSettings = false;
+bool isAbout = false;
 bool isLoadMap = false;
 bool isEmptySlot = false;
 bool isNewWorld = false;
@@ -136,6 +138,27 @@ void DrawSettings()
         buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
         buttonRec.x += rec.width - buttonRec.width;
         if (GuiButton(buttonRec, "#113#")) isSettings = false;
+    }
+}
+
+void DrawAbout()
+{
+    Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
+                     windowSize.y - UI_SPACING * 2};
+    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    nextElementPositionY = rec.y + UI_SPACING;
+
+    DrawTextCentered("Colony Simulator", 32);
+    DrawTextCentered("Head Developer: SemkiShow", 24);
+    DrawTextCentered("Developer: jaraslauzaitsau", 24);
+    DrawTextCentered("This game is licensed under GPL-3.0-only", 20);
+
+    {
+        auto buttonRec = rec;
+        buttonRec.width = ELEMENT_SIZE * windowSize.x / startWindowSize.x;
+        buttonRec.height = ELEMENT_SIZE * windowSize.y / startWindowSize.y;
+        buttonRec.x += rec.width - buttonRec.width;
+        if (GuiButton(buttonRec, "#113#")) isAbout = false;
     }
 }
 
@@ -292,11 +315,14 @@ void DrawMainUI()
     DrawTextCentered(labels["Colony Simulator"].c_str(), 48);
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
     if (DrawButtonCentered(labels["Play"].c_str())) isLoadMap = true;
-    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = !isSettings;
+    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = true;
+    if (DrawButtonCentered(labels["About"].c_str())) isAbout = true;
     if (DrawButtonCentered(labels["Exit"].c_str())) shouldClose = true;
 
     if (isSettings)
         DrawSettings();
+    else if (isAbout)
+        DrawAbout();
     else if (isNewWorld)
         DrawNewWorld();
     else if (isLoadMap)

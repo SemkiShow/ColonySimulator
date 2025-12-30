@@ -14,6 +14,7 @@ Create map
 Colony Simulator
 Play
 Settings
+About
 Exit
 Return to game
 Save game
