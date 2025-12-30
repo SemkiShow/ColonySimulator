@@ -29,6 +29,8 @@ Vector2 startWindowSize = windowSize;
 #define TEXT_OFFSET 5
 #define BUTTON_SPACING ELEMENT_SPACING * 3
 
+const Color MENU_BACKGROUND = Color{127, 127, 127, 191};
+
 float nextElementPositionY = UI_SPACING * 2;
 
 bool isSettings = false;
@@ -123,7 +125,7 @@ void DrawSettings()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     DrawCheckBox(labels["vsync"].c_str(), &vsync);
@@ -145,7 +147,7 @@ void DrawAbout()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     DrawTextCentered("Colony Simulator", 32);
@@ -166,7 +168,7 @@ void DrawLoadMap()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
     for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
     {
@@ -234,7 +236,7 @@ void EditIsland()
 {
     Rectangle rec = {UI_SPACING, windowSize.y / 2, windowSize.x - UI_SPACING * 2, windowSize.y / 3};
     rec.y -= rec.height / 2;
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     {
@@ -273,7 +275,7 @@ void DrawNewWorld()
 {
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
     Vector2 lastMapSize = slotMapSize;
@@ -339,7 +341,7 @@ void DrawPauseUI()
 
     Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
                      windowSize.y - UI_SPACING * 2};
-    DrawRectangleRounded(rec, 0.1f, 1, Color{127, 127, 127, 127});
+    DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
     if (DrawButtonCentered(labels["Return to game"].c_str())) OpenGameMenu();
     if (DrawButtonCentered(labels["Save game"].c_str())) SaveProgress();
