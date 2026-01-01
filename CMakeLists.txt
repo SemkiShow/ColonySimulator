@@ -1,15 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(ColonySimulator)
 
-if (UNIX)
-    set(GLFW_BUILD_WAYLAND OFF CACHE BOOL "Build GLFW Wayland support")
-    set(GLFW_BUILD_X11 ON CACHE BOOL "Build GLFW X11 support")
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-include(ExternalProject)
 
 # Generate compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
