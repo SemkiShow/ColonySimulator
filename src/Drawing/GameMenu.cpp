@@ -3,13 +3,15 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
+#include "Drawing.hpp"
 #include "Human.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Ship.hpp"
 #include "UI.hpp"
+#include "raylib.h"
 #include <algorithm>
 #include <iostream>
 #include <raygui.h>
@@ -205,6 +207,14 @@ void DrawGameMenu()
                        {pos.x, pos.y, humanTexture.width * scale, humanTexture.height * scale},
                        {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
                        human.angle, WHITE);
+    }
+    for (auto& ship: ships)
+    {
+        if (currentMenu == Menu::Game) ship.Move(GetFrameTime());
+        float scale = 0.0007f / perlinScale;
+        Vector2 pos = GlslToRaylib(ship.pos);
+        // DrawTexturePro should be here instead of DrawRectangle
+        DrawRectangle(pos.x - 10, pos.y - 10, 20, 20, Color{127, 127, 127, 255});
     }
 
     if (showIslandsBoxes)
