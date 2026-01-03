@@ -72,8 +72,9 @@ void DrawStats(int islandIdx)
                   woodScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(woodTexture, woodScale);
-        DrawTextCustom(std::to_string(island.colonized ? island.woodCount : island.woodColonize).c_str(),
-                 textOffset, textScale, WHITE);
+        DrawTextCustom(
+            std::to_string(island.colonized ? island.woodCount : island.woodColonize).c_str(),
+            textOffset, textScale, WHITE);
     }
     offset.y += woodTexture.height * woodScale + margin;
 
@@ -82,8 +83,9 @@ void DrawStats(int islandIdx)
                   ironScale, WHITE);
     {
         Vector2 textOffset = GetTextOffset(ironTexture, ironScale);
-        DrawTextCustom(std::to_string(island.colonized ? island.ironCount : island.ironColonize).c_str(),
-                 textOffset, textScale, WHITE);
+        DrawTextCustom(
+            std::to_string(island.colonized ? island.ironCount : island.ironColonize).c_str(),
+            textOffset, textScale, WHITE);
     }
     offset.y += ironTexture.height * ironScale + margin;
 
@@ -95,7 +97,8 @@ void DrawStats(int islandIdx)
                       humanScale, WHITE);
         {
             Vector2 textOffset = GetTextOffset(humanTexture, humanScale);
-            DrawTextCustom(std::to_string(island.peopleCount).c_str(), textOffset, textScale, WHITE);
+            DrawTextCustom(std::to_string(island.peopleCount).c_str(), textOffset, textScale,
+                           WHITE);
         }
         offset.y += humanTexture.height * humanScale + margin;
     }

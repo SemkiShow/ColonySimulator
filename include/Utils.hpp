@@ -41,7 +41,7 @@ void ShowLoadingScreen(bool showProgressbar, Func&& f, Args&&... args)
         ClearBackground(BLACK);
 
         float fontSize = 24;
-        DrawText(label.c_str(), 0, windowSize.y - fontSize, fontSize, WHITE);
+        DrawTextCustom(label.c_str(), {0, windowSize.y - fontSize}, fontSize, WHITE);
 
         if (showProgressbar)
         {

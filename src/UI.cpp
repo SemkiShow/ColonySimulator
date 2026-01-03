@@ -149,10 +149,10 @@ void DrawAbout()
     DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
-    DrawTextCentered("Colony Simulator", 64);
-    DrawTextCentered("Head Developer: SemkiShow", 32);
-    DrawTextCentered("Developer: jaraslauzaitsau", 32);
-    DrawTextCentered("This game is licensed under GPL v3.0", 24);
+    DrawTextCentered(labels["Colony Simulator"].c_str(), 64);
+    DrawTextCentered(labels["Lead Developer: SemkiShow"].c_str(), 32);
+    DrawTextCentered(labels["Developer: jaraslauzaitsau"].c_str(), 32);
+    DrawTextCentered(labels["This game is licensed under GPL v3.0"].c_str(), 24);
 
     {
         auto buttonRec = rec;

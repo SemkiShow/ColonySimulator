@@ -6,6 +6,7 @@
 #include "Drawing.hpp"
 #include "Human.hpp"
 #include "Island.hpp"
+#include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Utils.hpp"
@@ -286,7 +287,7 @@ void BuildMap()
 {
     auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
-        label = "Loading map...";
+        label = labels["Loading map..."];
         woodTotal = ironTotal = peopleTotal = 0;
         BuildIslands(loadingPercent, finished, 0.1f);
     };
