@@ -3,13 +3,15 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Island.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
-#include "Island.hpp"
 #include "Languages.hpp"
+#include "Pathfinding.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
+#include "Ship.hpp"
 #include "Utils.hpp"
 #include <cfloat>
 #include <climits>
@@ -42,6 +44,20 @@ std::vector<Island> islands;
 
 int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
 
+// Custom hash for std::pair<size_t, size_t>
+// Required as C++20 is not supported
+template <class T1, class T2> struct std::hash<std::pair<T1, T2>>
+{
+    size_t operator()(const std::pair<T1, T2>& p) const
+    {
+        size_t hash1 = std::hash<T1>{}(p.first);
+        size_t hash2 = std::hash<T2>{}(p.second);
+        return hash1 ^ hash2;
+    }
+};
+
+std::unordered_map<std::pair<size_t, size_t>, Path> pathCache;
+
 Vector2 Island::GetRandomPoint()
 {
     Vector2 pos;
@@ -55,8 +71,9 @@ Vector2 Island::GetRandomPoint()
 
 void Island::Colonize()
 {
-    if (colonized || woodTotal < woodColonize || ironTotal < ironColonize) return;
-    colonized = true;
+    if (colonized || colonizationInProgress || woodTotal < woodColonize || ironTotal < ironColonize)
+        return;
+    colonizationInProgress = true;
     woodTotal -= woodColonize;
     ironTotal -= ironColonize;
     SendPeople(1);
@@ -73,16 +90,25 @@ void Island::SendPeople(int count)
     }
     if (islands[maxPeopleIslandId].peopleCount < count) return;
     islands[maxPeopleIslandId].peopleCount -= count;
-    peopleCount += count;
+    ships.emplace_back(Ship(islands[maxPeopleIslandId].index, this->index, count));
 
     int counter = 0;
-    for (auto& human: people)
+    for (size_t i = 0; i < people.size(); i++)
     {
         if (counter >= count) break;
-        if (human.islandIdx != maxPeopleIslandId) continue;
-        human.islandIdx = index;
-        human.pos = GetRandomPoint();
+        if (people[i].islandIdx != maxPeopleIslandId) continue;
+        people.erase(people.begin() + i);
         counter++;
+    }
+}
+
+void Island::AddPeople(int count)
+{
+    if (!colonized) colonized = true;
+    peopleCount += count;
+    for (int i = 0; i < count; i++)
+    {
+        people.emplace_back(GetRandomPoint(), index);
     }
 }
 

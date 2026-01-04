@@ -6,6 +6,7 @@
 #pragma once
 
 #include "Json.hpp"
+#include "Pathfinding.hpp"
 #include <atomic>
 #include <raylib.h>
 #include <vector>
@@ -27,6 +28,7 @@ struct Island
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, woodMax = 0,
         ironCount = 0, peopleCount = 0, peopleMax = 0;
     float peopleGrowth = 0, addPeopleFraction = 0;
+    bool colonizationInProgress = false;
     bool colonized = false;
     int taxes = DEFAULT_TAXES, efficiency = 50;
     int index = -1;
@@ -44,6 +46,7 @@ struct Island
     Vector2 GetRandomPoint();
     void Colonize();
     void SendPeople(int count);
+    void AddPeople(int count);
     void GrowthTick();
     void DrawStats();
 
@@ -59,6 +62,8 @@ extern std::vector<Island> islands;
 extern int woodTotal;
 extern int ironTotal;
 extern int peopleTotal;
+
+extern std::unordered_map<std::pair<size_t, size_t>, Path> pathCache;
 
 void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);
 void BuildMap();

@@ -9,11 +9,14 @@
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Ship.hpp"
 #include "UI.hpp"
+#include "raylib.h"
 #include <algorithm>
 #include <iostream>
 #include <raygui.h>
 #include <raymath.h>
+#include <vector>
 
 double growthTimer = 0;
 Vector2 lastMousePosition = GetMousePosition();
@@ -74,24 +77,24 @@ void DrawResources()
 void UpdateDynamicShaderValues()
 {
     float scale = perlinScale;
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uScale"), &scale,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uScale"), &scale,
                    SHADER_UNIFORM_FLOAT);
     SetShaderValue(islandShader, GetShaderLocation(islandShader, "uScale"), &scale,
                    SHADER_UNIFORM_FLOAT);
 
     windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), (float*)&windowSize,
-                   SHADER_UNIFORM_VEC2);
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uResolution"),
+                   (float*)&windowSize, SHADER_UNIFORM_VEC2);
     SetShaderValue(islandShader, GetShaderLocation(islandShader, "uResolution"),
                    (float*)&windowSize, SHADER_UNIFORM_VEC2);
     windowSize /= GetWindowScaleDPI();
 
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), (float*)&perlinOffset,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uOffset"), (float*)&perlinOffset,
                    SHADER_UNIFORM_VEC2);
     SetShaderValue(islandShader, GetShaderLocation(islandShader, "uOffset"), (float*)&perlinOffset,
                    SHADER_UNIFORM_VEC2);
 
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uMapSize"), (float*)&mapSize,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uMapSize"), (float*)&mapSize,
                    SHADER_UNIFORM_VEC2);
 
     Vector2 mousePosition = RaylibToGlsl(GetMousePosition());
@@ -103,7 +106,7 @@ void DrawGameMenu()
 {
     UpdateDynamicShaderValues();
 
-    BeginShaderMode(biomeShader);
+    BeginShaderMode(perlinShader);
     DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
     EndShaderMode();
 
@@ -116,6 +119,23 @@ void DrawGameMenu()
                        {pos.x, pos.y, humanTexture.width * scale, humanTexture.height * scale},
                        {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
                        human.angle, WHITE);
+    }
+
+    // Remove ships that reached their target
+    for (auto it = ships.begin(); it != ships.end();)
+    {
+        if (it->reached)
+            it = ships.erase(it);
+        else
+            it++;
+    }
+    for (auto& ship: ships)
+    {
+        if (currentMenu == Menu::Game) ship.Move(GetFrameTime());
+        // float scale = 0.0007f / perlinScale;
+        Vector2 pos = GlslToRaylib(ship.pos);
+        // DrawTexturePro should be here instead of DrawRectangle
+        DrawRectangle(pos.x - 10, pos.y - 10, 20, 20, Color{127, 127, 127, 255});
     }
 
     if (showIslandsBoxes)
@@ -198,7 +218,7 @@ void ProcessPlayerInput(double deltaTime)
                 v.y >= center.y - boxSize.y / 2 && v.y <= center.y + boxSize.y / 2)
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
-                if (islands[i].colonized)
+                if (islands[i].colonized || islands[i].colonizationInProgress)
                     islands[i].SendPeople(1);
                 else
                     islands[i].Colonize();
