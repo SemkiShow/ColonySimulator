@@ -7,19 +7,21 @@
 #include "Island.hpp"
 #include "Pathfinding.hpp"
 
-#define SHIP_SPEED 0.05f
+#define SHIP_SPEED 25.0f
 
 struct Ship
 {
-    Island& source;
-    Island& destination;
+    size_t source_index;
+    size_t target_index;
     Vector2 pos;
     float rotation = 0;
     Path path;
     Vector2 nextPointDir;
     unsigned int nextPointIdx = 0;
+    int people;
+    bool reached = false;
 
-    Ship(Island& source, Island& destination);
+    Ship(size_t source_index, size_t target_index, int peopleCount = 1);
     void Move(float deltaTime);
 };
 

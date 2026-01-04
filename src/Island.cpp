@@ -3,11 +3,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Island.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
-#include "Island.hpp"
+#include "Pathfinding.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Ship.hpp"
 #include "Utils.hpp"
 #include <cfloat>
 #include <climits>
@@ -53,8 +55,9 @@ Vector2 Island::GetRandomPoint()
 
 void Island::Colonize()
 {
-    if (colonized || woodTotal < woodColonize || ironTotal < ironColonize) return;
-    colonized = true;
+    if (colonized || colonizationInProgress || woodTotal < woodColonize || ironTotal < ironColonize)
+        return;
+    colonizationInProgress = true;
     woodTotal -= woodColonize;
     ironTotal -= ironColonize;
     SendPeople(1);
@@ -71,16 +74,25 @@ void Island::SendPeople(int count)
     }
     if (islands[maxPeopleIslandId].peopleCount < count) return;
     islands[maxPeopleIslandId].peopleCount -= count;
-    peopleCount += count;
+    ships.emplace_back(Ship(islands[maxPeopleIslandId].index, this->index, count));
 
     int counter = 0;
-    for (auto& human: people)
+    for (size_t i = 0; i < people.size(); i++)
     {
         if (counter >= count) break;
-        if (human.islandIdx != maxPeopleIslandId) continue;
-        human.islandIdx = index;
-        human.pos = GetRandomPoint();
+        if (people[i].islandIdx != maxPeopleIslandId) continue;
+        people.erase(people.begin() + i);
         counter++;
+    }
+}
+
+void Island::AddPeople(int count)
+{
+    if (!colonized) colonized = true;
+    peopleCount += count;
+    for (int i = 0; i < count; i++)
+    {
+        people.emplace_back(GetRandomPoint(), index);
     }
 }
 
@@ -253,6 +265,8 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
+
+    pathCache = std::vector<std::vector<Path>>(islands.size(), std::vector<Path>(islands.size(), Path{}));
 
     // Set the closest island to center as colonized
     int minDistanceIslandIdx = 0;

@@ -27,6 +27,7 @@ struct Island
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, woodMax = 0,
         ironCount = 0, peopleCount = 0, peopleMax = 0;
     float peopleGrowth = 0, addPeopleFraction = 0;
+    bool colonizationInProgress = false;
     bool colonized = false;
     int taxes = DEFAULT_TAXES, efficiency = 50;
     int index = -1;
@@ -44,6 +45,7 @@ struct Island
     Vector2 GetRandomPoint();
     void Colonize();
     void SendPeople(int count);
+    void AddPeople(int count);
     void GrowthTick();
 
     Json ToJSON();

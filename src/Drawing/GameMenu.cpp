@@ -16,6 +16,7 @@
 #include <iostream>
 #include <raygui.h>
 #include <raymath.h>
+#include <vector>
 
 double growthTimer = 0;
 Vector2 lastMousePosition = GetMousePosition();
@@ -208,6 +209,13 @@ void DrawGameMenu()
                        {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
                        human.angle, WHITE);
     }
+    for (auto it = ships.begin(); it != ships.end();) // Remove ships that reached their target
+    {
+        if (it->reached)
+            it = ships.erase(it);
+        else
+            it++;
+    }
     for (auto& ship: ships)
     {
         if (currentMenu == Menu::Game) ship.Move(GetFrameTime());
@@ -297,7 +305,7 @@ void ProcessPlayerInput(double deltaTime)
                 v.y >= center.y - boxSize.y / 2 && v.y <= center.y + boxSize.y / 2)
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
-                if (islands[i].colonized)
+                if (islands[i].colonized || islands[i].colonizationInProgress)
                     islands[i].SendPeople(1);
                 else
                     islands[i].Colonize();
