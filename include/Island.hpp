@@ -6,6 +6,7 @@
 #pragma once
 
 #include "Json.hpp"
+#include "Pathfinding.hpp"
 #include <atomic>
 #include <raylib.h>
 #include <vector>
@@ -60,6 +61,8 @@ extern std::vector<Island> islands;
 extern int woodTotal;
 extern int ironTotal;
 extern int peopleTotal;
+
+extern std::unordered_map<std::pair<size_t, size_t>, Path> pathCache;
 
 void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);
 void BuildMap();

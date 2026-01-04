@@ -3,9 +3,9 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
+#include "Island.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
-#include "Island.hpp"
 #include "Languages.hpp"
 #include "Pathfinding.hpp"
 #include "Perlin.hpp"
@@ -42,6 +42,20 @@ std::vector<Biome> biomes = {{-1, rgb(0, 0, 255)},     {-0.5, rgb(0, 136, 255)},
 std::vector<Island> islands;
 
 int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
+
+// Custom hash for std::pair<size_t, size_t>
+// Required as C++20 is not supported
+template <class T1, class T2> struct std::hash<std::pair<T1, T2>>
+{
+    size_t operator()(const std::pair<T1, T2>& p) const
+    {
+        size_t hash1 = std::hash<T1>{}(p.first);
+        size_t hash2 = std::hash<T2>{}(p.second);
+        return hash1 ^ hash2;
+    }
+};
+
+std::unordered_map<std::pair<size_t, size_t>, Path> pathCache;
 
 Vector2 Island::GetRandomPoint()
 {
@@ -266,9 +280,6 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";
-
-    pathCache =
-        std::vector<std::vector<Path>>(islands.size(), std::vector<Path>(islands.size(), Path{}));
 
     // Set the closest island to center as colonized
     int minDistanceIslandIdx = 0;

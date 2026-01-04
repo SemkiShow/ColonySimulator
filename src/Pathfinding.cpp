@@ -11,8 +11,6 @@
 #include <queue>
 #include <raymath.h>
 
-std::vector<std::vector<Path>> pathCache;
-
 bool operator<(const Vector2& a, const Vector2& b)
 {
     const float eps = 0.01f;

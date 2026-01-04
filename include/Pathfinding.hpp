@@ -5,10 +5,10 @@
 #pragma once
 
 #include <vector>
+#include <raylib.h>
+
 typedef struct Vector2 Vector2;
 
 typedef std::vector<Vector2> Path;
-
-extern std::vector<std::vector<Path>> pathCache;
 
 Path FindPath(Vector2 start, Vector2 goal, bool onLand, float stepSize = 0.1f);
