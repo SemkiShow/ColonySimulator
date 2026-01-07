@@ -57,10 +57,10 @@ float perlin(vec2 pos)
     int X = int(i.x) & 255;
     int Y = int(i.y) & 255;
 
-    int aa = p[p[X] + Y];
-    int ab = p[p[X] + Y + 1];
-    int ba = p[p[X + 1] + Y];
-    int bb = p[p[X + 1] + Y + 1];
+    int aa = p[(p[(X + uSeed) & 255] + Y + uSeed) & 255];
+    int ab = p[(p[(X + uSeed) & 255] + Y + 1 + uSeed) & 255];
+    int ba = p[(p[(X + 1 + uSeed) & 255] + Y + uSeed) & 255];
+    int bb = p[(p[(X + 1 + uSeed) & 255] + Y + 1 + uSeed) & 255];
 
     float n00 = dot(g[aa & 7], f);
     float n01 = dot(g[ab & 7], f - vec2(0.0, 1.0));

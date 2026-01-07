@@ -65,10 +65,10 @@ float Perlin(Vector2 pos)
     float v = Fade(y);
 
     // Hash coordinates to find 4 corners
-    int aa = p[p[X] + Y];
-    int ab = p[p[X] + Y + 1];
-    int ba = p[p[X + 1] + Y];
-    int bb = p[p[X + 1] + Y + 1];
+    int aa = p[(p[(X + perlinSeed) & 255] + Y + perlinSeed) & 255];
+    int ab = p[(p[(X + perlinSeed) & 255] + Y + 1 + perlinSeed) & 255];
+    int ba = p[(p[(X + 1 + perlinSeed) & 255] + Y + perlinSeed) & 255];
+    int bb = p[(p[(X + 1 + perlinSeed) & 255] + Y + 1 + perlinSeed) & 255];
 
     // Dot products with fixed gradients
     float n00 = Vector2DotProduct(g[aa & 7], {x, y});
