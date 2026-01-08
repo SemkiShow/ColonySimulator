@@ -132,12 +132,11 @@ void DrawGameMenu()
     for (auto& ship: ships)
     {
         if (currentMenu == Menu::Game) ship.Move(GetFrameTime());
-        float scale = 0.0001f / perlinScale;
+        float scale = 0.01f / perlinScale;
         Vector2 pos = GlslToRaylib(ship.pos);
-        DrawRectangle(pos.x - 10, pos.y - 10, 20, 20, Color{127, 127, 127, 255});
         DrawTexturePro(shipTexture, {0, 0, shipTexture.width * 1.0f, shipTexture.height * 1.0f},
                        {pos.x, pos.y, shipTexture.width * scale, shipTexture.height * scale},
-                       {shipTexture.width * scale / 2.0f, shipTexture.height * scale / 2.0f}, ship.rotation,
+                       {shipTexture.width * scale / 2.0f, shipTexture.height * scale / 2.0f}, 0,
                        WHITE);
     }
 
