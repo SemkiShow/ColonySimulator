@@ -20,15 +20,32 @@ Ship::Ship(size_t sourceIndex, size_t targetIndex, int peopleCount)
     Vector2 end = islands[targetIndex].GetRandomPoint();
     Vector2 increment = Vector2Normalize(end - pos) * 0.25f;
 
+    int counter = 0;
     while (path.empty())
     {
-        while (GetPerlin(pos) >= LAND_START)
+        while (GetPerlin(pos) >= LAND_START) {
             pos += increment;
+            if (!InsideMap(pos)) {
+                reached = true;
+                return;
+            }
+        }
 
-        while (GetPerlin(end) >= LAND_START)
+        while (GetPerlin(end) >= LAND_START) {
             end -= increment;
+            if (!InsideMap(end)) {
+                reached = true;
+                return;
+            }
+        }
 
         path = FindPath(pos, end, false, 1.0f);
+
+        counter++;
+        if (counter >= 10) {
+            reached = true;
+            return;
+        }
     }
 
     // if (pathCache[sourceIndex][targetIndex].size() > 0)

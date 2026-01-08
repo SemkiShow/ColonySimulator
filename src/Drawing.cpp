@@ -12,6 +12,7 @@
 #include "Settings.hpp"
 #include <ctime>
 #include <raygui.h>
+#include <raylib.h>
 #include <raymath.h>
 
 bool shouldClose = false;
@@ -29,6 +30,7 @@ Texture lockTexture;
 Texture woodTexture;
 Texture ironTexture;
 Texture humanTexture;
+Texture shipTexture;
 
 Font myFont;
 
@@ -82,6 +84,7 @@ void InitGPU()
     woodTexture = LoadTexture("resources/textures/wooden_log.png");
     ironTexture = LoadTexture("resources/textures/iron_ingot.png");
     humanTexture = LoadTexture("resources/textures/human.png");
+    shipTexture = LoadTexture("resources/textures/ship.png");
 
     const char* symbols =
         "`1234567890-=qwertyuiop[]\\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?ęóąśłżźćńĘÓĄŚŁŻŹĆŃ";
@@ -177,6 +180,7 @@ void FreeResources()
     UnloadTexture(woodTexture);
     UnloadTexture(ironTexture);
     UnloadTexture(humanTexture);
+    UnloadTexture(shipTexture);
 
     UnloadFont(myFont);
 }
