@@ -31,6 +31,7 @@ void Human::MoveToTarget(double deltaTime)
     angle += angleMultiplier * rotationSpeed * deltaTime;
     if (angle < MIN_ANGLE) angleMultiplier = 1;
     if (angle > MAX_ANGLE) angleMultiplier = -1;
+    angle = fmax(MIN_ANGLE, fmin(MAX_ANGLE, angle));
 }
 
 Json Human::ToJSON()
