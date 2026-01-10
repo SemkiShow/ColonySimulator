@@ -74,18 +74,18 @@ void DrawResources()
 void UpdateDynamicShaderValues()
 {
     float scale = perlinScale;
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uScale"), &scale,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uScale"), &scale,
                    SHADER_UNIFORM_FLOAT);
 
     windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uResolution"), (float*)&windowSize,
-                   SHADER_UNIFORM_VEC2);
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uResolution"),
+                   (float*)&windowSize, SHADER_UNIFORM_VEC2);
     windowSize /= GetWindowScaleDPI();
 
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uOffset"), (float*)&perlinOffset,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uOffset"), (float*)&perlinOffset,
                    SHADER_UNIFORM_VEC2);
 
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uMapSize"), (float*)&mapSize,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uMapSize"), (float*)&mapSize,
                    SHADER_UNIFORM_VEC2);
 }
 
@@ -93,7 +93,7 @@ void DrawGameMenu()
 {
     UpdateDynamicShaderValues();
 
-    BeginShaderMode(biomeShader);
+    BeginShaderMode(perlinShader);
     DrawRectangle(0, 0, windowSize.x, windowSize.y, WHITE);
     EndShaderMode();
 

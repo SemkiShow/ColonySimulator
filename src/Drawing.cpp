@@ -22,7 +22,7 @@ Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
 bool lastVsync = vsync;
 
-Shader biomeShader;
+Shader perlinShader;
 
 Texture lockTexture;
 Texture woodTexture;
@@ -70,10 +70,10 @@ void InitGPU()
     int* codepoints = LoadCodepoints(symbols, &codepointCount);
     myFont = LoadFontEx("resources/fonts/JetBrainsMono-Bold.ttf", 512, codepoints, codepointCount);
 
-    biomeShader = LoadShader(0, "resources/shaders/Perlin.fs");
+    perlinShader = LoadShader(0, "resources/shaders/Perlin.fs");
 
     int biomeCount = (int)biomes.size();
-    SetShaderValue(biomeShader, GetShaderLocation(biomeShader, "uBiomeCount"), &biomeCount,
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uBiomeCount"), &biomeCount,
                    SHADER_UNIFORM_INT);
 
     {
@@ -81,7 +81,7 @@ void InitGPU()
         for (size_t i = 0; i < biomes.size(); i++)
             starts[i] = biomes[i].startLevel;
 
-        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeStart"), starts,
+        SetShaderValueV(perlinShader, GetShaderLocation(perlinShader, "uBiomeStart"), starts,
                         SHADER_UNIFORM_FLOAT, biomeCount);
     }
 
@@ -95,7 +95,7 @@ void InitGPU()
             colors[i * 4 + 3] = 1.0f;
         }
 
-        SetShaderValueV(biomeShader, GetShaderLocation(biomeShader, "uBiomeColor"), colors,
+        SetShaderValueV(perlinShader, GetShaderLocation(perlinShader, "uBiomeColor"), colors,
                         SHADER_UNIFORM_VEC4, biomeCount);
     }
 }
@@ -149,7 +149,7 @@ void DrawFrame()
 
 void FreeResources()
 {
-    UnloadShader(biomeShader);
+    UnloadShader(perlinShader);
 
     UnloadTexture(lockTexture);
     UnloadTexture(woodTexture);
