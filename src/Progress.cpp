@@ -5,6 +5,7 @@
 #include "Progress.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
+#include "Island.hpp"
 #include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
@@ -23,6 +24,27 @@ Json SaveSlot::ToJSON()
     for (auto& island: this->islands)
     {
         json["islands"].push_back(island.ToJSON());
+    }
+    json["pathCache"].format = JsonFormat::Newline;
+    for (auto& path : pathCache) {
+        Json pathJson;
+        pathJson["key"].format = JsonFormat::Inline;
+        pathJson["key"].push_back(path.first.first);
+        pathJson["key"].push_back(path.first.second);
+        pathJson["paths"].format = JsonFormat::Newline;
+        for (auto& p : path.second) {
+            Json singlePathJson;
+            singlePathJson.format = JsonFormat::Inline;
+            for (auto& point : p) {
+                Json pointJson;
+                pointJson.format = JsonFormat::Inline;
+                pointJson.push_back(point.x);
+                pointJson.push_back(point.y);
+                singlePathJson.push_back(pointJson);
+            }
+            pathJson["paths"].push_back(singlePathJson);
+        }
+        json["pathCache"].push_back(pathJson);
     }
     for (auto& human: this->people)
     {
@@ -49,6 +71,23 @@ void SaveSlot::LoadJSON(Json& json)
         this->islands.push_back(Island::LoadJSON(json["islands"][i]));
         this->islands.back().index = i;
     }
+    this->pathCache.clear();
+    for (size_t i = 0; i < json["pathCache"].size(); i++) {
+        auto& pathJson = json["pathCache"][i];
+        std::pair<int, int> key = {pathJson["key"][0].GetInt(), pathJson["key"][1].GetInt()};
+        std::vector<Path> paths;
+        for (size_t j = 0; j < pathJson["paths"].size(); j++) {
+            Path p;
+            auto& singlePathJson = pathJson["paths"][j];
+            for (size_t k = 0; k < singlePathJson.size(); k++) {
+                Vector2 point = {static_cast<float>(singlePathJson[k][0].GetDouble()),
+                                 static_cast<float>(singlePathJson[k][1].GetDouble())};
+                p.push_back(point);
+            }
+            paths.push_back(p);
+        }
+        this->pathCache[key] = paths;
+    }
     this->people.clear();
     for (size_t i = 0; i < json["people"].size(); i++)
     {
@@ -66,6 +105,7 @@ void SaveToSlot(int idx)
     if (idx < 0) return;
     saveSlots[idx].seed = perlinSeed;
     saveSlots[idx].islands = islands;
+    saveSlots[idx].pathCache = pathCache;
     saveSlots[idx].people = people;
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
@@ -86,6 +126,7 @@ void LoadFromSlot(int idx)
 
     perlinSeed = saveSlots[idx].seed;
     islands = saveSlots[idx].islands;
+    pathCache = saveSlots[idx].pathCache;
     people = saveSlots[idx].people;
     woodTotal = saveSlots[idx].woodTotal;
     ironTotal = saveSlots[idx].ironTotal;
@@ -104,7 +145,7 @@ void SaveProgress()
 
     Json json;
 
-    json["version"] = 2;
+    json["version"] = 3;
 
     for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
     {
@@ -141,6 +182,16 @@ void MigrateV1()
     }
 }
 
+void MigrateV2()
+{
+    for (size_t i = 0; i < saveSlots.size(); i++)
+    {
+        if (saveSlots[i].seed < 0) continue;
+        LoadFromSlot(i);
+        GeneratePathCache(saveSlots[i].islands, saveSlots[i].pathCache);
+    }
+}
+
 void LoadProgress()
 {
     if (!std::filesystem::exists("saves.json"))
@@ -167,5 +218,10 @@ void LoadProgress()
     {
         MigrateV1();
         version = 2;
+    }
+    if (version == 2)
+    {
+        MigrateV2();
+        version = 3;
     }
 }

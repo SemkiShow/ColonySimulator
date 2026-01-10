@@ -17,6 +17,7 @@ struct SaveSlot
     std::string name = "Empty slot";
     std::vector<Island> islands;
     std::vector<Human> people;
+    std::unordered_map<std::pair<int, int>, std::vector<Path>> pathCache;
     int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
     Vector2 mapSize{300, 300};
 

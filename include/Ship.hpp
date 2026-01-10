@@ -12,8 +12,8 @@
 
 struct Ship
 {
-    size_t sourceIndex = 0;
-    size_t targetIndex = 0;
+    int sourceIndex = 0;
+    int targetIndex = 0;
     Vector2 pos{0, 0};
     int flip = 1;
     Path path{};
@@ -22,7 +22,7 @@ struct Ship
     int people = 0;
     bool reached = false;
 
-    Ship(size_t sourceIndex, size_t targetIndex, int peopleCount = 1);
+    Ship(int sourceIndex, int targetIndex, int peopleCount = 1);
     void Move(float deltaTime);
 };
 
