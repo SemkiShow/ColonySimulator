@@ -81,7 +81,7 @@ void Island::Colonize()
 
 void Island::SendPeople(int count)
 {
-    if (peopleCount + count > peopleMax) return;
+    if (futurePeopleCount + count > peopleMax) return;
     int maxPeopleIslandId = (&islands[0] == this ? 1 : 0);
     for (size_t i = 0; i < islands.size(); i++)
     {
@@ -90,7 +90,8 @@ void Island::SendPeople(int count)
     }
     if (islands[maxPeopleIslandId].peopleCount < count) return;
     islands[maxPeopleIslandId].peopleCount -= count;
-    ships.emplace_back(Ship(islands[maxPeopleIslandId].index, this->index, count));
+    futurePeopleCount += count;
+    ships.emplace_back(islands[maxPeopleIslandId].index, this->index, count);
 
     int counter = 0;
     for (auto it = people.begin(); it != people.end();)

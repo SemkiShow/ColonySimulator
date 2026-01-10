@@ -26,7 +26,7 @@ struct Island
     Vector2 p1 = {0, 0}, p2 = {0, 0};
     float area = 0;
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, woodMax = 0,
-        ironCount = 0, peopleCount = 0, peopleMax = 0;
+        ironCount = 0, peopleCount = 0, peopleMax = 0, futurePeopleCount = 0;
     float peopleGrowth = 0, addPeopleFraction = 0;
     bool colonizationInProgress = false;
     bool colonized = false;
