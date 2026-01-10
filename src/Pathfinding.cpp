@@ -47,7 +47,7 @@ struct Node
     bool operator>(const Node& other) const { return cost > other.cost; }
 };
 
-void GeneratePathMap()
+void GeneratePathMap(float& loadingPercent)
 {
     pathMap.clear();
     pathMap.resize(islands.size());
@@ -108,6 +108,8 @@ void GeneratePathMap()
                 }
             }
         }
+
+        loadingPercent = i * 100.0f / islands.size();
     }
 }
 

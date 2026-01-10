@@ -7,7 +7,6 @@
 #include "Island.hpp"
 #include "Pathfinding.hpp"
 #include "Perlin.hpp"
-#include <iostream>
 #include <raymath.h>
 #include <vector>
 
@@ -28,7 +27,6 @@ Ship::Ship(int sourceIndex, int targetIndex, int peopleCount)
         } while (GetPerlin(startPos) >= LAND_START);
     
         path = GetPath(startPos, targetIndex);
-        std::cout << path.size() << '\n';
     }
     pos = path[0];
 

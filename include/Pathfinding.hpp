@@ -13,5 +13,5 @@ using ParentMap = std::vector<int>;
 
 extern std::vector<ParentMap> pathMap;
 
-void GeneratePathMap();
+void GeneratePathMap(float& loadingPercent);
 Path GetPath(Vector2 startPos, int targetIslandIdx);

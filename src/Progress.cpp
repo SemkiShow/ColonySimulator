@@ -108,13 +108,11 @@ void LoadFromSlot(int idx)
 
     auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
-        // GeneratePathMap isn't actually using a node graph. It's just a reference
         label = "Node graph out of date. Rebuilding...";
-        loadingPercent = 0;
-        GeneratePathMap();
+        GeneratePathMap(loadingPercent);
         finished = true;
     };
-    ShowLoadingScreen(false, func);
+    ShowLoadingScreen(true, func);
 
     SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uSeed"), &perlinSeed,
                    SHADER_UNIFORM_INT);
