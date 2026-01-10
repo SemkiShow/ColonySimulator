@@ -5,6 +5,7 @@
 
 #pragma once
 
+#include "Json.hpp"
 #include "Pathfinding.hpp"
 #include <raylib.h>
 
@@ -24,6 +25,9 @@ struct Ship
 
     Ship(int sourceIndex, int targetIndex, int peopleCount = 1);
     void Move(float deltaTime);
+
+    Json ToJSON();
+    static Ship LoadJSON(Json& json);
 };
 
 extern std::vector<Ship> ships;

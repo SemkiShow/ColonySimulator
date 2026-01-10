@@ -6,6 +6,7 @@
 
 #include "Human.hpp"
 #include "Island.hpp"
+#include "Ship.hpp"
 #include "Json.hpp"
 #include <vector>
 
@@ -18,6 +19,7 @@ struct SaveSlot
     std::vector<Island> islands;
     std::vector<Human> people;
     std::unordered_map<std::pair<int, int>, std::vector<Path>> pathCache;
+    std::vector<Ship> ships;
     int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
     Vector2 mapSize{300, 300};
 

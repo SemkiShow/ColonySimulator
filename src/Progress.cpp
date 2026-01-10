@@ -9,6 +9,7 @@
 #include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Ship.hpp"
 #include <ctime>
 #include <filesystem>
 
@@ -45,6 +46,10 @@ Json SaveSlot::ToJSON()
             pathJson["paths"].push_back(singlePathJson);
         }
         json["pathCache"].push_back(pathJson);
+    }
+    for (auto& ship: this->ships)
+    {
+        json["ships"].push_back(ship.ToJSON());
     }
     for (auto& human: this->people)
     {
@@ -88,6 +93,11 @@ void SaveSlot::LoadJSON(Json& json)
         }
         this->pathCache[key] = paths;
     }
+    this->ships.clear();
+    for (size_t i = 0; i < json["ships"].size(); i++)
+    {
+        this->ships.push_back(Ship::LoadJSON(json["ships"][i]));
+    }
     this->people.clear();
     for (size_t i = 0; i < json["people"].size(); i++)
     {
@@ -106,6 +116,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].seed = perlinSeed;
     saveSlots[idx].islands = islands;
     saveSlots[idx].pathCache = pathCache;
+    saveSlots[idx].ships = ships;
     saveSlots[idx].people = people;
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
@@ -127,6 +138,7 @@ void LoadFromSlot(int idx)
     perlinSeed = saveSlots[idx].seed;
     islands = saveSlots[idx].islands;
     pathCache = saveSlots[idx].pathCache;
+    ships = saveSlots[idx].ships;
     people = saveSlots[idx].people;
     woodTotal = saveSlots[idx].woodTotal;
     ironTotal = saveSlots[idx].ironTotal;
@@ -189,6 +201,7 @@ void MigrateV2()
         if (saveSlots[i].seed < 0) continue;
         LoadFromSlot(i);
         GeneratePathCache(saveSlots[i].islands, saveSlots[i].pathCache);
+        saveSlots[i].ships = {};
     }
 }
 

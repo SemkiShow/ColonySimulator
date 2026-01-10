@@ -43,3 +43,33 @@ void Ship::Move(float deltaTime)
         if (nextPointDir.x < -0.1) flip = -1;
     }
 }
+
+Json Ship::ToJSON()
+{
+    Json json;
+    json["sourceIndex"] = sourceIndex;
+    json["targetIndex"] = targetIndex;
+    json["pos"].format = JsonFormat::Inline;
+    json["pos"].push_back(pos.x);
+    json["pos"].push_back(pos.y);
+    json["nextPointIdx"] = static_cast<int>(nextPointIdx);
+    json["people"] = people;
+    json["reached"] = reached;
+    return json;
+}
+
+Ship Ship::LoadJSON(Json& json)
+{
+    Ship ship(json["sourceIndex"].GetInt(), json["targetIndex"].GetInt(), json["people"].GetInt());
+    ship.pos = {static_cast<float>(json["pos"][0].GetDouble()),
+                static_cast<float>(json["pos"][1].GetDouble())};
+    ship.nextPointIdx = static_cast<size_t>(json["nextPointIdx"].GetInt());
+    ship.people = json["people"].GetInt();
+    ship.reached = json["reached"].GetBool();
+
+    ship.path = pathCache[{ship.sourceIndex, ship.targetIndex}][rand() % PORTS_PER_ISLAND];
+    if (ship.nextPointIdx < ship.path.size())
+        ship.nextPointDir = Vector2Normalize(ship.path[ship.nextPointIdx] - ship.pos);
+
+    return ship;
+}
