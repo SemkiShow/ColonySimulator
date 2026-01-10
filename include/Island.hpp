@@ -65,16 +65,5 @@ extern int woodTotal;
 extern int ironTotal;
 extern int peopleTotal;
 
-// Custom hash for std::pair
-template <class T1, class T2> struct std::hash<std::pair<T1, T2>>
-{
-    size_t operator()(const std::pair<T1, T2>& p) const
-    {
-        size_t hash1 = std::hash<T1>{}(p.first);
-        size_t hash2 = std::hash<T2>{}(p.second);
-        return hash1 ^ hash2;
-    }
-};
-
 void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);
 void BuildMap();

@@ -12,3 +12,4 @@ AllowAllArgumentsOnNextLine: false
 BreakStringLiterals: false
 SpaceBeforeRangeBasedForLoopColon: false
 InsertNewlineAtEOF: true
+AlwaysBreakTemplateDeclarations: Yes

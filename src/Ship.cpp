@@ -25,7 +25,7 @@ Ship::Ship(int sourceIndex, int targetIndex, int peopleCount)
         {
             startPos += dir;
         } while (GetPerlin(startPos) >= LAND_START);
-    
+
         path = GetPath(startPos, targetIndex);
     }
     pos = path[0];

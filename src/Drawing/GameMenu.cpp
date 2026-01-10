@@ -122,7 +122,7 @@ void DrawGameMenu()
             it = ships.erase(it);
         }
         else
-        it++;
+            it++;
     }
 
     // Draw ships
@@ -152,7 +152,7 @@ void DrawGameMenu()
     //         counter++;
     //     }
     // }
-  
+
     for (auto& island: islands)
     {
         island.DrawStats();
