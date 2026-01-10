@@ -135,9 +135,10 @@ void DrawGameMenu()
         float scale = 0.01f / perlinScale;
         Vector2 pos = GlslToRaylib(ship.pos);
         DrawTexturePro(shipTexture,
-                       {0, 0, ship.rotation * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
+                       {0, 0, ship.flip * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
                        {pos.x, pos.y, shipTexture.width * scale, shipTexture.height * scale},
-                       {shipTexture.width * scale / 2.0f, shipTexture.height * scale / 2.0f}, 0, WHITE);
+                       {shipTexture.width * scale / 2.0f, shipTexture.height * scale}, 0,
+                       WHITE);
         // DrawRectangle(pos.x - 10, pos.y - 20, 20, 20, Color{127, 127, 127, 127});
     }
 

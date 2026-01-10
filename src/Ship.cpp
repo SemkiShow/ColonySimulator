@@ -86,13 +86,7 @@ void Ship::Move(float deltaTime)
         }
 
         nextPointDir = Vector2Normalize(path[nextPointIdx] - pos);
-        if (nextPointDir.x > 0.1)
-        {
-            rotation = 1;
-        }
-        else if (nextPointDir.x < -0.1)
-        {
-            rotation = -1;
-        }
+        if (nextPointDir.x > 0) flip = 1;
+        if (nextPointDir.x < -0.1) flip = -1;
     }
 }
