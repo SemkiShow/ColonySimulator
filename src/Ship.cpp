@@ -7,6 +7,7 @@
 #include "Island.hpp"
 #include "Pathfinding.hpp"
 #include "Perlin.hpp"
+#include <iostream>
 #include <raymath.h>
 #include <vector>
 
@@ -18,12 +19,17 @@ Ship::Ship(int sourceIndex, int targetIndex, int peopleCount)
     Vector2 startPos = islands[sourceIndex].GetRandomPoint();
     Vector2 endPos = islands[targetIndex].GetRandomPoint();
     Vector2 dir = Vector2Normalize(endPos - startPos);
-    do
-    {
-        startPos += dir;
-    } while (GetPerlin(startPos) >= LAND_START);
 
-    path = GetPath(startPos, targetIndex);
+    while (path.size() <= 1)
+    {
+        do
+        {
+            startPos += dir;
+        } while (GetPerlin(startPos) >= LAND_START);
+    
+        path = GetPath(startPos, targetIndex);
+        std::cout << path.size() << '\n';
+    }
     pos = path[0];
 
     nextPointDir = Vector2Normalize(path[0] - pos);

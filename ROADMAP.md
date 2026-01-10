@@ -54,7 +54,7 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 
 ### v1.2.0
 
-- [ ] Ships flowing through the sea to the target island
+- [x] Ships flowing through the sea to the target island
 - [x] Animated people walking
 - [x] Translations
 - [ ] Approximate island shapes more accurately, than a rectangle
