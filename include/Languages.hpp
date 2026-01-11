@@ -4,13 +4,14 @@
 
 #pragma once
 
+#include <libintl.h>
 #include <string>
-#include <unordered_map>
 #include <vector>
+
+#define _(s) std::string(gettext(s))
 
 extern std::string currentLanguage;
 extern std::vector<std::string> languages;
-extern std::unordered_map<std::string, std::string> labels;
 
 void GetAllLanguages();
 void ReloadLabels();

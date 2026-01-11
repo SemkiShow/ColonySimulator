@@ -393,7 +393,7 @@ void BuildMap()
 {
     auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
-        label = labels["Loading map..."];
+        label = _("Loading map...");
         woodTotal = ironTotal = peopleTotal = 0;
         BuildIslands(loadingPercent, finished, 0.1f);
     };

@@ -116,8 +116,8 @@ void DrawLanguageButtons(float posX)
         }
         posX += ELEMENT_SIZE + ELEMENT_SPACING;
     }
-    DrawTextCustom(labels["language"].c_str(), {posX, nextElementPositionY},
-                   ELEMENT_SIZE - TEXT_OFFSET, WHITE);
+    DrawTextCustom(_("language").c_str(), {posX, nextElementPositionY}, ELEMENT_SIZE - TEXT_OFFSET,
+                   WHITE);
 }
 
 void DrawSettings()
@@ -127,10 +127,10 @@ void DrawSettings()
     DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
-    DrawCheckBox(labels["vsync"].c_str(), &vsync);
-    DrawCheckBox(labels["show-fps"].c_str(), &showFPS);
-    DrawSlider("", labels["pan-sensitivity"].c_str(), &panSensitivity, 100, 1000);
-    DrawSlider("", labels["wheel-sensitivity"].c_str(), &wheelSensitivity, 0.05f, 10);
+    DrawCheckBox(_("vsync").c_str(), &vsync);
+    DrawCheckBox(_("show-fps").c_str(), &showFPS);
+    DrawSlider("", _("pan-sensitivity").c_str(), &panSensitivity, 100, 1000);
+    DrawSlider("", _("wheel-sensitivity").c_str(), &wheelSensitivity, 0.05f, 10);
     DrawLanguageButtons(rec.x + UI_SPACING);
 
     {
@@ -149,10 +149,10 @@ void DrawAbout()
     DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
 
-    DrawTextCentered(labels["Colony Simulator"].c_str(), 64);
-    DrawTextCentered(labels["Lead Developer: SemkiShow"].c_str(), 32);
-    DrawTextCentered(labels["Developer: jaraslauzaitsau"].c_str(), 32);
-    DrawTextCentered(labels["This game is licensed under GPL v3.0"].c_str(), 24);
+    DrawTextCentered(_("Colony Simulator").c_str(), 64);
+    DrawTextCentered(_("Lead Developer: SemkiShow").c_str(), 32);
+    DrawTextCentered(_("Developer: jaraslauzaitsau").c_str(), 32);
+    DrawTextCentered(_("This game is licensed under GPL v3.0").c_str(), 24);
 
     {
         auto buttonRec = rec;
@@ -217,11 +217,10 @@ void DrawLoadMap()
 
     if (isEmptySlot)
     {
-        int res = GuiMessageBox(rec, labels["Warning"].c_str(),
-                                (labels["Are you sure you want to empty"] + " " +
-                                 std::string(saveSlots[slotToEmpty].name) + "?")
-                                    .c_str(),
-                                labels["Yes;No"].c_str());
+        int res = GuiMessageBox(
+            rec, _("Warning").c_str(),
+            (_("Are you sure you want to empty") + " " + saveSlots[slotToEmpty].name + "?").c_str(),
+            _("Yes;No").c_str());
         if (res >= 0)
         {
             if (res == 1) EmptySlot(slotToEmpty);
@@ -251,7 +250,7 @@ void EditIsland()
     }
 
     auto& island = islands[islandEditIdx];
-    DrawSliderInt("", labels["Taxes"].c_str(), &island.taxes, 0, 100);
+    DrawSliderInt("", _("Taxes").c_str(), &island.taxes, 0, 100);
 }
 
 void DrawGameUI()
@@ -279,11 +278,11 @@ void DrawNewWorld()
 
     Vector2 lastMapSize = slotMapSize;
 
-    DrawValueBox(labels["seed"].c_str(), &slotSeed, 0, 100);
-    DrawCheckBox(labels["square map"].c_str(), &squareMap);
-    DrawSlider("", labels["map size x"].c_str(), &slotMapSize.x, 50, 1000);
-    DrawSlider("", labels["map size y"].c_str(), &slotMapSize.y, 50, 1000);
-    if (DrawButtonCentered(labels["Create map"].c_str()))
+    DrawValueBox(_("seed").c_str(), &slotSeed, 0, 100);
+    DrawCheckBox(_("square map").c_str(), &squareMap);
+    DrawSlider("", _("map size x").c_str(), &slotMapSize.x, 50, 1000);
+    DrawSlider("", _("map size y").c_str(), &slotMapSize.y, 50, 1000);
+    if (DrawButtonCentered(_("Create map").c_str()))
     {
         isNewWorld = false;
         perlinSeed = slotSeed;
@@ -313,12 +312,12 @@ void DrawMainUI()
 
     nextElementPositionY = UI_SPACING;
 
-    DrawTextCentered(labels["Colony Simulator"].c_str(), 48);
+    DrawTextCentered(_("Colony Simulator").c_str(), 48);
     nextElementPositionY += (ELEMENT_SIZE + ELEMENT_SPACING) * 2 * windowSize.y / startWindowSize.y;
-    if (DrawButtonCentered(labels["Play"].c_str())) isLoadMap = true;
-    if (DrawButtonCentered(labels["Settings"].c_str())) isSettings = true;
-    if (DrawButtonCentered(labels["About"].c_str())) isAbout = true;
-    if (DrawButtonCentered(labels["Exit"].c_str())) shouldClose = true;
+    if (DrawButtonCentered(_("Play").c_str())) isLoadMap = true;
+    if (DrawButtonCentered(_("Settings").c_str())) isSettings = true;
+    if (DrawButtonCentered(_("About").c_str())) isAbout = true;
+    if (DrawButtonCentered(_("Exit").c_str())) shouldClose = true;
 
     if (isSettings)
         DrawSettings();
@@ -342,15 +341,15 @@ void DrawPauseUI()
                      windowSize.y - UI_SPACING * 2};
     DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
     nextElementPositionY = rec.y + UI_SPACING;
-    if (DrawButtonCentered(labels["Return to game"].c_str())) OpenGameMenu();
-    if (DrawButtonCentered(labels["Save game"].c_str())) SaveProgress();
-    if (DrawButtonCentered(labels["Go to the main menu"].c_str())) isSaveGame = true;
+    if (DrawButtonCentered(_("Return to game").c_str())) OpenGameMenu();
+    if (DrawButtonCentered(_("Save game").c_str())) SaveProgress();
+    if (DrawButtonCentered(_("Go to the main menu").c_str())) isSaveGame = true;
 
     if (isSaveGame)
     {
-        int res = GuiMessageBox(rec, labels["Info"].c_str(),
-                                labels["Would you like to save the game before exiting?"].c_str(),
-                                labels["Yes;No"].c_str());
+        int res = GuiMessageBox(rec, _("Info").c_str(),
+                                _("Would you like to save the game before exiting?").c_str(),
+                                _("Yes;No").c_str());
         if (res >= 0)
         {
             if (res != 1) LoadFromSlot(currentSlot);

@@ -14,6 +14,14 @@ int main()
 {
     srand(time(0));
 
+#ifdef _WIN32
+    _putenv("LANGUAGE=pl");
+#else
+    setenv("LANGUAGE", "pl", 1);
+#endif
+    bindtextdomain("ColonySimulator", "resources/locales");
+    textdomain("ColonySimulator");
+
     int flags = 0;
     if (vsync) flags |= FLAG_VSYNC_HINT;
     flags |= FLAG_WINDOW_HIGHDPI;
@@ -33,7 +41,7 @@ int main()
     {
         auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
         {
-            label = labels["Loading progress..."];
+            label = _("Loading progress...");
             loadingPercent = 0;
             LoadProgress();
             finished = true;
@@ -52,7 +60,7 @@ int main()
     {
         auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
         {
-            label = labels["Saving progress..."];
+            label = _("Saving progress...");
             loadingPercent = 0;
             Save();
             SaveProgress();

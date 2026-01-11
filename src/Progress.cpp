@@ -82,7 +82,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
     saveSlots[idx].peopleTotal = peopleTotal;
-    saveSlots[idx].name = labels["Slot"] + " " + std::to_string(idx + 1);
+    saveSlots[idx].name = _("Slot") + " " + std::to_string(idx + 1);
     saveSlots[idx].mapSize = mapSize;
 }
 

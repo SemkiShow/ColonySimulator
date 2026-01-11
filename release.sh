@@ -32,6 +32,6 @@ cp $archive_name.zip $archive_name-windows-x86_64.zip
 zip $archive_name-windows-x86_64.zip $executable_name.exe
 rm $executable_name.exe
 
-# Creating a GitHub release
+# Create a GitHub release
 gh release create $1 $archive_name-linux-x86_64.zip $archive_name-windows-x86_64.zip
 rm $archive_name*
