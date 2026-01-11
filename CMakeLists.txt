@@ -20,6 +20,11 @@ target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -static)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib raygui)
 
+# Disable the console on a Windows release build
+if(WIN32)
+    set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE $<CONFIG:Release>)
+endif()
+
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
 if (APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE "-framework IOKit")

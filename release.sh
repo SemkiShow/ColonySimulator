@@ -4,20 +4,34 @@ set -e
 shopt -s globstar
 executable_name=ColonySimulator
 
-# Compiling for Linux
+if [ -z "$1" ]; then
+    echo "Usage: $0 <VERSION>"
+fi
+
+# Compile for Linux
 cmake -B build_release -DCMAKE_BUILD_TYPE=Release
 cmake --build build_release -j$(nproc)
 cp build_release/bin/$executable_name .
 
-# Compiling for Windows
+# Compile for Windows
 cmake -B build_release_windows -DCMAKE_TOOLCHAIN_FILE=mingw-w64-x86_64.cmake -DCMAKE_BUILD_TYPE=Release
 cmake --build build_release_windows -j$(nproc)
 cp build_release_windows/bin/$executable_name.exe .
 
-# Zipping the build
-zip release.zip $executable_name $executable_name.exe LICENSE README.md resources/**
-rm $executable_name $executable_name.exe
+# Zip the dependencies
+archive_name=$executable_name-$1
+zip $archive_name.zip LICENSE README.md resources/**
+
+# Create the Linux release
+cp $archive_name.zip $archive_name-linux-x86_64.zip
+zip $archive_name-linux-x86_64.zip $executable_name
+rm $executable_name
+
+# Create the Windows release
+cp $archive_name.zip $archive_name-windows-x86_64.zip
+zip $archive_name-windows-x86_64.zip $executable_name.exe
+rm $executable_name.exe
 
 # Creating a GitHub release
-gh release create $1 release.zip
-rm release.zip
+gh release create $1 $archive_name-linux-x86_64.zip $archive_name-windows-x86_64.zip
+rm $archive_name*
