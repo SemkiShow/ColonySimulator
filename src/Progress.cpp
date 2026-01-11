@@ -77,7 +77,6 @@ void SaveToSlot(int idx)
     if (idx < 0) return;
     saveSlots[idx].seed = perlinSeed;
     saveSlots[idx].islands = islands;
-    saveSlots[idx].pathMap = pathMap;
     saveSlots[idx].ships = ships;
     saveSlots[idx].people = people;
     saveSlots[idx].woodTotal = woodTotal;
