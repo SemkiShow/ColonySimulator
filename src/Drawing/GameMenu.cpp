@@ -138,21 +138,6 @@ void DrawGameMenu()
         // DrawRectangle(pos.x - 10, pos.y - 20, 20, 20, Color{127, 127, 127, 127});
     }
 
-    // Draw debug ship path lines
-    // for (auto& ship: ships)
-    // {
-    //     Vector2 lastPoint;
-    //     if (!ship.path.empty()) lastPoint = ship.path[0];
-    //     int counter = 0;
-    //     for (auto& point: ship.path)
-    //     {
-    //         DrawLineEx(GlslToRaylib(lastPoint), GlslToRaylib(point), 3,
-    //                    ColorLerp(RED, BLUE, counter * 1.0f / ship.path.size()));
-    //         lastPoint = point;
-    //         counter++;
-    //     }
-    // }
-
     for (auto& island: islands)
     {
         island.DrawStats();
@@ -173,6 +158,28 @@ void DrawGameMenu()
                                  0.25f, 16, {0, 0, 0, 127});
             DrawTextCustom(text, mouse, fontSize, WHITE);
         }
+    }
+
+    // Draw debug ship path lines
+    // for (auto& ship: ships)
+    // {
+    //     Vector2 lastPoint;
+    //     if (!ship.path.empty()) lastPoint = ship.path[0];
+    //     int counter = 0;
+    //     for (auto& point: ship.path)
+    //     {
+    //         DrawLineEx(GlslToRaylib(lastPoint), GlslToRaylib(point), 3,
+    //                    ColorLerp(RED, BLUE, counter * 1.0f / ship.path.size()));
+    //         lastPoint = point;
+    //         counter++;
+    //     }
+    // }
+
+    // Draw debug island bounds
+    for (auto& island: islands)
+    {
+        Vector2 p1 = GlslToRaylib(island.p1), p2 = GlslToRaylib(island.p2);
+        DrawRectangleV(p1, p2 - p1, {255, 0, 0, 127});
     }
 
     DrawGameUI();
