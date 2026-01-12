@@ -7,6 +7,7 @@
 #include "Human.hpp"
 #include "Island.hpp"
 #include "Languages.hpp"
+#include "Map.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"

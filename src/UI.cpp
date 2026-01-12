@@ -8,6 +8,7 @@
 #include "Drawing/GameMenu.hpp"
 #include "Island.hpp"
 #include "Languages.hpp"
+#include "Map.hpp"
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
