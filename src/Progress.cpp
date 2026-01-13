@@ -87,7 +87,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].mapSize = mapSize;
 }
 
-void LoadFromSlot(int idx)
+void LoadFromSlot(int idx, bool generatePathMap)
 {
     currentSlot = idx;
     if (saveSlots[idx].seed == -1)
@@ -106,6 +106,11 @@ void LoadFromSlot(int idx)
     peopleTotal = saveSlots[idx].peopleTotal;
     mapSize = saveSlots[idx].mapSize;
 
+    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uSeed"), &perlinSeed,
+                   SHADER_UNIFORM_INT);
+
+    if (!generatePathMap) return;
+
     auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
         label = "Node graph out of date. Rebuilding...";
@@ -113,9 +118,6 @@ void LoadFromSlot(int idx)
         finished = true;
     };
     ShowLoadingScreen(true, func);
-
-    SetShaderValue(perlinShader, GetShaderLocation(perlinShader, "uSeed"), &perlinSeed,
-                   SHADER_UNIFORM_INT);
 }
 
 void EmptySlot(int idx) { saveSlots[idx] = {}; }

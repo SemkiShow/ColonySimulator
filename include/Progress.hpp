@@ -30,7 +30,7 @@ extern std::vector<SaveSlot> saveSlots;
 extern int currentSlot;
 
 void SaveToSlot(int idx);
-void LoadFromSlot(int idx);
+void LoadFromSlot(int idx, bool generatePathMap);
 void EmptySlot(int idx);
 void SaveProgress();
 void LoadProgress();

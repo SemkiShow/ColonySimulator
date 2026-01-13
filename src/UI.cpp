@@ -191,7 +191,7 @@ void DrawLoadMap()
             // Load map
             if (GuiButton({posX, nextElementPositionY, BUTTON_SIZE, BUTTON_SIZE}, "#131#"))
             {
-                LoadFromSlot(i);
+                LoadFromSlot(i, true);
                 OpenGameMenu();
                 isLoadMap = false;
             }
@@ -353,7 +353,7 @@ void DrawPauseUI()
                                 _("Yes;No").c_str());
         if (res >= 0)
         {
-            if (res != 1) LoadFromSlot(currentSlot);
+            if (res != 1) LoadFromSlot(currentSlot, false);
             SaveProgress();
             currentMenu = Menu::Main;
             isSaveGame = false;
