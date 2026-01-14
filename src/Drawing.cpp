@@ -114,6 +114,17 @@ void DrawFrame()
         return;
     }
 
+    if (currentMenu == Menu::Game) ProcessPlayerInput(GetFrameTime());
+
+    if (lastVsync != vsync)
+    {
+        lastVsync = vsync;
+        if (!vsync)
+            ClearWindowState(FLAG_VSYNC_HINT);
+        else
+            SetWindowState(FLAG_VSYNC_HINT);
+    }
+
     BeginDrawing();
 
     ClearBackground(BLACK);
@@ -137,17 +148,6 @@ void DrawFrame()
     }
 
     EndDrawing();
-
-    if (currentMenu == Menu::Game) ProcessPlayerInput(GetFrameTime());
-
-    if (lastVsync != vsync)
-    {
-        lastVsync = vsync;
-        if (!vsync)
-            ClearWindowState(FLAG_VSYNC_HINT);
-        else
-            SetWindowState(FLAG_VSYNC_HINT);
-    }
 }
 
 void FreeResources()
