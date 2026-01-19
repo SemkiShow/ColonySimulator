@@ -1,9 +1,12 @@
 [submodule "thirdparty/raylib"]
 	path = thirdparty/raylib
 	url = https://github.com/raysan5/raylib
+	shallow = true
 [submodule "thirdparty/raygui"]
 	path = thirdparty/raygui
 	url = https://github.com/raysan5/raygui
+	shallow = true
 [submodule "thirdparty/libintl-lite"]
 	path = thirdparty/libintl-lite
 	url = https://github.com/j-jorge/libintl-lite.git
+	shallow = true
