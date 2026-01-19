@@ -4,11 +4,10 @@
 
 #pragma once
 
-#include <libintl.h>
 #include <string>
 #include <vector>
 
-#define _(s) std::string(gettext(s))
+#define _(s) (s)
 
 extern std::string currentLanguage;
 extern std::vector<std::string> languages;

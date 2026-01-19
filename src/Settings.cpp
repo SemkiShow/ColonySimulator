@@ -5,6 +5,7 @@
 #include "Settings.hpp"
 #include "Languages.hpp"
 #include <fstream>
+#include <raylib.h>
 #include <raymath.h>
 #include <vector>
 
@@ -59,6 +60,10 @@ void Load()
     }
     file.close();
 
+    if (vsync)
+        SetWindowState(FLAG_VSYNC_HINT);
+    else
+        ClearWindowState(FLAG_VSYNC_HINT);
+
     GetAllLanguages();
-    ReloadLabels();
 }

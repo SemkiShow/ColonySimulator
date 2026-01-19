@@ -4,6 +4,9 @@
 
 #include "Languages.hpp"
 #include "Progress.hpp"
+#include "UI.hpp"
+#include <RCore/Translations.hpp>
+#include <algorithm>
 #include <filesystem>
 
 std::string currentLanguage = "en";
@@ -17,20 +20,15 @@ void GetAllLanguages()
         if (!file.is_directory()) continue;
         languages.push_back(file.path().stem().string());
     }
+    std::sort(languages.begin(), languages.end());
 }
 
 void ReloadLabels()
 {
-#ifdef _WIN32
-    _putenv(("LANGUAGE=" + currentLanguage).c_str());
-#else
-    setenv("LANGUAGE", currentLanguage.c_str(), 1);
-#endif
-    bindtextdomain("ColonySimulator", "resources/locales");
-    textdomain("ColonySimulator");
+    app->SetLanguage("ColonySimulator", "resources/locales", currentLanguage);
 
     for (auto& slot: saveSlots)
     {
-        if (slot.seed == -1) slot.name = _("Empty slot");
+        if (slot.seed == -1) slot.name = GetText("Empty slot");
     }
 }

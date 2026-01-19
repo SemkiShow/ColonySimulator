@@ -7,20 +7,14 @@
 #include "Languages.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
+#include "UI.hpp"
+#include "UI/Loading.hpp"
+#include <RCore/Translations.hpp>
 #include <ctime>
-#include <raygui.h>
 
 int main()
 {
     srand(time(0));
-
-#ifdef _WIN32
-    _putenv("LANGUAGE=pl");
-#else
-    setenv("LANGUAGE", "pl", 1);
-#endif
-    bindtextdomain("ColonySimulator", "resources/locales");
-    textdomain("ColonySimulator");
 
     int flags = 0;
     if (vsync) flags |= FLAG_VSYNC_HINT;
@@ -28,29 +22,25 @@ int main()
     flags |= FLAG_WINDOW_RESIZABLE;
     flags |= FLAG_WINDOW_ALWAYS_RUN;
     SetConfigFlags(flags);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 24);
 
     InitWindow(windowSize.x, windowSize.y, "Colony Simulator");
     SetExitKey(-1);
 
-    GuiSetFont(GetFontDefault());
-
     Load();
+    InitUI();
+    ReloadLabels();
     InitGPU();
 
     {
         auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
         {
-            label = _("Loading progress...");
+            label = GetText("Loading progress...");
             loadingPercent = 0;
             LoadProgress();
             finished = true;
         };
         ShowLoadingScreen(false, func);
     }
-
-    GuiSetFont(myFont);
-    GuiSetStyle(DEFAULT, TEXT_SIZE, 20);
 
     while (!shouldClose && !WindowShouldClose())
     {
@@ -60,7 +50,7 @@ int main()
     {
         auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
         {
-            label = _("Saving progress...");
+            label = GetText("Saving progress...");
             loadingPercent = 0;
             Save();
             SaveProgress();

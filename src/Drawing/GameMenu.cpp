@@ -10,11 +10,10 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI.hpp"
+#include "UI/Settings.hpp"
 #include "raylib.h"
 #include <algorithm>
 #include <iostream>
-#include <raygui.h>
 #include <raymath.h>
 #include <vector>
 
@@ -176,13 +175,11 @@ void DrawGameMenu()
     // }
 
     // Draw debug island bounds
-    for (auto& island: islands)
-    {
-        Vector2 p1 = GlslToRaylib(island.p1), p2 = GlslToRaylib(island.p2);
-        DrawRectangleV(p1, p2 - p1, {255, 0, 0, 127});
-    }
-
-    DrawGameUI();
+    // for (auto& island: islands)
+    // {
+    //     Vector2 p1 = GlslToRaylib(island.p1), p2 = GlslToRaylib(island.p2);
+    //     DrawRectangleV(p1, p2 - p1, {255, 0, 0, 127});
+    // }
 }
 
 void ProcessPlayerInput(double deltaTime)
@@ -203,8 +200,8 @@ void ProcessPlayerInput(double deltaTime)
 
     if (IsKeyPressed(KEY_ESCAPE))
     {
-        if (isSettings)
-            isSettings = false;
+        if (settingsMenu->IsVisible())
+            settingsMenu->SetVisible(false);
         else
             currentMenu = Menu::Pause;
     }

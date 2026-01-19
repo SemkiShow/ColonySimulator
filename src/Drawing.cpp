@@ -5,13 +5,12 @@
 
 #include "Drawing.hpp"
 #include "Drawing/GameMenu.hpp"
-#include "Drawing/MainMenu.hpp"
-#include "Drawing/PauseMenu.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "UI.hpp"
+#include <RCore/Conversions.hpp>
 #include <ctime>
-#include <raygui.h>
 #include <raylib.h>
 #include <raymath.h>
 
@@ -21,7 +20,6 @@ Menu currentMenu = Menu::Main;
 
 Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
-bool lastVsync = vsync;
 
 Shader perlinShader;
 
@@ -32,6 +30,7 @@ Texture humanTexture;
 Texture shipTexture;
 
 Font myFont;
+std::shared_ptr<RFont> rayuiFont;
 
 Vector2 RaylibToGlsl(Vector2 v)
 {
@@ -72,6 +71,9 @@ void InitGPU()
     int codepointCount = 0;
     int* codepoints = LoadCodepoints(symbols, &codepointCount);
     myFont = LoadFontEx("resources/fonts/JetBrainsMono-Bold.ttf", 512, codepoints, codepointCount);
+
+    rayuiFont = std::make_shared<RFont>(rui::FromRaylib(myFont));
+    app->SetFont(rayuiFont);
 
     perlinShader = LoadShader(0, "resources/shaders/Perlin.fs");
 
@@ -116,36 +118,21 @@ void DrawFrame()
 
     if (currentMenu == Menu::Game) ProcessPlayerInput(GetFrameTime());
 
-    if (lastVsync != vsync)
-    {
-        lastVsync = vsync;
-        if (!vsync)
-            ClearWindowState(FLAG_VSYNC_HINT);
-        else
-            SetWindowState(FLAG_VSYNC_HINT);
-    }
-
     BeginDrawing();
 
     ClearBackground(BLACK);
 
     UpdateWindowSize();
 
-    switch (currentMenu)
+    if (currentMenu == Menu::Game || currentMenu == Menu::Pause)
     {
-    case Menu::Main:
-        DrawMainMenu();
-        break;
-    case Menu::Game:
         DrawGameMenu();
-        break;
-    case Menu::Pause:
-        DrawGameMenu();
-        DrawPauseMenu();
-        break;
-    default:
-        break;
     }
+
+    app->Update();
+    app->Draw();
+
+    if (showFPS) DrawFPS(0, 0);
 
     EndDrawing();
 }

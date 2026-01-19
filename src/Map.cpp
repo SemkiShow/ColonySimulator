@@ -8,6 +8,7 @@
 #include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "UI/Loading.hpp"
 #include <cfloat>
 #include <climits>
 #include <cmath>

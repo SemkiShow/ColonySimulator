@@ -4,11 +4,8 @@
 
 #pragma once
 
-extern bool showIslandsBoxes;
-extern int islandEditIdx;
+#include <RCore/RApplication.hpp>
 
-extern bool isSettings;
+void InitUI();
 
-void DrawGameUI();
-void DrawMainUI();
-void DrawPauseUI();
+extern std::shared_ptr<RApplication> app;

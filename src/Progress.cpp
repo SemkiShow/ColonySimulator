@@ -6,15 +6,17 @@
 #include "Drawing.hpp"
 #include "Human.hpp"
 #include "Island.hpp"
-#include "Languages.hpp"
 #include "Map.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
+#include "UI/LoadMap.hpp"
+#include "UI/Loading.hpp"
+#include <RCore/Translations.hpp>
 #include <ctime>
 #include <filesystem>
 
-std::vector<SaveSlot> saveSlots(MAX_SAVE_SLOTS);
+std::vector<SaveSlot> saveSlots;
 int currentSlot = -1;
 
 Json SaveSlot::ToJSON()
@@ -83,7 +85,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
     saveSlots[idx].peopleTotal = peopleTotal;
-    saveSlots[idx].name = _("Slot") + " " + std::to_string(idx + 1);
+    saveSlots[idx].name = GetText("Slot") + " " + std::to_string(idx + 1);
     saveSlots[idx].mapSize = mapSize;
 }
 
@@ -130,9 +132,9 @@ void SaveProgress()
 
     json["version"] = 3;
 
-    for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
+    for (auto& slot: saveSlots)
     {
-        json["saves"].push_back(saveSlots[i].ToJSON());
+        json["saves"].push_back(slot.ToJSON());
     }
 
     json.Save("saves.json");
@@ -191,7 +193,8 @@ void LoadProgress()
 
     for (size_t i = 0; i < json["saves"].size(); i++)
     {
-        saveSlots[i].LoadJSON(json["saves"][i]);
+        saveSlots.emplace_back();
+        saveSlots.back().LoadJSON(json["saves"][i]);
     }
 
     if (version == 0)
@@ -209,4 +212,6 @@ void LoadProgress()
         MigrateV2();
         version = 3;
     }
+
+    loadMapMenu->ReloadSlots();
 }

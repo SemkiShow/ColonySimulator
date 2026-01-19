@@ -1,9 +1,6 @@
 [submodule "thirdparty/raylib"]
 	path = thirdparty/raylib
 	url = https://github.com/raysan5/raylib
-[submodule "thirdparty/raygui"]
-	path = thirdparty/raygui
-	url = https://github.com/raysan5/raygui
-[submodule "thirdparty/libintl-lite"]
-	path = thirdparty/libintl-lite
-	url = https://github.com/j-jorge/libintl-lite.git
+[submodule "thirdparty/RayUI"]
+	path = thirdparty/RayUI
+	url = https://github.com/SemkiShow/RayUI

@@ -10,10 +10,9 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI.hpp"
 #include "Utils.hpp"
+#include <RCore/Translations.hpp>
 #include <cmath>
-#include <raygui.h>
 #include <raymath.h>
 
 #define K_WOOD_GET 3
@@ -213,7 +212,7 @@ void Island::DrawStats()
         auto buttonRec = rec;
         buttonRec.width = buttonRec.height = buttonScale;
         buttonRec.x += rec.width;
-        if (GuiButton(buttonRec, "#142#")) islandEditIdx = index;
+        // if (GuiButton(buttonRec, "#142#")) islandEditIdx = index;
     }
 }
 

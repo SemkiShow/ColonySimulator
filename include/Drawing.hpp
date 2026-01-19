@@ -5,10 +5,13 @@
 
 #pragma once
 
+#include <memory>
+
 typedef struct Vector2 Vector2;
 typedef struct Shader Shader;
 typedef struct Texture Texture;
 typedef struct Font Font;
+struct RFont;
 
 extern bool shouldClose;
 
@@ -33,6 +36,7 @@ extern Texture shipTexture;
 
 extern Font myFont;
 const float myFontSpacing = 1;
+extern std::shared_ptr<RFont> rayuiFont;
 
 Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
