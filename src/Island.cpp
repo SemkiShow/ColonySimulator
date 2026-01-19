@@ -270,3 +270,13 @@ Island Island::LoadJSON(Json& json)
     island.efficiency = json["efficiency"].GetInt();
     return island;
 }
+
+bool IsPointInIsland(const Vector2& point, int islandIdx)
+{
+    const Island& island = islands[islandIdx];
+    if (point.x < island.p1.x || point.x > island.p2.x ||
+        point.y < island.p1.y || point.y > island.p2.y)
+        return false;
+    if (GetPerlin(point) < LAND_START) return false;
+    return true;
+}

@@ -226,11 +226,7 @@ void ProcessPlayerInput(double deltaTime)
         Vector2 v = RaylibToGlsl(GetMousePosition());
         for (size_t i = 0; i < islands.size(); i++)
         {
-            Vector2 offset{4, 2};
-            Vector2 center = (islands[i].p1 + islands[i].p2) / 2 - offset;
-            const Vector2 boxSize = Vector2{17, 15};
-            if (v.x >= center.x - boxSize.x / 2 && v.x <= center.x + boxSize.x / 2 &&
-                v.y >= center.y - boxSize.y / 2 && v.y <= center.y + boxSize.y / 2)
+            if (IsPointInIsland(v, i))
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
                 if (islands[i].colonized || islands[i].colonizationInProgress)

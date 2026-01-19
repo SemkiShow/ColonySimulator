@@ -60,6 +60,8 @@ extern std::vector<Island> islands;
 
 #define LAND_START biomes[3].startLevel
 
+bool IsPointInIsland(const Vector2& point, int islandIdx);
+
 extern int woodTotal;
 extern int ironTotal;
 extern int peopleTotal;
