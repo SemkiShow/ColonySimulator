@@ -226,7 +226,7 @@ void ProcessPlayerInput(double deltaTime)
         Vector2 v = RaylibToGlsl(GetMousePosition());
         for (size_t i = 0; i < islands.size(); i++)
         {
-            if (IsPointInIsland(v, i))
+            if (islands[i].IsPointInside(v))
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
                 if (islands[i].colonized || islands[i].colonizationInProgress)

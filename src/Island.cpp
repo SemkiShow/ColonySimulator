@@ -41,6 +41,15 @@ Vector2 Island::GetRandomPoint()
     return pos;
 }
 
+bool Island::IsPointInside(const Vector2& point)
+{
+    if (point.x < p1.x || point.x > p2.x ||
+        point.y < p1.y || point.y > p2.y)
+        return false;
+    if (GetPerlin(point) < LAND_START) return false;
+    return true;
+}
+
 void Island::Colonize()
 {
     if (colonized || colonizationInProgress || woodTotal < woodColonize || ironTotal < ironColonize)
@@ -269,14 +278,4 @@ Island Island::LoadJSON(Json& json)
     island.taxes = json["taxes"].GetInt();
     island.efficiency = json["efficiency"].GetInt();
     return island;
-}
-
-bool IsPointInIsland(const Vector2& point, int islandIdx)
-{
-    const Island& island = islands[islandIdx];
-    if (point.x < island.p1.x || point.x > island.p2.x ||
-        point.y < island.p1.y || point.y > island.p2.y)
-        return false;
-    if (GetPerlin(point) < LAND_START) return false;
-    return true;
 }

@@ -45,6 +45,7 @@ struct Island
     }
 
     Vector2 GetRandomPoint();
+    bool IsPointInside(const Vector2& point);
     void Colonize();
     void SendPeople(int count);
     void AddPeople(int count);
@@ -59,8 +60,6 @@ extern std::vector<Biome> biomes;
 extern std::vector<Island> islands;
 
 #define LAND_START biomes[3].startLevel
-
-bool IsPointInIsland(const Vector2& point, int islandIdx);
 
 extern int woodTotal;
 extern int ironTotal;
