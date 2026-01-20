@@ -25,6 +25,7 @@ struct Biome
 struct Island
 {
     Vector2 p1 = {0, 0}, p2 = {0, 0};
+    std::vector<Vector2> borderPoints;
     float area = 0;
     int woodColonize = 0, ironColonize = 0, woodCount = 0, woodGrowth = 0, woodMax = 0,
         ironCount = 0, peopleCount = 0, peopleMax = 0, futurePeopleCount = 0;
@@ -35,11 +36,12 @@ struct Island
     int index = -1;
 
     Island() = default;
-    Island(Vector2 p1, Vector2 p2, float area, int woodColonize, int ironColonize, int woodCount,
-           int woodGrowth, int ironCount, float peopleGrowth, int peopleMax)
-        : p1(p1), p2(p2), area(area), woodColonize(woodColonize), ironColonize(ironColonize),
-          woodCount(woodCount), woodGrowth(woodGrowth), ironCount(ironCount), peopleMax(peopleMax),
-          peopleGrowth(peopleGrowth)
+    Island(Vector2 p1, Vector2 p2, const std::vector<Vector2>& borderPoints, float area,
+           int woodColonize, int ironColonize, int woodCount, int woodGrowth, int ironCount,
+           float peopleGrowth, int peopleMax)
+        : p1(p1), p2(p2), borderPoints(borderPoints), area(area), woodColonize(woodColonize),
+          ironColonize(ironColonize), woodCount(woodCount), woodGrowth(woodGrowth),
+          ironCount(ironCount), peopleMax(peopleMax), peopleGrowth(peopleGrowth)
     {
         woodMax = woodCount;
     }

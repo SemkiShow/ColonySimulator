@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing/GameMenu.hpp"
+#include "Debug.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
 #include "Island.hpp"
@@ -160,27 +161,7 @@ void DrawGameMenu()
         }
     }
 
-    // Draw debug ship path lines
-    // for (auto& ship: ships)
-    // {
-    //     Vector2 lastPoint;
-    //     if (!ship.path.empty()) lastPoint = ship.path[0];
-    //     int counter = 0;
-    //     for (auto& point: ship.path)
-    //     {
-    //         DrawLineEx(GlslToRaylib(lastPoint), GlslToRaylib(point), 3,
-    //                    ColorLerp(RED, BLUE, counter * 1.0f / ship.path.size()));
-    //         lastPoint = point;
-    //         counter++;
-    //     }
-    // }
-
-    // Draw debug island bounds
-    for (auto& island: islands)
-    {
-        Vector2 p1 = GlslToRaylib(island.p1), p2 = GlslToRaylib(island.p2);
-        DrawRectangleV(p1, p2 - p1, {255, 0, 0, 127});
-    }
+    DrawIslandBorderPoints();
 
     DrawGameUI();
 }
@@ -195,6 +176,9 @@ void ProcessPlayerInput(double deltaTime)
         perlinOffset.x -= panSensitivity * perlinScale * deltaTime;
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D))
         perlinOffset.x += panSensitivity * perlinScale * deltaTime;
+
+    if (IsKeyPressed(KEY_EQUAL)) perlinScale -= wheelSensitivity * 0.01;
+    if (IsKeyPressed(KEY_MINUS)) perlinScale += wheelSensitivity * 0.01;
 
     if (!IsWindowFocused() || IsWindowHidden())
     {
@@ -252,10 +236,7 @@ void ProcessPlayerInput(double deltaTime)
     if (GetTime() - growthTimer > GROWTH_PERIOD)
     {
         growthTimer = GetTime();
-        for (auto& island: islands)
-        {
-            island.GrowthTick();
-        }
+        for (auto& island: islands) island.GrowthTick();
     }
 
     lastMousePosition = GetMousePosition();
