@@ -38,11 +38,7 @@ Json SaveSlot::ToJSON()
     json["woodTotal"] = this->woodTotal;
     json["ironTotal"] = this->ironTotal;
     json["peopleTotal"] = this->peopleTotal;
-
-    json["mapSize"].format = JsonFormat::Inline;
-    json["mapSize"].push_back(this->mapSize.x);
-    json["mapSize"].push_back(this->mapSize.y);
-
+    json["mapSize"] = Vector2ToJson(this->mapSize);
     return json;
 }
 
@@ -69,8 +65,7 @@ void SaveSlot::LoadJSON(Json& json)
     this->woodTotal = json["woodTotal"].GetInt();
     this->ironTotal = json["ironTotal"].GetInt();
     this->peopleTotal = json["peopleTotal"].GetInt();
-    this->mapSize = {static_cast<float>(json["mapSize"][0].GetDouble()),
-                     static_cast<float>(json["mapSize"][1].GetDouble())};
+    this->mapSize = JsonToVector2(json["mapSize"]);
 }
 
 void SaveToSlot(int idx)
@@ -98,8 +93,15 @@ void LoadFromSlot(int idx, bool generatePathMap)
         return;
     }
 
-    saveSlots[idx] = LoadFile(GetSlotPath(idx));
-    saveSlots[idx].opened = true;
+    auto loadSlot = [idx](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
+    {
+        label = _("Loading progress...");
+        loadingPercent = 0;
+        saveSlots[idx] = LoadFile(GetSlotPath(idx));
+        saveSlots[idx].opened = true;
+        finished = true;
+    };
+    ShowLoadingScreen(false, loadSlot);
 
     perlinSeed = saveSlots[idx].seed;
     islands = saveSlots[idx].islands;
@@ -262,4 +264,5 @@ void LoadProgress()
         saveSlots.back().people.clear();
         saveSlots.back().ships.clear();
     }
+    saveSlots.resize(MAX_SAVE_SLOTS);
 }
