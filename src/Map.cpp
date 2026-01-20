@@ -64,8 +64,7 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
             if (map[i][j] == INT_MAX) continue;
 
             int idx = map[i][j];
-            while (same.find(idx) != same.end())
-                idx = same[idx];
+            while (same.find(idx) != same.end()) idx = same[idx];
             map[i][j] = idx;
             islandAreas[idx]++;
 

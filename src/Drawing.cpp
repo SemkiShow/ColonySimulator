@@ -81,8 +81,7 @@ void InitGPU()
 
     {
         float starts[8];
-        for (size_t i = 0; i < biomes.size(); i++)
-            starts[i] = biomes[i].startLevel;
+        for (size_t i = 0; i < biomes.size(); i++) starts[i] = biomes[i].startLevel;
 
         SetShaderValueV(perlinShader, GetShaderLocation(perlinShader, "uBiomeStart"), starts,
                         SHADER_UNIFORM_FLOAT, biomeCount);
