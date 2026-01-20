@@ -126,7 +126,22 @@ void LoadFromSlot(int idx, bool generatePathMap)
     ShowLoadingScreen(true, func);
 }
 
-void EmptySlot(int idx) { saveSlots[idx] = {}; }
+void EmptySlot(int idx)
+{
+    saveSlots[idx] = {};
+    saveSlots[idx].opened = true;
+}
+
+void FixSaveIds()
+{
+    int id = 0;
+    for (auto& file: std::filesystem::directory_iterator("saves/"))
+    {
+        if (!file.is_regular_file()) continue;
+
+        std::filesystem::rename(file, GetSlotPath(id++));
+    }
+}
 
 std::string GetSlotPath(int idx) { return "saves/" + std::to_string(idx) + ".json"; }
 
@@ -136,6 +151,7 @@ void SaveProgress()
 
     if (!std::filesystem::exists("saves/")) std::filesystem::create_directory("saves");
 
+    FixSaveIds();
     for (size_t i = 0; i < saveSlots.size(); i++)
     {
         if (!saveSlots[i].opened) continue;
@@ -252,6 +268,7 @@ void LoadProgress()
         return;
     }
 
+    FixSaveIds();
     saveSlots.clear();
     for (auto& file: std::filesystem::directory_iterator("saves/"))
     {
