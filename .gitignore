@@ -5,3 +5,4 @@ settings.txt
 saves.json
 perf.data*
 gmon.out
+saves/

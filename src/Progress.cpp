@@ -85,6 +85,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].peopleTotal = peopleTotal;
     saveSlots[idx].name = _("Slot") + " " + std::to_string(idx + 1);
     saveSlots[idx].mapSize = mapSize;
+    saveSlots[idx].opened = true;
 }
 
 void LoadFromSlot(int idx, bool generatePathMap)
@@ -96,6 +97,9 @@ void LoadFromSlot(int idx, bool generatePathMap)
         SaveToSlot(idx);
         return;
     }
+
+    saveSlots[idx] = LoadFile(GetSlotPath(idx));
+    saveSlots[idx].opened = true;
 
     perlinSeed = saveSlots[idx].seed;
     islands = saveSlots[idx].islands;
@@ -122,48 +126,42 @@ void LoadFromSlot(int idx, bool generatePathMap)
 
 void EmptySlot(int idx) { saveSlots[idx] = {}; }
 
+std::string GetSlotPath(int idx) { return "saves/" + std::to_string(idx) + ".json"; }
+
 void SaveProgress()
 {
     SaveToSlot(currentSlot);
 
-    Json json;
+    if (!std::filesystem::exists("saves/")) std::filesystem::create_directory("saves");
 
-    json["version"] = 3;
-
-    for (size_t i = 0; i < MAX_SAVE_SLOTS; i++)
+    for (size_t i = 0; i < saveSlots.size(); i++)
     {
-        json["saves"].push_back(saveSlots[i].ToJSON());
-    }
+        if (!saveSlots[i].opened) continue;
 
-    json.Save("saves.json");
+        Json json;
+        json = saveSlots[i].ToJSON();
+        json["version"] = 3;
+        json.Save(GetSlotPath(i));
+    }
 }
 
-void MigrateV0()
+void MigrateV0(SaveSlot& slot)
 {
     int lastPerlinSeed = perlinSeed;
-    for (auto& slot: saveSlots)
+    perlinSeed = slot.seed;
+    for (size_t i = 0; i < slot.islands.size(); i++)
     {
-        perlinSeed = slot.seed;
-        for (size_t i = 0; i < slot.islands.size(); i++)
+        auto& island = slot.islands[i];
+        if (!island.colonized) continue;
+        for (int j = 0; j < island.peopleCount; j++)
         {
-            auto& island = slot.islands[i];
-            if (!island.colonized) continue;
-            for (int j = 0; j < island.peopleCount; j++)
-            {
-                slot.people.emplace_back(island.GetRandomPoint(), i);
-            }
+            slot.people.emplace_back(island.GetRandomPoint(), i);
         }
     }
     perlinSeed = lastPerlinSeed;
 }
 
-void MigrateV1()
-{
-    for (auto& slot: saveSlots)
-    {
-        slot.mapSize = {300, 300};
-    }
-}
+void MigrateV1(SaveSlot& slot) { slot.mapSize = {300, 300}; }
 
 void MigrateV2()
 {
@@ -177,14 +175,8 @@ void MigrateV2()
     // }
 }
 
-void LoadProgress()
+void LoadSavesJson()
 {
-    if (!std::filesystem::exists("saves.json"))
-    {
-        SaveProgress();
-        return;
-    }
-
     Json json = Json::Load("saves.json");
 
     int version = json["version"].GetInt();
@@ -192,21 +184,82 @@ void LoadProgress()
     for (size_t i = 0; i < json["saves"].size(); i++)
     {
         saveSlots[i].LoadJSON(json["saves"][i]);
+
+        if (version == 0)
+        {
+            MigrateV0(saveSlots[i]);
+            version = 1;
+        }
+        if (version == 1)
+        {
+            MigrateV1(saveSlots[i]);
+            version = 2;
+        }
+        if (version == 2)
+        {
+            version = 3;
+        }
     }
+}
+
+SaveSlot LoadFile(const std::filesystem::path& path)
+{
+    SaveSlot slot;
+
+    Json json = Json::Load(path);
+
+    int version = json["version"].GetInt();
+
+    slot.LoadJSON(json);
 
     if (version == 0)
     {
-        MigrateV0();
+        MigrateV0(saveSlots.back());
         version = 1;
     }
     if (version == 1)
     {
-        MigrateV1();
+        MigrateV1(saveSlots.back());
         version = 2;
     }
     if (version == 2)
     {
-        MigrateV2();
         version = 3;
+    }
+
+    return slot;
+}
+
+void LoadProgress()
+{
+    if (std::filesystem::exists("saves.json"))
+    {
+        LoadSavesJson();
+        for (auto& slot: saveSlots)
+        {
+            slot.opened = true;
+        }
+        SaveProgress();
+        std::filesystem::remove("saves.json");
+        return;
+    }
+
+    if (!std::filesystem::exists("saves/"))
+    {
+        SaveProgress();
+        return;
+    }
+
+    saveSlots.clear();
+    for (auto& file: std::filesystem::directory_iterator("saves/"))
+    {
+        if (!file.is_regular_file()) continue;
+
+        saveSlots.emplace_back(LoadFile(file));
+
+        // Strip the save slot of heavy data (restored later on demand)
+        saveSlots.back().islands.clear();
+        saveSlots.back().people.clear();
+        saveSlots.back().ships.clear();
     }
 }

@@ -220,15 +220,8 @@ void Island::DrawStats()
 Json Island::ToJSON()
 {
     Json json;
-
-    json["p1"].format = JsonFormat::Inline;
-    json["p1"].push_back(p1.x);
-    json["p1"].push_back(p1.y);
-
-    json["p2"].format = JsonFormat::Inline;
-    json["p2"].push_back(p2.x);
-    json["p2"].push_back(p2.y);
-
+    json["p1"] = Vector2ToJson(p1);
+    json["p2"] = Vector2ToJson(p2);
     json["area"] = area;
     json["woodColonize"] = woodColonize;
     json["ironColonize"] = ironColonize;
@@ -243,17 +236,14 @@ Json Island::ToJSON()
     json["colonized"] = colonized;
     json["taxes"] = taxes;
     json["efficiency"] = efficiency;
-
     return json;
 }
 
 Island Island::LoadJSON(Json& json)
 {
     Island island;
-    island.p1 = {static_cast<float>(json["p1"][0].GetDouble()),
-                 static_cast<float>(json["p1"][1].GetDouble())};
-    island.p2 = {static_cast<float>(json["p2"][0].GetDouble()),
-                 static_cast<float>(json["p2"][1].GetDouble())};
+    island.p1 = JsonToVector2(json["p1"]);
+    island.p2 = JsonToVector2(json["p2"]);
     island.area = json["area"].GetDouble();
     island.woodColonize = json["woodColonize"].GetInt();
     island.ironColonize = json["ironColonize"].GetInt();
