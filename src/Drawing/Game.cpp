@@ -4,13 +4,13 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing/Game.hpp"
-#include "Debug.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
+#include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
 #include "UI/Settings.hpp"
@@ -158,8 +158,6 @@ void DrawGameMenu()
             DrawTextCustom(text, mouse, fontSize, WHITE);
         }
     }
-
-    DrawIslandBorderPoints();
 }
 
 void ProcessPlayerInput(double deltaTime)
@@ -210,7 +208,7 @@ void ProcessPlayerInput(double deltaTime)
         Vector2 v = RaylibToGlsl(GetMousePosition());
         for (size_t i = 0; i < islands.size(); i++)
         {
-            if (islands[i].IsPointInside(v))
+            if (islands[i].IsPointInside(v) && !islands[i].editButton->IsMouseHovered())
             {
                 std::cout << "Clicked on island with id: " << i << '\n';
                 if (islands[i].colonized || islands[i].colonizationInProgress)
@@ -222,7 +220,7 @@ void ProcessPlayerInput(double deltaTime)
         }
     }
 
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && !editIslandMenu->IsVisible())
     {
         Vector2 delta = GetMousePosition() - lastMousePosition;
         delta.y *= -1;

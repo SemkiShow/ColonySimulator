@@ -9,8 +9,6 @@
 #include "Pathfinding.hpp"
 #include <raylib.h>
 
-#define SHIP_SPEED 25
-
 struct Ship
 {
     int sourceIndex = 0;

@@ -6,6 +6,7 @@
 #include "UI.hpp"
 #include "UI/About.hpp"
 #include "UI/DeleteSlot.hpp"
+#include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
@@ -16,13 +17,6 @@
 #include <raylib.h>
 
 std::shared_ptr<RApplication> app;
-
-int slotToEmpty = -1;
-int newMapSlot = -1;
-int slotSeed = -1;
-bool squareMap = true;
-Vector2 slotMapSize{300, 300};
-int islandEditIdx = -1;
 
 void InitUI()
 {
@@ -51,6 +45,10 @@ void InitUI()
     gameMenu->SetVisible(false);
     app->AddWindow(gameMenu);
 
+    editIslandMenu = std::make_shared<EditIslandMenu>();
+    editIslandMenu->SetVisible(false);
+    app->AddWindow(editIslandMenu);
+
     pauseMenu = std::make_shared<PauseMenu>();
     pauseMenu->SetVisible(false);
     app->AddWindow(pauseMenu);
@@ -63,27 +61,5 @@ void InitUI()
     loadingScreen->SetVisible(false);
     app->AddWindow(loadingScreen);
 
-    app->SetDebugMode(true);
+    // app->SetDebugMode(true);
 }
-
-// void EditIsland()
-// {
-// Rectangle rec = {UI_SPACING, windowSize.y / 2, windowSize.x - UI_SPACING * 2, windowSize.y /
-// 3}; rec.y -= rec.height / 2; DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
-// nextElementPositionY = rec.y + UI_SPACING;
-
-// {
-//     auto buttonRec = rec;
-//     buttonRec.width = ELEMENT_SIZE;
-//     buttonRec.height = ELEMENT_SIZE;
-//     buttonRec.x += rec.width - UI_SPACING;
-//     if (GuiButton(buttonRec, "#113#"))
-//     {
-//         islandEditIdx = -1;
-//         return;
-//     }
-// }
-
-// auto& island = islands[islandEditIdx];
-// DrawSliderInt("", _("Taxes").c_str(), &island.taxes, 0, 100);
-// }

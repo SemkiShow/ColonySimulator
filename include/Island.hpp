@@ -6,6 +6,7 @@
 #pragma once
 
 #include "Json.hpp"
+#include <RWidgets/Buttons/RIconButton.hpp>
 #include <raylib.h>
 #include <vector>
 
@@ -19,8 +20,6 @@ struct Biome
 #define GROWTH_PERIOD 1
 #define DEFAULT_TAXES 67
 
-#define PORTS_PER_ISLAND 1
-
 struct Island
 {
     Vector2 p1 = {0, 0}, p2 = {0, 0};
@@ -33,6 +32,7 @@ struct Island
     bool colonized = false;
     int taxes = DEFAULT_TAXES, efficiency = 50;
     int index = -1;
+    std::shared_ptr<RIconButton> editButton;
 
     Island() = default;
     Island(Vector2 p1, Vector2 p2, const std::vector<Vector2>& borderPoints, float area,

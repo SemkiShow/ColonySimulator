@@ -11,6 +11,8 @@
 #include <raymath.h>
 #include <vector>
 
+#define SHIP_SPEED 25
+
 std::vector<Ship> ships;
 
 Ship::Ship(int sourceIndex, int targetIndex, int peopleCount)

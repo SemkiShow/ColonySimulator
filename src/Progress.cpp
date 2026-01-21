@@ -11,6 +11,7 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
+#include "UI/Game.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
 #include <RCore/Translations.hpp>
@@ -126,6 +127,8 @@ void LoadFromSlot(int idx, bool generatePathMap)
         finished = true;
     };
     ShowLoadingScreen(true, func);
+
+    gameMenu->ReloadIslandUI();
 }
 
 void FixSaveIds()

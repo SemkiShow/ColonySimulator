@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 15:22+0100\n"
+"POT-Creation-Date: 2026-01-21 23:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,14 @@ msgstr ""
 
 #: src/Languages.cpp:32
 msgid "Empty slot"
+msgstr ""
+
+#: src/Map.cpp:240
+msgid "Loading map..."
+msgstr ""
+
+#: src/Progress.cpp:101 src/main.cpp:40
+msgid "Loading progress..."
 msgstr ""
 
 #: src/UI/About.cpp:17 src/UI/Main.cpp:22
@@ -35,11 +43,24 @@ msgstr ""
 msgid "This game is licensed under GPL v3.0"
 msgstr ""
 
+#: src/UI/DeleteSlot.cpp:10
+msgid "Yes"
+msgstr ""
+
+#: src/UI/DeleteSlot.cpp:10
+msgid "No"
+msgstr ""
+
+#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
+#: src/UI/NewMap.cpp:106
+msgid "New map"
+msgstr ""
+
 #: src/UI/Main.cpp:34
 msgid "Play"
 msgstr ""
 
-#: src/UI/Main.cpp:42
+#: src/UI/Main.cpp:42 src/UI/Pause.cpp:43
 msgid "Settings"
 msgstr ""
 
@@ -49,31 +70,6 @@ msgstr ""
 
 #: src/UI/Main.cpp:58
 msgid "Exit"
-msgstr ""
-
-#: src/UI/Settings.cpp:25
-msgid "vsync"
-msgstr ""
-
-#: src/UI/Settings.cpp:44
-msgid "show-fps"
-msgstr ""
-
-#: src/UI/Settings.cpp:55
-msgid "pan-sensitivity"
-msgstr ""
-
-#: src/UI/Settings.cpp:65
-msgid "wheel-sensitivity"
-msgstr ""
-
-#: src/UI/Settings.cpp:76
-msgid "language"
-msgstr ""
-
-#: src/UI/LoadMap.cpp:30 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
-#: src/Progress.cpp:84
-msgid "New map"
 msgstr ""
 
 #: src/UI/NewMap.cpp:31
@@ -104,24 +100,44 @@ msgstr ""
 msgid "Create map"
 msgstr ""
 
-#: src/UI/DeleteSlot.cpp:10
-msgid "Yes"
+#: src/UI/Pause.cpp:31
+msgid "Return to game"
 msgstr ""
 
-#: src/UI/DeleteSlot.cpp:10
-msgid "No"
+#: src/UI/Pause.cpp:50
+msgid "Save game"
 msgstr ""
 
-#: src/main.cpp:37 src/Progress.cpp:101
-msgid "Loading progress..."
+#: src/UI/Pause.cpp:57
+msgid "Go to the main menu"
 msgstr ""
 
-#: src/main.cpp:53
+#: src/UI/Settings.cpp:25
+msgid "vsync"
+msgstr ""
+
+#: src/UI/Settings.cpp:44
+msgid "show-fps"
+msgstr ""
+
+#: src/UI/Settings.cpp:55
+msgid "pan-sensitivity"
+msgstr ""
+
+#: src/UI/Settings.cpp:65
+msgid "wheel-sensitivity"
+msgstr ""
+
+#: src/UI/Settings.cpp:76
+msgid "language"
+msgstr ""
+
+#: src/UI/EditIsland.cpp:17
+msgid "Taxes"
+msgstr ""
+
+#: src/main.cpp:61
 msgid "Saving progress..."
-msgstr ""
-
-#: src/Map.cpp:244
-msgid "Loading map..."
 msgstr ""
 
 #: include/UI/DeleteSlot.hpp:19

@@ -218,17 +218,13 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
             abs(Vector2Distance(Vector2{0, 0}, (minIsland.p1 + minIsland.p2) / 2)))
             minDistanceIslandIdx = i;
     }
-    islands[minDistanceIslandIdx].colonized = true;
 
     // Set start resources
     auto& startIsland = islands[minDistanceIslandIdx];
     peopleTotal = startIsland.area * K_PEOPLE;
     peopleTotal = fmax(2, peopleTotal);
     startIsland.peopleCount = peopleTotal;
-    for (int i = 0; i < startIsland.peopleCount; i++)
-    {
-        people.emplace_back(startIsland.GetRandomPoint(), minDistanceIslandIdx);
-    }
+    startIsland.AddPeople(startIsland.peopleCount);
 
     // Prevent softlocking by having enough people to extract iron and enough iron to colonize
     startIsland.peopleMax = fmax(3, startIsland.peopleMax);

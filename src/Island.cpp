@@ -4,11 +4,11 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Island.hpp"
-#include "Drawing.hpp"
 #include "Human.hpp"
 #include "Perlin.hpp"
 #include "Ship.hpp"
 #include "Utils.hpp"
+#include <RCore/Conversions.hpp>
 #include <RCore/Translations.hpp>
 #include <cmath>
 #include <raymath.h>
@@ -16,6 +16,8 @@
 #define K_WOOD_GET 3
 #define K_IRON_GET 1
 #define K_EFFICIENCY 5
+
+#define PORTS_PER_ISLAND 1
 
 inline Color rgb(unsigned char r, unsigned char g, unsigned char b) { return {r, g, b, 255}; }
 
@@ -41,9 +43,7 @@ Vector2 Island::GetRandomPoint()
 bool Island::IsPointInside(const Vector2& point)
 {
     // Basic checks to avoid expensive raycasting
-    if (point.x < p1.x || point.x > p2.x ||
-        point.y < p1.y || point.y > p2.y)
-        return false;
+    if (point.x < p1.x || point.x > p2.x || point.y < p1.y || point.y > p2.y) return false;
     if (GetPerlin(point) < LAND_START) return false;
 
     return CheckCollisionPointPoly(point, borderPoints.data(), borderPoints.size());
@@ -218,10 +218,10 @@ void Island::DrawStats()
     // Draw taxes button
     if (colonized)
     {
-        auto buttonRec = rec;
+        auto buttonRec = rui::FromRaylib(rec);
         buttonRec.width = buttonRec.height = buttonScale;
         buttonRec.x += rec.width;
-        // if (GuiButton(buttonRec, "#142#")) islandEditIdx = index;
+        editButton->SetBounds(buttonRec);
     }
 }
 
