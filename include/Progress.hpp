@@ -21,6 +21,7 @@ struct SaveSlot
     std::vector<Ship> ships;
     int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
     Vector2 mapSize{300, 300};
+    bool opened = false;
 
     Json ToJSON();
     void LoadJSON(Json& json);
@@ -32,5 +33,7 @@ extern int currentSlot;
 void SaveToSlot(int idx);
 void LoadFromSlot(int idx, bool generatePathMap);
 void EmptySlot(int idx);
+std::string GetSlotPath(int idx);
 void SaveProgress();
+SaveSlot LoadFile(const std::filesystem::path& path);
 void LoadProgress();

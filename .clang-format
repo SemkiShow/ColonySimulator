@@ -6,6 +6,7 @@ PointerAlignment: Left
 
 BreakBeforeBraces: Allman
 AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
 BreakBeforeBinaryOperators: None
 AllowAllParametersOfDeclarationOnNextLine: false
 AllowAllArgumentsOnNextLine: false

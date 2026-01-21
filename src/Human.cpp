@@ -38,10 +38,7 @@ Json Human::ToJSON()
 {
     Json json;
 
-    json["pos"].format = JsonFormat::Inline;
-    json["pos"].push_back(pos.x);
-    json["pos"].push_back(pos.y);
-
+    json["pos"] = Vector2ToJson(pos);
     json["angle"] = angle;
     json["rotation"] = rotation;
     json["islandIdx"] = islandIdx;
@@ -55,8 +52,7 @@ Human Human::LoadJSON(Json& json)
 {
     Human human;
 
-    human.pos = {static_cast<float>(json["pos"][0].GetDouble()),
-                 static_cast<float>(json["pos"][1].GetDouble())};
+    human.pos = JsonToVector2(json["pos"]);
     human.angle = json["angle"].GetDouble();
     human.rotation = json["rotation"].GetDouble();
     human.islandIdx = json["islandIdx"].GetInt();
