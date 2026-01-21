@@ -81,7 +81,7 @@ void SaveToSlot(int idx)
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
     saveSlots[idx].peopleTotal = peopleTotal;
-    saveSlots[idx].name = GetText("Slot") + " " + std::to_string(idx + 1);
+    saveSlots[idx].name = GetText("New map");
     saveSlots[idx].mapSize = mapSize;
     saveSlots[idx].opened = true;
 }
@@ -127,12 +127,6 @@ void LoadFromSlot(int idx, bool generatePathMap)
         finished = true;
     };
     ShowLoadingScreen(true, func);
-}
-
-void EmptySlot(int idx)
-{
-    saveSlots[idx] = {};
-    saveSlots[idx].opened = true;
 }
 
 void FixSaveIds()

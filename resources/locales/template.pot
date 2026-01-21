@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 17:16+0100\n"
+"POT-Creation-Date: 2026-01-21 15:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Map.cpp:136
-msgid "Loading map..."
-msgstr ""
-
 #: src/Languages.cpp:32
 msgid "Empty slot"
-msgstr ""
-
-#: src/Progress.cpp:88
-msgid "Slot"
 msgstr ""
 
 #: src/UI/About.cpp:17 src/UI/Main.cpp:22
@@ -41,10 +33,6 @@ msgstr ""
 
 #: src/UI/About.cpp:27
 msgid "This game is licensed under GPL v3.0"
-msgstr ""
-
-#: src/UI/LoadMap.cpp:28
-msgid "New map"
 msgstr ""
 
 #: src/UI/Main.cpp:34
@@ -63,30 +51,79 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-#: src/UI/Settings.cpp:23
+#: src/UI/Settings.cpp:25
 msgid "vsync"
 msgstr ""
 
-#: src/UI/Settings.cpp:31
+#: src/UI/Settings.cpp:44
 msgid "show-fps"
 msgstr ""
 
-#: src/UI/Settings.cpp:39
+#: src/UI/Settings.cpp:55
 msgid "pan-sensitivity"
 msgstr ""
 
-#: src/UI/Settings.cpp:46
+#: src/UI/Settings.cpp:65
 msgid "wheel-sensitivity"
 msgstr ""
 
-#: src/UI/Settings.cpp:53
+#: src/UI/Settings.cpp:76
 msgid "language"
 msgstr ""
 
-#: src/main.cpp:37
+#: src/UI/LoadMap.cpp:30 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
+#: src/Progress.cpp:84
+msgid "New map"
+msgstr ""
+
+#: src/UI/NewMap.cpp:31
+msgid "map name"
+msgstr ""
+
+#: src/UI/NewMap.cpp:38
+msgid "seed"
+msgstr ""
+
+#: src/UI/NewMap.cpp:42
+msgid "Enter the map's seed"
+msgstr ""
+
+#: src/UI/NewMap.cpp:45
+msgid "square map"
+msgstr ""
+
+#: src/UI/NewMap.cpp:52
+msgid "map size x"
+msgstr ""
+
+#: src/UI/NewMap.cpp:66
+msgid "map size y"
+msgstr ""
+
+#: src/UI/NewMap.cpp:80
+msgid "Create map"
+msgstr ""
+
+#: src/UI/DeleteSlot.cpp:10
+msgid "Yes"
+msgstr ""
+
+#: src/UI/DeleteSlot.cpp:10
+msgid "No"
+msgstr ""
+
+#: src/main.cpp:37 src/Progress.cpp:101
 msgid "Loading progress..."
 msgstr ""
 
 #: src/main.cpp:53
 msgid "Saving progress..."
+msgstr ""
+
+#: src/Map.cpp:244
+msgid "Loading map..."
+msgstr ""
+
+#: include/UI/DeleteSlot.hpp:19
+msgid "Are you sure you want to delete map "
 msgstr ""

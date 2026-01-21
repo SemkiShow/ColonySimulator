@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-19 17:03+0100\n"
-"PO-Revision-Date: 2026-01-19 17:06+0100\n"
+"POT-Creation-Date: 2026-01-21 15:22+0100\n"
+"PO-Revision-Date: 2026-01-21 15:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,17 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 
-#: src/Map.cpp:136
-msgid "Loading map..."
-msgstr "Loading map..."
-
 #: src/Languages.cpp:32
 msgid "Empty slot"
 msgstr "Empty slot"
-
-#: src/Progress.cpp:88
-msgid "Slot"
-msgstr "Slot"
 
 #: src/UI/About.cpp:17 src/UI/Main.cpp:22
 msgid "Colony Simulator"
@@ -46,10 +38,6 @@ msgstr ""
 msgid "This game is licensed under GPL v3.0"
 msgstr "This game is licensed under GPL v3.0"
 
-#: src/UI/LoadMap.cpp:28
-msgid "New map"
-msgstr "New map"
-
 #: src/UI/Main.cpp:34
 msgid "Play"
 msgstr "Play"
@@ -66,27 +54,70 @@ msgstr "About"
 msgid "Exit"
 msgstr "Exit"
 
-#: src/UI/Settings.cpp:23
+#: src/UI/Settings.cpp:25
 msgid "vsync"
 msgstr "vsync"
 
-#: src/UI/Settings.cpp:31
+#: src/UI/Settings.cpp:44
 msgid "show-fps"
 msgstr "show-fps"
 
-#: src/UI/Settings.cpp:39
+#: src/UI/Settings.cpp:55
 msgid "pan-sensitivity"
 msgstr "pan-sensitivity"
 
-#: src/UI/Settings.cpp:46
+#: src/UI/Settings.cpp:65
 msgid "wheel-sensitivity"
 msgstr "wheel-sensitivity"
 
-#: src/UI/Settings.cpp:53
+#: src/UI/Settings.cpp:76
 msgid "language"
 msgstr "language"
 
-#: src/main.cpp:37
+#: src/UI/LoadMap.cpp:30 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
+#: src/Progress.cpp:84
+msgid "New map"
+msgstr "New map"
+
+#: src/UI/NewMap.cpp:31
+msgid "map name"
+msgstr "map name"
+
+#: src/UI/NewMap.cpp:38
+msgid "seed"
+msgstr "seed"
+
+#: src/UI/NewMap.cpp:42
+#| msgid "Enter the map seed"
+msgid "Enter the map's seed"
+msgstr "Enter the map's seed"
+
+#: src/UI/NewMap.cpp:45
+msgid "square map"
+msgstr "square map"
+
+#: src/UI/NewMap.cpp:52
+msgid "map size x"
+msgstr "map size x"
+
+#: src/UI/NewMap.cpp:66
+msgid "map size y"
+msgstr "map size y"
+
+#: src/UI/NewMap.cpp:80
+msgid "Create map"
+msgstr "Create map"
+
+#: src/UI/DeleteSlot.cpp:10
+#| msgid "Yes;No"
+msgid "Yes"
+msgstr "Yes"
+
+#: src/UI/DeleteSlot.cpp:10
+msgid "No"
+msgstr "No"
+
+#: src/main.cpp:37 src/Progress.cpp:101
 msgid "Loading progress..."
 msgstr "Loading progress..."
 
@@ -94,35 +125,26 @@ msgstr "Loading progress..."
 msgid "Saving progress..."
 msgstr "Saving progress..."
 
+#: src/Map.cpp:244
+msgid "Loading map..."
+msgstr "Loading map..."
+
+#: include/UI/DeleteSlot.hpp:19
+#| msgid "Are you sure you want to empty"
+msgid "Are you sure you want to delete map "
+msgstr "Are you sure you want to delete map "
+
+#~ msgid "Slot"
+#~ msgstr "Slot"
+
 #~ msgid "Lead Developer: SemkiShow"
 #~ msgstr "Lead Developer: SemkiShow"
 
 #~ msgid "Warning"
 #~ msgstr "Warning"
 
-#~ msgid "Are you sure you want to empty"
-#~ msgstr "Are you sure you want to empty"
-
-#~ msgid "Yes;No"
-#~ msgstr "Yes;No"
-
 #~ msgid "Taxes"
 #~ msgstr "Taxes"
-
-#~ msgid "seed"
-#~ msgstr "seed"
-
-#~ msgid "square map"
-#~ msgstr "square map"
-
-#~ msgid "map size x"
-#~ msgstr "map size x"
-
-#~ msgid "map size y"
-#~ msgstr "map size y"
-
-#~ msgid "Create map"
-#~ msgstr "Create map"
 
 #~ msgid "Return to game"
 #~ msgstr "Return to game"

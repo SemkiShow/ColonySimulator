@@ -31,7 +31,7 @@ extern int currentSlot;
 
 void SaveToSlot(int idx);
 void LoadFromSlot(int idx, bool generatePathMap);
-void EmptySlot(int idx);
+void FixSaveIds();
 std::string GetSlotPath(int idx);
 void SaveProgress();
 SaveSlot LoadFile(const std::filesystem::path& path);

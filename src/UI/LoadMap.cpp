@@ -5,12 +5,14 @@
 #include "UI/LoadMap.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
+#include "UI/DeleteSlot.hpp"
+#include "UI/Main.hpp"
+#include "UI/NewMap.hpp"
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Layouts/RGridLayout.hpp>
 #include <RWidgets/Layouts/RHBoxLayout.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
-#include <iostream>
 
 std::shared_ptr<LoadMapMenu> loadMapMenu;
 
@@ -29,7 +31,8 @@ LoadMapMenu::LoadMapMenu()
     newMapButton->SetAlignment(RAlign::Bottom);
     buttonLayout->AddWidget(newMapButton);
 
-    Connect([newMapButton] { return newMapButton->IsClicked(); }, [] {}, newMapButton);
+    Connect([newMapButton] { return newMapButton->IsClicked(); },
+            [] { newMapMenu->SetVisible(true); }, newMapButton);
 }
 
 void LoadMapMenu::ReloadSlots()
@@ -48,7 +51,13 @@ void LoadMapMenu::ReloadSlots()
                 if (auto btn = weakPlayButton.lock()) return btn->IsClicked();
                 return false;
             },
-            [i] { LoadFromSlot(i, true); }, playButton);
+            [i]
+            {
+                LoadFromSlot(i, true);
+                mainMenu->SetVisible(false);
+                loadMapMenu->SetVisible(false);
+            },
+            playButton);
 
         auto deleteButton = std::make_shared<RIconButton>(RIcon::Bin);
         slotLayout->AddWidget(deleteButton);
@@ -62,8 +71,8 @@ void LoadMapMenu::ReloadSlots()
             },
             [i]
             {
-                saveSlots[i].deleteLater = true;
-                std::cout << "Deleted save slot " << i << '\n';
+                deleteSlotMenu->SetSlotIdx(i);
+                deleteSlotMenu->SetVisible(true);
             },
             deleteButton);
 
@@ -81,17 +90,24 @@ void LoadMapMenu::Update()
     PopupPane::Update();
 
     bool anyDeleted = false;
-    for (auto it = saveSlots.begin(); it != saveSlots.end();)
+    int counter = 0;
+    for (auto it = saveSlots.begin(); it != saveSlots.end(); counter++)
     {
         if (it->deleteLater)
         {
             it = saveSlots.erase(it);
+            auto path = GetSlotPath(counter);
+            if (std::filesystem::exists(path)) std::filesystem::remove(path);
             anyDeleted = true;
             continue;
         }
         ++it;
     }
-    if (anyDeleted) ReloadSlots();
+    if (anyDeleted)
+    {
+        FixSaveIds();
+        ReloadSlots();
+    }
 }
 
 // void DrawLoadMap()

@@ -20,6 +20,8 @@ bool PopupPane::PollEvents()
 
 void PopupPane::Update()
 {
+    if (centralWidget && centralWidget->IsDeleteLater()) UnsetCentralWidget();
+
     if (updateBounds)
     {
         updateBounds = false;
@@ -55,20 +57,7 @@ void PopupPane::Update()
     closeButton.Update();
     pane.Update();
 
-    for (auto it = events.begin(); it != events.end();)
-    {
-        if (!it->IsValid())
-        {
-            it = events.erase(it);
-            continue;
-        }
-
-        if (it->event())
-        {
-            it->func();
-        }
-        ++it;
-    }
+    UpdateEvents();
 
     if (closeButton.IsClicked()) SetVisible(false);
 }
