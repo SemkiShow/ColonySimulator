@@ -7,6 +7,7 @@
 #include "Island.hpp"
 #include "Pathfinding.hpp"
 #include "Perlin.hpp"
+#include "Utils.hpp"
 #include <raymath.h>
 #include <vector>
 
@@ -61,11 +62,7 @@ Json Ship::ToJSON()
     Json json;
     json["sourceIndex"] = sourceIndex;
     json["targetIndex"] = targetIndex;
-
-    json["pos"].format = JsonFormat::Inline;
-    json["pos"].push_back(pos.x);
-    json["pos"].push_back(pos.y);
-
+    json["pos"] = Vector2ToJson(pos);
     json["people"] = people;
     return json;
 }
@@ -76,11 +73,9 @@ Ship Ship::LoadJSON(Json& json)
     ship.sourceIndex = json["sourceIndex"].GetInt();
     ship.targetIndex = json["targetIndex"].GetInt();
     ship.people = json["people"].GetInt();
-    ship.pos = {static_cast<float>(json["pos"][0].GetDouble()),
-                static_cast<float>(json["pos"][1].GetDouble())};
-    ship.nextPointIdx = static_cast<size_t>(json["nextPointIdx"].GetInt());
+    ship.pos = JsonToVector2(json["pos"]);
+    ship.nextPointIdx = json["nextPointIdx"].GetInt();
     ship.people = json["people"].GetInt();
     ship.reached = true;
-
     return ship;
 }

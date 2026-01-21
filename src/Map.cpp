@@ -15,6 +15,7 @@
 #include <iostream>
 #include <raymath.h>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #define K_WOOD_COLONIZE 0.05f
@@ -26,8 +27,85 @@
 #define K_PEOPLE_GROWTH 0.001f
 #define K_PEOPLE_MAX 0.1f
 
+template <class T1, class T2>
+struct std::hash<std::pair<T1, T2>>
+{
+    std::size_t operator()(const std::pair<T1, T2>& p) const
+    {
+        auto h1 = std::hash<T1>{}(p.first);
+        auto h2 = std::hash<T2>{}(p.second);
+        return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
+    }
+};
+
+std::vector<Vector2> GetBorderPoints(const std::vector<std::pair<int, int>>& islandPoints,
+                                     float stepSize, float approxStepSize)
+{
+    using Point = std::pair<int, int>;
+    if (islandPoints.empty()) return {};
+
+    std::unordered_set<Point> pointSet(islandPoints.begin(), islandPoints.end());
+
+    // Find the start point
+    Point startPoint = islandPoints[0];
+    for (const auto& p: islandPoints)
+    {
+        startPoint = std::min(startPoint, p);
+    }
+
+    Point dirs[8] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
+
+    // Extract border points using a wall follower algorithm
+    std::vector<Vector2> borderPoints;
+    Point currentPoint = startPoint;
+    int backtrackDir = 7;
+    do
+    {
+        borderPoints.push_back({currentPoint.first * stepSize - mapSize.x / 2,
+                                currentPoint.second * stepSize - mapSize.y / 2});
+
+        bool foundNext = false;
+        for (int i = 0; i < 8; i++)
+        {
+            int checkIdx = (backtrackDir + i) % 8;
+            Point neighbor = {currentPoint.first + dirs[checkIdx].first,
+                              currentPoint.second + dirs[checkIdx].second};
+
+            if (pointSet.count(neighbor))
+            {
+                currentPoint = neighbor;
+                backtrackDir = (checkIdx + 5) % 8;
+                foundNext = true;
+                break;
+            }
+        }
+
+        if (!foundNext) break;
+    } while (currentPoint != startPoint);
+
+    // Return early if there are not enough points anyway
+    if (borderPoints.size() < 3) return borderPoints;
+
+    // Approximate border points as an optimisation
+    std::vector<Vector2> approxBorderPoints;
+    approxBorderPoints.push_back(borderPoints[0]);
+    const float sqrApprox = approxStepSize * approxStepSize;
+    for (size_t i = 1; i < borderPoints.size(); i++)
+    {
+        if (Vector2DistanceSqr(borderPoints[i], approxBorderPoints.back()) >= sqrApprox)
+        {
+            approxBorderPoints.push_back(borderPoints[i]);
+        }
+    }
+
+    // Return the original border points if the approximation removed too many points
+    return (approxBorderPoints.size() < 3 ? borderPoints : approxBorderPoints);
+}
+
 void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float stepSize)
 {
+    const float stepsTotal = 3;
+
     // Find islands
     size_t maxX = ceil(mapSize.x / stepSize) + 1, maxY = ceil(mapSize.y / stepSize) + 1;
     std::vector<std::vector<int>> map(maxY, std::vector<int>(maxX, INT_MAX));
@@ -40,22 +118,47 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
             if (GetPerlin({j * stepSize - mapSize.x / 2, i * stepSize - mapSize.y / 2}) <
                 LAND_START)
                 continue;
-            if (j > 0) map[i][j] = fmin(map[i][j], map[i][j - 1]);
-            if (i > 0) map[i][j] = fmin(map[i][j], map[i - 1][j]);
-            if (j > 0 && i > 0)
+
+            int left = (j > 0) ? map[i][j - 1] : INT_MAX;
+            int top = (i > 0) ? map[i - 1][j] : INT_MAX;
+
+            // Determine label based on neighbors
+            if (left == INT_MAX && top == INT_MAX)
             {
-                auto n1 = map[i][j - 1], n2 = map[i - 1][j];
-                if (n1 > n2) std::swap(n1, n2);
-                if (n1 != n2 && same.find(n2) == same.end()) same[n2] = n1;
+                map[i][j] = counter++;
             }
-            if (map[i][j] == INT_MAX) map[i][j] = counter++;
+            else
+            {
+                // Inherit the smallest label found
+                map[i][j] = std::min(left, top);
+
+                // Merge islands if we touch two different valid labels
+                if (left != INT_MAX && top != INT_MAX && left != top)
+                {
+                    int rootLeft = left;
+                    while (same.count(rootLeft)) rootLeft = same[rootLeft];
+
+                    int rootTop = top;
+                    while (same.count(rootTop)) rootTop = same[rootTop];
+
+                    // If roots are different, merge the larger root into the smaller root
+                    if (rootLeft != rootTop)
+                    {
+                        if (rootLeft < rootTop)
+                            same[rootTop] = rootLeft;
+                        else
+                            same[rootLeft] = rootTop;
+                    }
+                }
+            }
         }
-        loadingPercent += 1.0f / maxY / 2 * 100;
+        loadingPercent += 1.0f / maxY / stepsTotal * 100;
     }
     std::cout << "Total island count: " << counter - same.size() << '\n';
 
     // Calculate islands' areas
     std::vector<int> islandAreas(counter, 0);
+    std::vector<std::vector<std::pair<int, int>>> islandPoints(counter);
     std::vector<std::pair<Vector2, Vector2>> islandCorners(
         counter, {{FLT_MAX, FLT_MAX}, {-FLT_MAX, -FLT_MAX}});
     for (size_t i = 0; i < maxY; i++)
@@ -65,10 +168,10 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
             if (map[i][j] == INT_MAX) continue;
 
             int idx = map[i][j];
-            while (same.find(idx) != same.end())
-                idx = same[idx];
+            while (same.count(idx)) idx = same[idx];
             map[i][j] = idx;
             islandAreas[idx]++;
+            islandPoints[idx].emplace_back(j, i);
 
             auto& corner = islandCorners[idx];
             corner.first.x = fmin(corner.first.x, j * stepSize - mapSize.x / 2);
@@ -76,7 +179,7 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
             corner.second.x = fmax(corner.second.x, j * stepSize - mapSize.x / 2);
             corner.second.y = fmax(corner.second.y, i * stepSize - mapSize.y / 2);
         }
-        loadingPercent += 1.0f / maxY / 2 * 100;
+        loadingPercent += 1.0f / maxY / stepsTotal * 100;
     }
 
     // Add large enough islands to the main vector
@@ -85,18 +188,23 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
     islands.clear();
     for (size_t i = 0; i < counter; i++)
     {
+        loadingPercent += 1.0f / counter / stepsTotal * 100;
+
         if (islandAreas[i] < minIslandArea) continue;
 
         auto& corner = islandCorners[i];
+        auto borderPoints = GetBorderPoints(islandPoints[i], stepSize);
         Vector2 center = {(corner.second.x + corner.first.x) / 2,
                           (corner.second.y + corner.first.y) / 2};
         float distance = Vector2Distance(center, {0, 0});
         float area = islandAreas[i] * stepSize * stepSize;
         float cost = distance * area;
-        islands.emplace_back(corner.first, corner.second, area, cost * K_WOOD_COLONIZE,
-                             cost * K_IRON_COLONIZE, cost * K_WOOD, cost * K_WOOD_GROWTH,
-                             cost * K_IRON, area * K_PEOPLE_GROWTH, area * K_PEOPLE_MAX);
+        islands.emplace_back(corner.first, corner.second, borderPoints, area,
+                             cost * K_WOOD_COLONIZE, cost * K_IRON_COLONIZE, cost * K_WOOD,
+                             cost * K_WOOD_GROWTH, cost * K_IRON, area * K_PEOPLE_GROWTH,
+                             area * K_PEOPLE_MAX);
         islands.back().index = islands.size() - 1;
+
         passed++;
     }
     std::cout << "Found " << passed << " large enough islands\n";

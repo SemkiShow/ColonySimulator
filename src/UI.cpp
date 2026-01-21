@@ -108,6 +108,7 @@ void DrawNewWorld()
     //     mapSize = slotMapSize;
     //     BuildMap();
     //     SaveToSlot(newMapSlot);
+    //     SaveProgress();
     // }
 
     // if (squareMap)

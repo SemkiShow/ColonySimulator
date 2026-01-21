@@ -42,8 +42,7 @@ double Stod(std::string_view s)
 
 void Json::SkipWhitespace(const std::string& s, size_t& idx)
 {
-    while (idx < s.size() && isspace(s[idx]))
-        ++idx;
+    while (idx < s.size() && isspace(s[idx])) ++idx;
 }
 
 Json Json::ParseValue(const std::string& s, size_t& idx)
@@ -211,8 +210,7 @@ Json Json::ParseNumber(std::string_view s, size_t& idx)
             if (idx < s.size() && (s[idx] == '+' || s[idx] == '-')) ++idx;
             if (idx >= s.size() || !isdigit(s[idx]))
                 throw std::runtime_error("Invalid number: exponent missing digits");
-            while (idx < s.size() && isdigit(s[idx]))
-                ++idx;
+            while (idx < s.size() && isdigit(s[idx])) ++idx;
         }
         else
         {
