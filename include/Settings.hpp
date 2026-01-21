@@ -4,7 +4,7 @@
 
 #pragma once
 
-typedef struct Vector2 Vector2;
+struct Vector2;
 
 extern bool vsync;
 extern bool showFPS;

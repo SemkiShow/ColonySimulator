@@ -7,10 +7,10 @@
 
 #include <memory>
 
-typedef struct Vector2 Vector2;
-typedef struct Shader Shader;
-typedef struct Texture Texture;
-typedef struct Font Font;
+struct Vector2;
+struct Shader;
+struct Texture;
+struct Font;
 struct RFont;
 
 extern bool shouldClose;

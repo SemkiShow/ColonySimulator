@@ -4,7 +4,7 @@
 
 #pragma once
 
-typedef struct Vector2 Vector2;
+struct Vector2;
 
 float GetPerlin(Vector2 v);
 bool InsideMap(Vector2 pos);

@@ -6,7 +6,7 @@
 
 #include <vector>
 
-typedef struct Vector2 Vector2;
+struct Vector2;
 
 using Path = std::vector<Vector2>;
 using ParentMap = std::vector<int>;

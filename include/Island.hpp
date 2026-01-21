@@ -6,7 +6,6 @@
 #pragma once
 
 #include "Json.hpp"
-#include "Pathfinding.hpp"
 #include <raylib.h>
 #include <vector>
 

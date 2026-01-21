@@ -6,9 +6,7 @@
 #include "Island.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
-#include "Pathfinding.hpp"
 #include "Perlin.hpp"
-#include "Settings.hpp"
 #include "Ship.hpp"
 #include "Utils.hpp"
 #include <RCore/Translations.hpp>

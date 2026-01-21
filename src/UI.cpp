@@ -4,9 +4,6 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI.hpp"
-#include "Drawing.hpp"
-#include "Perlin.hpp"
-#include "Settings.hpp"
 #include "UI/About.hpp"
 #include "UI/DeleteSlot.hpp"
 #include "UI/LoadMap.hpp"
