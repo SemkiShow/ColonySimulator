@@ -6,10 +6,12 @@
 #include "UI.hpp"
 #include "UI/About.hpp"
 #include "UI/DeleteSlot.hpp"
+#include "UI/Game.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
 #include "UI/Main.hpp"
 #include "UI/NewMap.hpp"
+#include "UI/Pause.hpp"
 #include "UI/Settings.hpp"
 #include <raylib.h>
 
@@ -41,13 +43,21 @@ void InitUI()
     newMapMenu->SetVisible(false);
     app->AddWindow(newMapMenu);
 
-    settingsMenu = std::make_shared<SettingsMenu>();
-    settingsMenu->SetVisible(false);
-    app->AddWindow(settingsMenu);
-
     aboutMenu = std::make_shared<AboutMenu>();
     aboutMenu->SetVisible(false);
     app->AddWindow(aboutMenu);
+
+    gameMenu = std::make_shared<GameMenu>();
+    gameMenu->SetVisible(false);
+    app->AddWindow(gameMenu);
+
+    pauseMenu = std::make_shared<PauseMenu>();
+    pauseMenu->SetVisible(false);
+    app->AddWindow(pauseMenu);
+
+    settingsMenu = std::make_shared<SettingsMenu>();
+    settingsMenu->SetVisible(false);
+    app->AddWindow(settingsMenu);
 
     loadingScreen = std::make_shared<LoadingScreen>();
     loadingScreen->SetVisible(false);
@@ -76,52 +86,4 @@ void InitUI()
 
 // auto& island = islands[islandEditIdx];
 // DrawSliderInt("", _("Taxes").c_str(), &island.taxes, 0, 100);
-// }
-
-// void DrawGameUI()
-// {
-// if (showFPS) DrawFPS(0, 0);
-
-// if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE, 0, ELEMENT_SIZE, ELEMENT_SIZE},
-// "#142#"))
-//     isSettings = !isSettings;
-
-// // if (GuiButton(Rectangle{windowSize.x - ELEMENT_SIZE * 2, 0, ELEMENT_SIZE, ELEMENT_SIZE},
-// //               "#140#"))
-// //     showIslandsBoxes = !showIslandsBoxes;
-
-// if (islandEditIdx != -1) EditIsland();
-
-// if (isSettings) DrawSettings();
-// }
-
-// void DrawPauseUI()
-// {
-// if (isSettings)
-// {
-//     DrawSettings();
-//     return;
-// }
-
-// Rectangle rec = {UI_SPACING, UI_SPACING, windowSize.x - UI_SPACING * 2,
-//                  windowSize.y - UI_SPACING * 2};
-// DrawRectangleRounded(rec, 0.1f, 1, MENU_BACKGROUND);
-// nextElementPositionY = rec.y + UI_SPACING;
-// if (DrawButtonCentered(_("Return to game").c_str())) OpenGameMenu();
-// if (DrawButtonCentered(_("Save game").c_str())) SaveProgress();
-// if (DrawButtonCentered(_("Go to the main menu").c_str())) isSaveGame = true;
-
-// if (isSaveGame)
-// {
-//     int res = GuiMessageBox(rec, _("Info").c_str(),
-//                             _("Would you like to save the game before exiting?").c_str(),
-//                             _("Yes;No").c_str());
-//     if (res >= 0)
-//     {
-//         if (res != 1) LoadFromSlot(currentSlot, false);
-//         SaveProgress();
-//         currentMenu = Menu::Main;
-//         isSaveGame = false;
-//     }
-// }
 // }

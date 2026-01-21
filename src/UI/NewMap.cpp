@@ -102,7 +102,9 @@ NewMapMenu::NewMapMenu()
                 BuildMap();
                 saveSlots.emplace_back();
                 SaveToSlot(saveSlots.size() - 1);
-                if (!mapNameTextbox->GetValue().empty())
+                if (mapNameTextbox->GetValue().empty())
+                    saveSlots.back().name = GetText("New map");
+                else
                     saveSlots.back().name = mapNameTextbox->GetValue();
                 SaveProgress();
                 loadMapMenu->ReloadSlots();

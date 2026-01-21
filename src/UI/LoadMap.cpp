@@ -6,6 +6,7 @@
 #include "Languages.hpp"
 #include "Progress.hpp"
 #include "UI/DeleteSlot.hpp"
+#include "UI/Game.hpp"
 #include "UI/Main.hpp"
 #include "UI/NewMap.hpp"
 #include <RWidgets/Buttons/RLabelButton.hpp>
@@ -56,6 +57,7 @@ void LoadMapMenu::ReloadSlots()
                 LoadFromSlot(i, true);
                 mainMenu->SetVisible(false);
                 loadMapMenu->SetVisible(false);
+                gameMenu->SetVisible(true);
             },
             playButton);
 

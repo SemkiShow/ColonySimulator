@@ -4,19 +4,19 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Drawing.hpp"
-#include "Drawing/GameMenu.hpp"
+#include "Drawing/Game.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
+#include "UI/Game.hpp"
+#include "UI/Pause.hpp"
 #include <RCore/Conversions.hpp>
 #include <ctime>
 #include <raylib.h>
 #include <raymath.h>
 
 bool shouldClose = false;
-
-Menu currentMenu = Menu::Main;
 
 Vector2 windowSize{16 * 50, 9 * 50};
 double timer = 0;
@@ -108,14 +108,18 @@ void DrawFrame()
 {
     if (IsWindowMinimized())
     {
-        if (currentMenu == Menu::Game) currentMenu = Menu::Pause;
+        if (gameMenu->IsVisible())
+        {
+            gameMenu->SetVisible(false);
+            pauseMenu->SetVisible(true);
+        }
 
         PollInputEvents();
         WaitTime(0.1);
         return;
     }
 
-    if (currentMenu == Menu::Game) ProcessPlayerInput(GetFrameTime());
+    if (gameMenu->IsVisible()) ProcessPlayerInput(GetFrameTime());
 
     BeginDrawing();
 
@@ -123,7 +127,7 @@ void DrawFrame()
 
     UpdateWindowSize();
 
-    if (currentMenu == Menu::Game || currentMenu == Menu::Pause)
+    if (gameMenu->IsVisible() || pauseMenu->IsVisible())
     {
         DrawGameMenu();
     }

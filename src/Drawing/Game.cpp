@@ -3,7 +3,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "Drawing/GameMenu.hpp"
+#include "Drawing/Game.hpp"
 #include "Debug.hpp"
 #include "Drawing.hpp"
 #include "Human.hpp"
@@ -11,18 +11,18 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
+#include "UI/Game.hpp"
+#include "UI/Pause.hpp"
 #include "UI/Settings.hpp"
-#include "raylib.h"
 #include <algorithm>
 #include <iostream>
+#include <raylib.h>
 #include <raymath.h>
 #include <vector>
 
 double growthTimer = 0;
 Vector2 lastMousePosition = GetMousePosition();
 Vector2 mousePressedStart = GetMousePosition();
-
-void OpenGameMenu() { currentMenu = Menu::Game; }
 
 void DrawResources()
 {
@@ -104,7 +104,7 @@ void DrawGameMenu()
     // Draw people
     for (auto& human: people)
     {
-        if (currentMenu == Menu::Game) human.MoveToTarget(GetFrameTime());
+        if (gameMenu->IsVisible()) human.MoveToTarget(GetFrameTime());
         float scale = 0.0005f / perlinScale;
         Vector2 pos = GlslToRaylib(human.pos);
         DrawTexturePro(humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},
@@ -128,7 +128,7 @@ void DrawGameMenu()
     // Draw ships
     for (auto& ship: ships)
     {
-        if (currentMenu == Menu::Game) ship.Move(GetFrameTime());
+        if (gameMenu->IsVisible()) ship.Move(GetFrameTime());
         float scale = 0.01f / perlinScale;
         Vector2 pos = GlslToRaylib(ship.pos);
         DrawTexturePro(shipTexture,
@@ -178,7 +178,8 @@ void ProcessPlayerInput(double deltaTime)
 
     if (!IsWindowFocused() || IsWindowHidden())
     {
-        currentMenu = Menu::Pause;
+        gameMenu->SetVisible(false);
+        pauseMenu->SetVisible(true);
     }
 
     if (IsKeyPressed(KEY_ESCAPE))
@@ -186,7 +187,10 @@ void ProcessPlayerInput(double deltaTime)
         if (settingsMenu->IsVisible())
             settingsMenu->SetVisible(false);
         else
-            currentMenu = Menu::Pause;
+        {
+            gameMenu->SetVisible(false);
+            pauseMenu->SetVisible(true);
+        }
     }
 
     float wheelMove = GetMouseWheelMove();

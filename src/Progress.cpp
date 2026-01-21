@@ -81,7 +81,6 @@ void SaveToSlot(int idx)
     saveSlots[idx].woodTotal = woodTotal;
     saveSlots[idx].ironTotal = ironTotal;
     saveSlots[idx].peopleTotal = peopleTotal;
-    saveSlots[idx].name = GetText("New map");
     saveSlots[idx].mapSize = mapSize;
     saveSlots[idx].opened = true;
 }

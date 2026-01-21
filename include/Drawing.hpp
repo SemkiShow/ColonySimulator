@@ -14,16 +14,6 @@ struct Font;
 struct RFont;
 
 extern bool shouldClose;
-
-enum class Menu
-{
-    Main,
-    Game,
-    Pause,
-    Settings
-};
-extern Menu currentMenu;
-
 extern Vector2 windowSize;
 
 extern Shader perlinShader;
