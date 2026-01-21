@@ -46,6 +46,7 @@ struct Island
     }
 
     Vector2 GetRandomPoint();
+    bool IsPointInside(const Vector2& point);
     void Colonize();
     void SendPeople(int count);
     void AddPeople(int count);

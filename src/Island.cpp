@@ -34,8 +34,19 @@ Vector2 Island::GetRandomPoint()
     {
         pos.x = GetRandomFloat(p1.x, p2.x);
         pos.y = GetRandomFloat(p1.y, p2.y);
-    } while (GetPerlin(pos) < LAND_START);
+    } while (!IsPointInside(pos));
     return pos;
+}
+
+bool Island::IsPointInside(const Vector2& point)
+{
+    // Basic checks to avoid expensive raycasting
+    if (point.x < p1.x || point.x > p2.x ||
+        point.y < p1.y || point.y > p2.y)
+        return false;
+    if (GetPerlin(point) < LAND_START) return false;
+
+    return CheckCollisionPointPoly(point, borderPoints.data(), borderPoints.size());
 }
 
 void Island::Colonize()
