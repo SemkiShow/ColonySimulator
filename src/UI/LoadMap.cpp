@@ -33,7 +33,12 @@ LoadMapMenu::LoadMapMenu()
     buttonLayout->AddWidget(newMapButton);
 
     Connect([newMapButton] { return newMapButton->IsClicked(); },
-            [] { newMapMenu->SetVisible(true); }, newMapButton);
+            []
+            {
+                newMapMenu->ResetToDefault();
+                newMapMenu->SetVisible(true);
+            },
+            newMapButton);
 }
 
 void LoadMapMenu::ReloadSlots()

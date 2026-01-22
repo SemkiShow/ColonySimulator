@@ -11,12 +11,9 @@
 #include "UI/LoadMap.hpp"
 #include <RCore/Translations.hpp>
 #include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Checkboxes/RCheckbox.hpp>
 #include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Layouts/RGridLayout.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
-#include <RWidgets/Textboxes/RTextbox.hpp>
-#include <RWidgets/Textboxes/RTextboxInt.hpp>
 
 std::shared_ptr<NewMapMenu> newMapMenu;
 
@@ -32,21 +29,21 @@ NewMapMenu::NewMapMenu()
     mapNameLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(mapNameLabel);
 
-    auto mapNameTextbox = std::make_shared<RTextbox>(_("New map"));
+    mapNameTextbox = std::make_shared<RTextbox>(_("New map"));
     layout->AddWidget(mapNameTextbox);
 
     auto seedLabel = std::make_shared<RLabel>(_("seed"));
     seedLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(seedLabel);
 
-    auto seedTextbox = std::make_shared<RTextboxInt>(_("Enter the map's seed"), rand());
+    seedTextbox = std::make_shared<RTextboxInt>(_("Enter the map's seed"), rand());
     layout->AddWidget(seedTextbox);
 
     auto squareMapLabel = std::make_shared<RLabel>(_("square map"));
     squareMapLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(squareMapLabel);
 
-    auto squareMapCheckbox = std::make_shared<RCheckbox>(true);
+    squareMapCheckbox = std::make_shared<RCheckbox>(true);
     layout->AddWidget(squareMapCheckbox);
 
     auto mapSizeXLabel = std::make_shared<RLabel>(_("map size x"));
@@ -57,7 +54,7 @@ NewMapMenu::NewMapMenu()
     layout->AddWidget(mapSizeXSlider);
 
     Connect([this] { return mapSizeXSlider->IsValueChanged(); },
-            [squareMapCheckbox, this]
+            [this]
             {
                 if (!squareMapCheckbox->GetValue()) return;
                 mapSizeYSlider->SetValue(mapSizeXSlider->GetValue());
@@ -71,7 +68,7 @@ NewMapMenu::NewMapMenu()
     layout->AddWidget(mapSizeYSlider);
 
     Connect([this] { return mapSizeYSlider->IsValueChanged(); },
-            [squareMapCheckbox, this]
+            [this]
             {
                 if (!squareMapCheckbox->GetValue()) return;
                 mapSizeXSlider->SetValue(mapSizeYSlider->GetValue());
@@ -81,27 +78,18 @@ NewMapMenu::NewMapMenu()
     createButton->SetAlignment(RAlign::Bottom);
     mainLayout->AddWidget(createButton);
 
-    auto resetToDefault = [mapNameTextbox, seedTextbox, squareMapCheckbox, this]
-    {
-        mapNameTextbox->SetValue(GetText("New map"));
-        seedTextbox->SetNumber(rand());
-        squareMapCheckbox->SetValue(true);
-        mapSizeXSlider->SetValue(300);
-        mapSizeYSlider->SetValue(300);
-    };
-
-    Connect([this] { return IsCloseButtonClicked(); }, resetToDefault);
-    resetToDefault();
+    Connect([this] { return IsCloseButtonClicked(); }, [this] { ResetToDefault(); });
 
     Connect([createButton] { return createButton->IsClicked(); },
-            [seedTextbox, this, mapNameTextbox, resetToDefault]
+            [this]
             {
                 perlinSeed = seedTextbox->GetNumber();
                 mapSize = {static_cast<float>(mapSizeXSlider->GetValue()),
                            static_cast<float>(mapSizeYSlider->GetValue())};
                 BuildMap();
                 saveSlots.emplace_back();
-                SaveToSlot(saveSlots.size() - 1);
+                currentSlot = saveSlots.size() - 1;
+                SaveToSlot(currentSlot);
                 if (mapNameTextbox->GetValue().empty())
                     saveSlots.back().name = GetText("New map");
                 else
@@ -109,6 +97,15 @@ NewMapMenu::NewMapMenu()
                 SaveProgress();
                 loadMapMenu->ReloadSlots();
                 SetVisible(false);
-                resetToDefault();
+                ResetToDefault();
             });
+}
+
+void NewMapMenu::ResetToDefault()
+{
+    mapNameTextbox->SetValue(GetText("New map"));
+    seedTextbox->SetNumber(rand());
+    squareMapCheckbox->SetValue(true);
+    mapSizeXSlider->SetValue(300);
+    mapSizeYSlider->SetValue(300);
 }
