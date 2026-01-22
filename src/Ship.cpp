@@ -65,7 +65,18 @@ Json Ship::ToJSON()
     json["sourceIndex"] = sourceIndex;
     json["targetIndex"] = targetIndex;
     json["pos"] = Vector2ToJson(pos);
+    json["flip"] = flip;
+
+    json["path"].format = JsonFormat::Inline;
+    for (auto& p: path)
+    {
+        json["path"].push_back(Vector2ToJson(p));
+    }
+
+    json["nextPointDir"] = Vector2ToJson(nextPointDir);
+    json["nextPointIdx"] = (int)nextPointIdx;
     json["people"] = people;
+    json["reached"] = reached;
     return json;
 }
 
@@ -74,10 +85,18 @@ Ship Ship::LoadJSON(Json& json)
     Ship ship;
     ship.sourceIndex = json["sourceIndex"].GetInt();
     ship.targetIndex = json["targetIndex"].GetInt();
-    ship.people = json["people"].GetInt();
     ship.pos = JsonToVector2(json["pos"]);
+    ship.flip = json["flip"].GetInt();
+
+    ship.path.clear();
+    for (size_t i = 0; i < json["path"].size(); i++)
+    {
+        ship.path.push_back(JsonToVector2(json["path"][i]));
+    }
+
+    ship.nextPointDir = JsonToVector2(json["nextPointDir"]);
     ship.nextPointIdx = json["nextPointIdx"].GetInt();
     ship.people = json["people"].GetInt();
-    ship.reached = true;
+    ship.reached = json["reached"].GetBool();
     return ship;
 }
