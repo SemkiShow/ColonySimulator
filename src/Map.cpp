@@ -4,6 +4,7 @@
 
 #include "Map.hpp"
 #include "Human.hpp"
+#include "Ship.hpp"
 #include "Island.hpp"
 #include "Languages.hpp"
 #include "Perlin.hpp"
@@ -239,6 +240,8 @@ void BuildMap()
     {
         label = _("Loading map...");
         woodTotal = ironTotal = peopleTotal = 0;
+        people.clear();
+        ships.clear();
         BuildIslands(loadingPercent, finished, 0.1f);
     };
     ShowLoadingScreen(true, func);
