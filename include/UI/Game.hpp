@@ -12,6 +12,8 @@ class GameMenu : public RWindow
   public:
     GameMenu();
 
+    void Draw() override;
+
     void UpdateIslandUI();
     void ReloadIslandUI();
 

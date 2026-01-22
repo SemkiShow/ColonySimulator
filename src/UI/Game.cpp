@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/Game.hpp"
+#include "Drawing/Game.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "UI/EditIsland.hpp"
@@ -19,6 +20,15 @@ GameMenu::GameMenu()
     ReloadIslandUI();
 
     Connect([] { return true; }, [this] { UpdateIslandUI(); });
+}
+
+void GameMenu::Draw()
+{
+    DrawGameMenu();
+
+    RWindow::Draw();
+
+    DrawResources();
 }
 
 void GameMenu::UpdateIslandUI()

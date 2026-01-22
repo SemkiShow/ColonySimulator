@@ -108,9 +108,8 @@ void DrawFrame()
 {
     if (IsWindowMinimized())
     {
-        if (gameMenu->IsVisible())
+        if (gameMenu->IsVisible() && !pauseMenu->IsVisible())
         {
-            gameMenu->SetVisible(false);
             pauseMenu->SetVisible(true);
         }
 
@@ -119,7 +118,7 @@ void DrawFrame()
         return;
     }
 
-    if (gameMenu->IsVisible()) ProcessPlayerInput(GetFrameTime());
+    if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ProcessPlayerInput(GetFrameTime());
 
     BeginDrawing();
 
@@ -127,15 +126,8 @@ void DrawFrame()
 
     UpdateWindowSize();
 
-    if (gameMenu->IsVisible() || pauseMenu->IsVisible())
-    {
-        DrawGameMenu();
-    }
-    else
-    {
-        app->Update();
-        app->Draw();
-    }
+    app->Update();
+    app->Draw();
 
     if (showFPS) DrawFPS(0, 0);
 

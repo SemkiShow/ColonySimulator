@@ -4,5 +4,6 @@
 
 #pragma once
 
+void DrawResources();
 void DrawGameMenu();
 void ProcessPlayerInput(double deltaTime);
