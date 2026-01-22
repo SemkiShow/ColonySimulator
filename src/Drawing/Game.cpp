@@ -10,6 +10,7 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
+#include "UI.hpp"
 #include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
@@ -141,6 +142,9 @@ void DrawGameMenu()
     {
         island.DrawStats();
     }
+
+    app->Update();
+    app->Draw();
 
     DrawResources();
 
