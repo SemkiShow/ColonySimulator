@@ -131,9 +131,10 @@ void DrawFrame()
     {
         DrawGameMenu();
     }
-
-    app->Update();
-    app->Draw();
+    else {
+        app->Update();
+        app->Draw();
+    }
 
     if (showFPS) DrawFPS(0, 0);
 
