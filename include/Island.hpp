@@ -18,7 +18,7 @@ struct Biome
 };
 
 #define GROWTH_PERIOD 1
-#define DEFAULT_TAXES 67
+#define DEFAULT_TAXES 60
 
 struct Island
 {

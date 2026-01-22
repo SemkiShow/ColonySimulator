@@ -131,7 +131,8 @@ void DrawFrame()
     {
         DrawGameMenu();
     }
-    else {
+    else
+    {
         app->Update();
         app->Draw();
     }
