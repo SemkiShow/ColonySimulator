@@ -19,8 +19,8 @@ struct SaveSlot
     std::vector<Ship> ships;
     int woodTotal = 0, ironTotal = 0, peopleTotal = 0;
     Vector2 mapSize{300, 300};
-    bool deleteLater = false;
-    bool opened = false;
+    bool completed = false;
+    bool deleteLater = false, opened = false;
 
     Json ToJSON();
     void LoadJSON(Json& json);

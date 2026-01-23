@@ -6,7 +6,6 @@
 #include "Languages.hpp"
 #include <fstream>
 #include <raylib.h>
-#include <raymath.h>
 #include <vector>
 
 bool vsync = true;

@@ -9,8 +9,10 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
+#include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
+#include "UI/Victory.hpp"
 #include <RCore/Conversions.hpp>
 #include <ctime>
 #include <raylib.h>
@@ -31,6 +33,8 @@ Texture shipTexture;
 
 Font myFont;
 std::shared_ptr<RFont> rayuiFont;
+
+Sound victorySound;
 
 Vector2 RaylibToGlsl(Vector2 v)
 {
@@ -118,7 +122,11 @@ void DrawFrame()
         return;
     }
 
-    if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ProcessPlayerInput(GetFrameTime());
+    if (gameMenu->IsVisible() && !pauseMenu->IsVisible() && !editIslandMenu->IsVisible() &&
+        !victoryMenu->IsVisible())
+    {
+        ProcessPlayerInput(GetFrameTime());
+    }
 
     BeginDrawing();
 
@@ -145,4 +153,6 @@ void FreeResources()
     UnloadTexture(shipTexture);
 
     UnloadFont(myFont);
+
+    UnloadSound(victorySound);
 }

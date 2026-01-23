@@ -14,7 +14,6 @@
 #include "UI/Game.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
-#include <RCore/Translations.hpp>
 #include <ctime>
 #include <filesystem>
 
@@ -43,6 +42,7 @@ Json SaveSlot::ToJSON()
     json["ironTotal"] = this->ironTotal;
     json["peopleTotal"] = this->peopleTotal;
     json["mapSize"] = Vector2ToJson(this->mapSize);
+    json["completed"] = this->completed;
     return json;
 }
 
@@ -70,6 +70,7 @@ void SaveSlot::LoadJSON(Json& json)
     this->ironTotal = json["ironTotal"].GetInt();
     this->peopleTotal = json["peopleTotal"].GetInt();
     this->mapSize = JsonToVector2(json["mapSize"]);
+    this->completed = json["completed"].GetBool();
 }
 
 void SaveToSlot(int idx)

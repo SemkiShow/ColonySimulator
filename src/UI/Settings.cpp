@@ -5,7 +5,6 @@
 #include "UI/Settings.hpp"
 #include "Languages.hpp"
 #include "Settings.hpp"
-#include <RCore/Translations.hpp>
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Checkboxes/RCheckbox.hpp>
 #include <RWidgets/Labels/RLabel.hpp>

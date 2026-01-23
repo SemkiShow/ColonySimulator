@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 23:29+0100\n"
+"POT-Creation-Date: 2026-01-23 12:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,11 +21,7 @@ msgstr ""
 msgid "Empty slot"
 msgstr ""
 
-#: src/Map.cpp:240
-msgid "Loading map..."
-msgstr ""
-
-#: src/Progress.cpp:101 src/main.cpp:40
+#: src/Progress.cpp:103 src/main.cpp:38
 msgid "Loading progress..."
 msgstr ""
 
@@ -51,7 +47,11 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
+#: src/UI/EditIsland.cpp:17
+msgid "Taxes"
+msgstr ""
+
+#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:32 src/UI/NewMap.cpp:94
 #: src/UI/NewMap.cpp:106
 msgid "New map"
 msgstr ""
@@ -72,31 +72,31 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
-#: src/UI/NewMap.cpp:31
+#: src/UI/NewMap.cpp:28
 msgid "map name"
 msgstr ""
 
-#: src/UI/NewMap.cpp:38
+#: src/UI/NewMap.cpp:35
 msgid "seed"
 msgstr ""
 
-#: src/UI/NewMap.cpp:42
+#: src/UI/NewMap.cpp:39
 msgid "Enter the map's seed"
 msgstr ""
 
-#: src/UI/NewMap.cpp:45
+#: src/UI/NewMap.cpp:42
 msgid "square map"
 msgstr ""
 
-#: src/UI/NewMap.cpp:52
+#: src/UI/NewMap.cpp:49
 msgid "map size x"
 msgstr ""
 
-#: src/UI/NewMap.cpp:66
+#: src/UI/NewMap.cpp:63
 msgid "map size y"
 msgstr ""
 
-#: src/UI/NewMap.cpp:80
+#: src/UI/NewMap.cpp:77
 msgid "Create map"
 msgstr ""
 
@@ -132,12 +132,20 @@ msgstr ""
 msgid "language"
 msgstr ""
 
-#: src/UI/EditIsland.cpp:17
-msgid "Taxes"
+#: src/UI/Victory.cpp:21
+msgid "You won!"
 msgstr ""
 
-#: src/main.cpp:61
+#: src/UI/Victory.cpp:25
+msgid "Ok"
+msgstr ""
+
+#: src/main.cpp:54
 msgid "Saving progress..."
+msgstr ""
+
+#: src/Map.cpp:241
+msgid "Loading map..."
 msgstr ""
 
 #: include/UI/DeleteSlot.hpp:19

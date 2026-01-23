@@ -6,10 +6,11 @@
 #include "Island.hpp"
 #include "Human.hpp"
 #include "Perlin.hpp"
+#include "Progress.hpp"
 #include "Ship.hpp"
+#include "UI/Victory.hpp"
 #include "Utils.hpp"
 #include <RCore/Conversions.hpp>
-#include <RCore/Translations.hpp>
 #include <cmath>
 #include <raymath.h>
 
@@ -87,6 +88,21 @@ void Island::SendPeople(int count)
     }
 }
 
+void CheckForVictory()
+{
+    int colonizedCount = 0;
+    for (auto& island: islands)
+    {
+        if (island.colonized) colonizedCount++;
+    }
+    bool completed = colonizedCount == (int)islands.size();
+    if (completed && !saveSlots[currentSlot].completed)
+    {
+        victoryMenu->Show();
+    }
+    saveSlots[currentSlot].completed = completed;
+}
+
 void Island::AddPeople(int count)
 {
     if (!colonized) colonized = true;
@@ -95,6 +111,7 @@ void Island::AddPeople(int count)
     {
         people.emplace_back(GetRandomPoint(), index);
     }
+    CheckForVictory();
 }
 
 void Island::GrowthTick()

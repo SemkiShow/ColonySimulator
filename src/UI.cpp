@@ -14,7 +14,7 @@
 #include "UI/NewMap.hpp"
 #include "UI/Pause.hpp"
 #include "UI/Settings.hpp"
-#include <raylib.h>
+#include "UI/Victory.hpp"
 
 std::shared_ptr<RApplication> app;
 
@@ -48,6 +48,10 @@ void InitUI()
     editIslandMenu = std::make_shared<EditIslandMenu>();
     editIslandMenu->SetVisible(false);
     app->AddWindow(editIslandMenu);
+
+    victoryMenu = std::make_shared<VictoryMenu>();
+    victoryMenu->SetVisible(false);
+    app->AddWindow(victoryMenu);
 
     pauseMenu = std::make_shared<PauseMenu>();
     pauseMenu->SetVisible(false);

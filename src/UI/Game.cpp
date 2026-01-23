@@ -7,7 +7,6 @@
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "UI/EditIsland.hpp"
-#include <raymath.h>
 
 std::shared_ptr<GameMenu> gameMenu;
 

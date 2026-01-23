@@ -31,4 +31,14 @@ void ReloadLabels()
     {
         if (slot.seed == -1) slot.name = GetText("Empty slot");
     }
+
+    UnloadSound(victorySound);
+    if (currentLanguage == "pl")
+    {
+        victorySound = LoadSound("resources/sounds/gratulacje_uzytkowniku.mp3");
+    }
+    else
+    {
+        victorySound = LoadSound("resources/sounds/youve_got_mail.mp3");
+    }
 }

@@ -10,7 +10,6 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
 #include <algorithm>
@@ -211,7 +210,7 @@ void ProcessPlayerInput(double deltaTime)
         }
     }
 
-    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && !editIslandMenu->IsVisible())
+    if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
     {
         Vector2 delta = GetMousePosition() - lastMousePosition;
         delta.y *= -1;

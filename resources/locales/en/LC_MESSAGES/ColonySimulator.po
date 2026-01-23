@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-21 23:29+0100\n"
-"PO-Revision-Date: 2026-01-21 23:30+0100\n"
+"POT-Creation-Date: 2026-01-23 12:07+0100\n"
+"PO-Revision-Date: 2026-01-23 12:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -22,11 +22,7 @@ msgstr ""
 msgid "Empty slot"
 msgstr "Empty slot"
 
-#: src/Map.cpp:240
-msgid "Loading map..."
-msgstr "Loading map..."
-
-#: src/Progress.cpp:101 src/main.cpp:40
+#: src/Progress.cpp:103 src/main.cpp:38
 msgid "Loading progress..."
 msgstr "Loading progress..."
 
@@ -54,7 +50,11 @@ msgstr "Yes"
 msgid "No"
 msgstr "No"
 
-#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:35 src/UI/NewMap.cpp:86
+#: src/UI/EditIsland.cpp:17
+msgid "Taxes"
+msgstr "Taxes"
+
+#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:32 src/UI/NewMap.cpp:94
 #: src/UI/NewMap.cpp:106
 msgid "New map"
 msgstr "New map"
@@ -75,31 +75,31 @@ msgstr "About"
 msgid "Exit"
 msgstr "Exit"
 
-#: src/UI/NewMap.cpp:31
+#: src/UI/NewMap.cpp:28
 msgid "map name"
 msgstr "map name"
 
-#: src/UI/NewMap.cpp:38
+#: src/UI/NewMap.cpp:35
 msgid "seed"
 msgstr "seed"
 
-#: src/UI/NewMap.cpp:42
+#: src/UI/NewMap.cpp:39
 msgid "Enter the map's seed"
 msgstr "Enter the map's seed"
 
-#: src/UI/NewMap.cpp:45
+#: src/UI/NewMap.cpp:42
 msgid "square map"
 msgstr "square map"
 
-#: src/UI/NewMap.cpp:52
+#: src/UI/NewMap.cpp:49
 msgid "map size x"
 msgstr "map size x"
 
-#: src/UI/NewMap.cpp:66
+#: src/UI/NewMap.cpp:63
 msgid "map size y"
 msgstr "map size y"
 
-#: src/UI/NewMap.cpp:80
+#: src/UI/NewMap.cpp:77
 msgid "Create map"
 msgstr "Create map"
 
@@ -135,13 +135,21 @@ msgstr "wheel-sensitivity"
 msgid "language"
 msgstr "language"
 
-#: src/UI/EditIsland.cpp:17
-msgid "Taxes"
-msgstr "Taxes"
+#: src/UI/Victory.cpp:21
+msgid "You won!"
+msgstr "You won!"
 
-#: src/main.cpp:61
+#: src/UI/Victory.cpp:25
+msgid "Ok"
+msgstr "Ok"
+
+#: src/main.cpp:54
 msgid "Saving progress..."
 msgstr "Saving progress..."
+
+#: src/Map.cpp:241
+msgid "Loading map..."
+msgstr "Loading map..."
 
 #: include/UI/DeleteSlot.hpp:19
 msgid "Are you sure you want to delete map "
