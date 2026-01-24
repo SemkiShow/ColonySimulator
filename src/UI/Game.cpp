@@ -10,7 +10,6 @@
 
 std::shared_ptr<GameMenu> gameMenu;
 
-// TODO: Replace UI hardcoding with more RayUI usage
 GameMenu::GameMenu()
 {
     layout = std::make_shared<RLayout>();

@@ -62,8 +62,8 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 ### v1.3.0
 
 - [x] Approximate island shapes more accurately, than a rectangle
-- [ ] Replace raygui with a custom UI library
-- [ ] SFX, animations and particle effects
+- [x] Replace raygui with a custom UI library
+- [ ] Replace UI hardcoding with more RayUI usage
 - [x] Fix ships saving
 
 ### Joke features (probably not worth implementing)
