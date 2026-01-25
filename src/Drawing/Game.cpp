@@ -13,7 +13,6 @@
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
 #include <algorithm>
-#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include <vector>
@@ -105,6 +104,7 @@ void DrawGameMenu()
         if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) human.MoveToTarget(GetFrameTime());
         float scale = 0.0005f / perlinScale;
         Vector2 pos = GlslToRaylib(human.pos);
+        if (!InsideScreen(pos)) continue;
         DrawTexturePro(humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},
                        {pos.x, pos.y, humanTexture.width * scale, humanTexture.height * scale},
                        {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
@@ -129,6 +129,7 @@ void DrawGameMenu()
         if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ship.Move(GetFrameTime());
         float scale = 0.01f / perlinScale;
         Vector2 pos = GlslToRaylib(ship.pos);
+        if (!InsideScreen(pos)) continue;
         DrawTexturePro(shipTexture,
                        {0, 0, ship.flip * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
                        {pos.x, pos.y, shipTexture.width * scale, shipTexture.height * scale},
@@ -194,13 +195,11 @@ void ProcessPlayerInput(double deltaTime)
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON) &&
         Vector2Distance(GetMousePosition(), mousePressedStart) == 0)
     {
-        std::cout << "Mouse pressed!\n";
         Vector2 v = RaylibToGlsl(GetMousePosition());
         for (size_t i = 0; i < islands.size(); i++)
         {
             if (islands[i].IsPointInside(v) && !islands[i].editButton->IsMouseHovered())
             {
-                std::cout << "Clicked on island with id: " << i << '\n';
                 if (islands[i].colonized || islands[i].colonizationInProgress)
                     islands[i].SendPeople(1);
                 else

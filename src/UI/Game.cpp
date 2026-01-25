@@ -5,7 +5,6 @@
 #include "UI/Game.hpp"
 #include "Drawing/Game.hpp"
 #include "Island.hpp"
-#include "Perlin.hpp"
 #include "UI/EditIsland.hpp"
 
 std::shared_ptr<GameMenu> gameMenu;
@@ -31,13 +30,6 @@ void GameMenu::Draw()
 
 void GameMenu::UpdateIslandUI()
 {
-    float scale = 0.1f / perlinScale;
-
-    for (auto& island: islands)
-    {
-        island.editButton->SetVisible(scale >= minScale && island.colonized);
-    }
-
     // if (scale < minScale)
     // {
     //     for (auto& island: islands)

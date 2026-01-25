@@ -159,7 +159,8 @@ void Island::DrawStats()
 {
     // Do not draw anything if the scale is too small
     float scale = 0.01f / perlinScale;
-    if (scale < 0.05f) return;
+    editButton->SetVisible(false);
+    // if (scale < 0.05f) return;
 
     // Constants
     const float margin = 100 * scale, lockScale = 0.5f * scale, woodScale = 0.15f * scale,
@@ -238,6 +239,7 @@ void Island::DrawStats()
         auto buttonRec = rui::FromRaylib(rec);
         buttonRec.width = buttonRec.height = buttonScale;
         buttonRec.x += rec.width;
+        editButton->SetVisible(true);
         editButton->SetBounds(buttonRec);
     }
 }

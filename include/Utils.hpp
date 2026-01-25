@@ -36,3 +36,8 @@ inline Vector2 JsonToVector2(Json& json)
 {
     return {static_cast<float>(json[0].GetDouble()), static_cast<float>(json[1].GetDouble())};
 }
+
+inline bool InsideScreen(Vector2 v)
+{
+    return v.x >= 0 && v.x < windowSize.x && v.y >= 0 && v.y < windowSize.y;
+}

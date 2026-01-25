@@ -19,7 +19,6 @@ class GameMenu : public RWindow
 
   private:
     std::shared_ptr<RLayout> layout;
-    const float minScale = 0.5f;
 };
 
 extern std::shared_ptr<GameMenu> gameMenu;
