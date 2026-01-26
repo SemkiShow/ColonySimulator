@@ -12,25 +12,26 @@
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Layouts/RGridLayout.hpp>
-#include <RWidgets/Layouts/RHBoxLayout.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <RWidgets/ScrollAreas/RScrollArea.hpp>
 
 std::shared_ptr<LoadMapMenu> loadMapMenu;
 
 LoadMapMenu::LoadMapMenu()
 {
-    auto centralLayout = std::make_shared<RVBoxLayout>();
-    SetCentralWidget(centralLayout);
+    auto layout = std::make_shared<RVBoxLayout>();
+    layout->SetMargin(0);
+    SetCentralWidget(layout);
+
+    auto scrollArea = std::make_shared<RScrollArea>();
+    layout->AddWidget(scrollArea);
 
     slotLayout = std::make_shared<RGridLayout>(3);
-    centralLayout->AddWidget(slotLayout);
-
-    auto buttonLayout = std::make_shared<RHBoxLayout>();
-    centralLayout->AddWidget(buttonLayout);
+    scrollArea->SetCentralWidget(slotLayout);
 
     auto newMapButton = std::make_shared<RLabelButton>(_("New map"));
     newMapButton->SetAlignment(RAlign::Bottom);
-    buttonLayout->AddWidget(newMapButton);
+    layout->AddWidget(newMapButton);
 
     Connect([newMapButton] { return newMapButton->IsClicked(); },
             []

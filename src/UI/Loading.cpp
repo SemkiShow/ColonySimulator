@@ -4,7 +4,6 @@
 
 #include "UI/Loading.hpp"
 #include <RWidgets/Layouts/RHBoxLayout.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
 #include <RWidgets/Panes/RPane.hpp>
 
 std::shared_ptr<LoadingScreen> loadingScreen;
