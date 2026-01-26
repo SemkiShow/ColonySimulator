@@ -11,6 +11,7 @@
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
 #include <RWidgets/Panes/RPaneRounded.hpp>
+#include <cassert>
 
 std::shared_ptr<PauseMenu> pauseMenu;
 
@@ -77,5 +78,6 @@ PauseMenu::PauseMenu()
 
 void PauseMenu::UpdateTimeLabel()
 {
+    assert(IsSlotValid(currentSlot));
     timeLabel->SetLabel(_("Time elapsed: ") + FormatTime(saveSlots[currentSlot].time));
 }

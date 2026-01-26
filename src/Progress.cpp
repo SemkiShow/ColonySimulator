@@ -14,9 +14,9 @@
 #include "UI/Game.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
+#include <cassert>
 #include <ctime>
 #include <filesystem>
-#include <iostream>
 
 std::vector<SaveSlot> saveSlots;
 int currentSlot = -1;
@@ -80,11 +80,7 @@ bool IsSlotValid(int idx) { return idx >= 0 && idx < (int)saveSlots.size(); }
 
 void SaveToSlot(int idx)
 {
-    if (!IsSlotValid(idx))
-    {
-        std::cerr << "Invalid save slot index " << idx << '\n';
-        return;
-    }
+    assert(IsSlotValid(idx));
     saveSlots[idx].seed = perlinSeed;
     saveSlots[idx].islands = islands;
     saveSlots[idx].ships = ships;
@@ -98,11 +94,7 @@ void SaveToSlot(int idx)
 
 void LoadFromSlot(int idx, bool generatePathMap)
 {
-    if (!IsSlotValid(idx))
-    {
-        std::cerr << "Invalid save slot index " << idx << '\n';
-        return;
-    }
+    assert(IsSlotValid(idx));
 
     currentSlot = idx;
     if (saveSlots[idx].seed == -1)
@@ -162,7 +154,7 @@ std::string GetSlotPath(int idx) { return "saves/" + std::to_string(idx) + ".jso
 
 void SaveProgress()
 {
-    SaveToSlot(currentSlot);
+    if (IsSlotValid(currentSlot)) SaveToSlot(currentSlot);
 
     if (!std::filesystem::exists("saves/")) std::filesystem::create_directory("saves");
 

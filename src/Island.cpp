@@ -12,6 +12,7 @@
 #include "UI/Victory.hpp"
 #include "Utils.hpp"
 #include <RCore/Conversions.hpp>
+#include <cassert>
 #include <cmath>
 #include <raymath.h>
 
@@ -91,6 +92,7 @@ void Island::SendPeople(int count)
 
 void CheckForVictory()
 {
+    if (!IsSlotValid(currentSlot)) return;
     int colonizedCount = 0;
     for (auto& island: islands)
     {

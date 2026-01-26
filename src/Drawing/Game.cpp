@@ -8,6 +8,7 @@
 #include "Human.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
+#include "Progress.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
 #include "UI/Game.hpp"
@@ -18,6 +19,7 @@
 #include <vector>
 
 double growthTimer = 0;
+Vector2 lastMousePosition = GetMousePosition();
 Vector2 mousePressedStart = GetMousePosition();
 
 void DrawResources()
@@ -161,6 +163,8 @@ void ProcessPlayerInput()
 {
     double deltaTime = GetFrameTime();
 
+    if (IsSlotValid(currentSlot)) saveSlots[currentSlot].time += deltaTime;
+
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
         perlinOffset.y += panSensitivity * perlinScale * deltaTime;
     if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
@@ -212,7 +216,7 @@ void ProcessPlayerInput()
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
     {
-        Vector2 delta = GetMouseDelta();
+        Vector2 delta = GetMousePosition() - lastMousePosition;
         delta.y *= -1;
         perlinOffset -= delta * perlinScale * GetWindowScaleDPI();
     }
@@ -222,4 +226,6 @@ void ProcessPlayerInput()
         growthTimer = GetTime();
         for (auto& island: islands) island.GrowthTick();
     }
+
+    lastMousePosition = GetMousePosition();
 }

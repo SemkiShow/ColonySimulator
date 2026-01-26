@@ -10,6 +10,7 @@
 #include <RCore/Translations.hpp>
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <cassert>
 #include <raylib.h>
 
 std::shared_ptr<VictoryMenu> victoryMenu;
@@ -33,6 +34,7 @@ VictoryMenu::VictoryMenu()
 
 void VictoryMenu::Show()
 {
+    assert(IsSlotValid(currentSlot));
     SetVisible(true);
     auto time = saveSlots[currentSlot].time;
     if (bestTime < 0) bestTime = time;
