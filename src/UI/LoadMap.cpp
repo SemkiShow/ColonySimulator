@@ -95,8 +95,6 @@ void LoadMapMenu::ReloadSlots()
 
 void LoadMapMenu::Update()
 {
-    PopupPane::Update();
-
     bool anyDeleted = false;
     int counter = 0;
     for (auto it = saveSlots.begin(); it != saveSlots.end(); counter++)
@@ -116,4 +114,6 @@ void LoadMapMenu::Update()
         FixSaveIds();
         ReloadSlots();
     }
+
+    PopupPane::Update();
 }

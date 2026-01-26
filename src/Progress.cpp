@@ -247,7 +247,6 @@ SaveSlot LoadFile(const std::filesystem::path& path)
         version = 3;
     }
 
-    loadMapMenu->ReloadSlots();
     return slot;
 }
 

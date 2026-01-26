@@ -20,9 +20,11 @@ std::shared_ptr<NewMapMenu> newMapMenu;
 NewMapMenu::NewMapMenu()
 {
     auto mainLayout = std::make_shared<RVBoxLayout>();
+    mainLayout->SetMargin(0);
     SetCentralWidget(mainLayout);
 
     auto layout = std::make_shared<RGridLayout>(2);
+    layout->SetMargin(0);
     mainLayout->AddWidget(layout);
 
     auto mapNameLabel = std::make_shared<RLabel>(_("map name"));
