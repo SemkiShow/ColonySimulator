@@ -13,6 +13,7 @@ bool showFPS = true;
 float panSensitivity = 500;
 float wheelSensitivity = 0.3f;
 Vector2 mapSize = {300, 300};
+double bestTime = -1;
 
 std::vector<std::string> Split(std::string input, char delimiter = ' ')
 {
@@ -40,6 +41,7 @@ void Save()
     file << "pan-sensitivity=" << panSensitivity << '\n';
     file << "wheel-sensitivity=" << wheelSensitivity << '\n';
     file << "language=" << currentLanguage << '\n';
+    file << "best-time=" << bestTime << '\n';
     file.close();
 }
 
@@ -56,6 +58,7 @@ void Load()
         if (label == "pan-sensitivity") panSensitivity = stof(value);
         if (label == "wheel-sensitivity") wheelSensitivity = stof(value);
         if (label == "language") currentLanguage = value;
+        if (label == "best-time") bestTime = stod(value);
     }
     file.close();
 

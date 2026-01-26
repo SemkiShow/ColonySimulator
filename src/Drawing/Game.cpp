@@ -18,7 +18,6 @@
 #include <vector>
 
 double growthTimer = 0;
-Vector2 lastMousePosition = GetMousePosition();
 Vector2 mousePressedStart = GetMousePosition();
 
 void DrawResources()
@@ -158,8 +157,10 @@ void DrawGameMenu()
     }
 }
 
-void ProcessPlayerInput(double deltaTime)
+void ProcessPlayerInput()
 {
+    double deltaTime = GetFrameTime();
+
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
         perlinOffset.y += panSensitivity * perlinScale * deltaTime;
     if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S))
@@ -211,7 +212,7 @@ void ProcessPlayerInput(double deltaTime)
 
     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON))
     {
-        Vector2 delta = GetMousePosition() - lastMousePosition;
+        Vector2 delta = GetMouseDelta();
         delta.y *= -1;
         perlinOffset -= delta * perlinScale * GetWindowScaleDPI();
     }
@@ -221,6 +222,4 @@ void ProcessPlayerInput(double deltaTime)
         growthTimer = GetTime();
         for (auto& island: islands) island.GrowthTick();
     }
-
-    lastMousePosition = GetMousePosition();
 }

@@ -6,4 +6,4 @@
 
 void DrawResources();
 void DrawGameMenu();
-void ProcessPlayerInput(double deltaTime);
+void ProcessPlayerInput();

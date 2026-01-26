@@ -16,6 +16,7 @@
 #include "UI/Loading.hpp"
 #include <ctime>
 #include <filesystem>
+#include <iostream>
 
 std::vector<SaveSlot> saveSlots;
 int currentSlot = -1;
@@ -43,6 +44,7 @@ Json SaveSlot::ToJSON()
     json["peopleTotal"] = this->peopleTotal;
     json["mapSize"] = Vector2ToJson(this->mapSize);
     json["completed"] = this->completed;
+    json["time"] = this->time;
     return json;
 }
 
@@ -71,11 +73,18 @@ void SaveSlot::LoadJSON(Json& json)
     this->peopleTotal = json["peopleTotal"].GetInt();
     this->mapSize = JsonToVector2(json["mapSize"]);
     this->completed = json["completed"].GetBool();
+    this->time = json["time"].GetDouble();
 }
+
+bool IsSlotValid(int idx) { return idx >= 0 && idx < (int)saveSlots.size(); }
 
 void SaveToSlot(int idx)
 {
-    if (idx < 0) return;
+    if (!IsSlotValid(idx))
+    {
+        std::cerr << "Invalid save slot index " << idx << '\n';
+        return;
+    }
     saveSlots[idx].seed = perlinSeed;
     saveSlots[idx].islands = islands;
     saveSlots[idx].ships = ships;
@@ -89,6 +98,12 @@ void SaveToSlot(int idx)
 
 void LoadFromSlot(int idx, bool generatePathMap)
 {
+    if (!IsSlotValid(idx))
+    {
+        std::cerr << "Invalid save slot index " << idx << '\n';
+        return;
+    }
+
     currentSlot = idx;
     if (saveSlots[idx].seed == -1)
     {

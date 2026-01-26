@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-23 12:07+0100\n"
-"PO-Revision-Date: 2026-01-23 12:08+0100\n"
+"POT-Creation-Date: 2026-01-26 20:34+0100\n"
+"PO-Revision-Date: 2026-01-26 20:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 
-#: src/Languages.cpp:32
+#: src/Languages.cpp:33
 msgid "Empty slot"
 msgstr "Empty slot"
 
-#: src/Progress.cpp:103 src/main.cpp:38
+#: src/Progress.cpp:117 src/main.cpp:38
 msgid "Loading progress..."
 msgstr "Loading progress..."
 
@@ -54,8 +54,8 @@ msgstr "No"
 msgid "Taxes"
 msgstr "Taxes"
 
-#: src/UI/LoadMap.cpp:31 src/UI/NewMap.cpp:32 src/UI/NewMap.cpp:94
-#: src/UI/NewMap.cpp:106
+#: src/UI/LoadMap.cpp:34 src/UI/NewMap.cpp:34 src/UI/NewMap.cpp:96
+#: src/UI/NewMap.cpp:108
 msgid "New map"
 msgstr "New map"
 
@@ -63,7 +63,7 @@ msgstr "New map"
 msgid "Play"
 msgstr "Play"
 
-#: src/UI/Main.cpp:42 src/UI/Pause.cpp:43
+#: src/UI/Main.cpp:42 src/UI/Pause.cpp:49
 msgid "Settings"
 msgstr "Settings"
 
@@ -75,73 +75,81 @@ msgstr "About"
 msgid "Exit"
 msgstr "Exit"
 
-#: src/UI/NewMap.cpp:28
+#: src/UI/NewMap.cpp:30
 msgid "map name"
 msgstr "map name"
 
-#: src/UI/NewMap.cpp:35
+#: src/UI/NewMap.cpp:37
 msgid "seed"
 msgstr "seed"
 
-#: src/UI/NewMap.cpp:39
+#: src/UI/NewMap.cpp:41
 msgid "Enter the map's seed"
 msgstr "Enter the map's seed"
 
-#: src/UI/NewMap.cpp:42
+#: src/UI/NewMap.cpp:44
 msgid "square map"
 msgstr "square map"
 
-#: src/UI/NewMap.cpp:49
+#: src/UI/NewMap.cpp:51
 msgid "map size x"
 msgstr "map size x"
 
-#: src/UI/NewMap.cpp:63
+#: src/UI/NewMap.cpp:65
 msgid "map size y"
 msgstr "map size y"
 
-#: src/UI/NewMap.cpp:77
+#: src/UI/NewMap.cpp:79
 msgid "Create map"
 msgstr "Create map"
 
-#: src/UI/Pause.cpp:31
+#: src/UI/Pause.cpp:37
 msgid "Return to game"
 msgstr "Return to game"
 
-#: src/UI/Pause.cpp:50
+#: src/UI/Pause.cpp:56
 msgid "Save game"
 msgstr "Save game"
 
-#: src/UI/Pause.cpp:57
+#: src/UI/Pause.cpp:63
 msgid "Go to the main menu"
 msgstr "Go to the main menu"
 
-#: src/UI/Settings.cpp:25
+#: src/UI/Pause.cpp:80 src/UI/Victory.cpp:38
+msgid "Time elapsed: "
+msgstr "Time elapsed: "
+
+#: src/UI/Settings.cpp:24
 msgid "vsync"
 msgstr "vsync"
 
-#: src/UI/Settings.cpp:44
+#: src/UI/Settings.cpp:43
 msgid "show-fps"
 msgstr "show-fps"
 
-#: src/UI/Settings.cpp:55
+#: src/UI/Settings.cpp:54
 msgid "pan-sensitivity"
 msgstr "pan-sensitivity"
 
-#: src/UI/Settings.cpp:65
+#: src/UI/Settings.cpp:64
 msgid "wheel-sensitivity"
 msgstr "wheel-sensitivity"
 
-#: src/UI/Settings.cpp:76
+#: src/UI/Settings.cpp:75
 msgid "language"
 msgstr "language"
 
-#: src/UI/Victory.cpp:21
+#: src/UI/Victory.cpp:26
+msgid "Ok"
+msgstr "Ok"
+
+#: src/UI/Victory.cpp:38
 msgid "You won!"
 msgstr "You won!"
 
-#: src/UI/Victory.cpp:25
-msgid "Ok"
-msgstr "Ok"
+#: src/UI/Victory.cpp:39
+msgid "Best time: "
+msgstr "Best time: "
 
 #: src/main.cpp:54
 msgid "Saving progress..."

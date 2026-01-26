@@ -21,6 +21,7 @@ struct SaveSlot
     Vector2 mapSize{300, 300};
     bool completed = false;
     bool deleteLater = false, opened = false;
+    double time = 0;
 
     Json ToJSON();
     void LoadJSON(Json& json);
@@ -29,6 +30,7 @@ struct SaveSlot
 extern std::vector<SaveSlot> saveSlots;
 extern int currentSlot;
 
+bool IsSlotValid(int idx);
 void SaveToSlot(int idx);
 void LoadFromSlot(int idx, bool generatePathMap);
 void FixSaveIds();

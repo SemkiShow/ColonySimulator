@@ -5,8 +5,10 @@
 #include "UI/Victory.hpp"
 #include "Drawing.hpp"
 #include "Languages.hpp"
+#include "Progress.hpp"
+#include "Settings.hpp"
+#include <RCore/Translations.hpp>
 #include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Layouts/RVBoxLayout.hpp>
 #include <raylib.h>
 
@@ -17,7 +19,7 @@ VictoryMenu::VictoryMenu()
     auto layout = std::make_shared<RVBoxLayout>();
     SetCentralWidget(layout);
 
-    auto label = std::make_shared<RLabel>(_("You won!"));
+    label = std::make_shared<RLabel>();
     label->SetAlignment(RAlign::HCenter);
     layout->AddWidget(label);
 
@@ -32,5 +34,14 @@ VictoryMenu::VictoryMenu()
 void VictoryMenu::Show()
 {
     SetVisible(true);
+    auto time = saveSlots[currentSlot].time;
+    if (bestTime < 0) bestTime = time;
+    label->SetLabel(GetText("You won!") + '\n' + GetText("Time elapsed: ") + FormatTime(time) +
+                    '\n' + GetText("Best time: ") + FormatTime(bestTime));
+    if (time < bestTime)
+        label->SetTint({"#009800ff"});
+    else
+        label->SetThemeList(RThemeList::Text);
+    bestTime = std::min(bestTime, time);
     PlaySound(victorySound);
 }

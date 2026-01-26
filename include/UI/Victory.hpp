@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Windows/RPopupWindow.hpp>
 
 class VictoryMenu : public RPopupWindow
@@ -12,6 +13,9 @@ class VictoryMenu : public RPopupWindow
     VictoryMenu();
 
     void Show();
+
+  private:
+    std::shared_ptr<RLabel> label;
 };
 
 extern std::shared_ptr<VictoryMenu> victoryMenu;

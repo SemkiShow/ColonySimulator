@@ -3,12 +3,14 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/LoadMap.hpp"
+#include "Drawing.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
 #include "UI/DeleteSlot.hpp"
 #include "UI/Game.hpp"
 #include "UI/Main.hpp"
 #include "UI/NewMap.hpp"
+#include "UI/Pause.hpp"
 #include <RWidgets/Buttons/RLabelButton.hpp>
 #include <RWidgets/Labels/RLabel.hpp>
 #include <RWidgets/Layouts/RGridLayout.hpp>
@@ -61,6 +63,7 @@ void LoadMapMenu::ReloadSlots()
             [i]
             {
                 LoadFromSlot(i, true);
+                pauseMenu->UpdateTimeLabel();
                 mainMenu->SetVisible(false);
                 loadMapMenu->SetVisible(false);
                 gameMenu->SetVisible(true);

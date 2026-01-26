@@ -11,6 +11,7 @@ extern bool showFPS;
 extern float panSensitivity;
 extern float wheelSensitivity;
 extern Vector2 mapSize;
+extern double bestTime;
 
 void Save();
 void Load();

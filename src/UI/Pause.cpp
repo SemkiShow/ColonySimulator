@@ -26,6 +26,12 @@ PauseMenu::PauseMenu()
     layout->SetPadding(20);
     pane->SetCentralWidget(layout);
 
+    timeLabel = std::make_shared<RLabel>("");
+    timeLabel->SetAlignment(RAlign::HCenter);
+    layout->AddWidget(timeLabel);
+
+    Connect([] { return true; }, [this] { UpdateTimeLabel(); });
+
     const float buttonWidth = 250;
 
     auto back = std::make_shared<RLabelButton>(_("Return to game"));
@@ -67,4 +73,9 @@ PauseMenu::PauseMenu()
                 mainMenu->SetVisible(true);
                 SetVisible(false);
             });
+}
+
+void PauseMenu::UpdateTimeLabel()
+{
+    timeLabel->SetLabel(_("Time elapsed: ") + FormatTime(saveSlots[currentSlot].time));
 }
