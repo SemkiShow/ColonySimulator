@@ -44,7 +44,8 @@ bool InsideScreen(Vector2 v)
 std::string FormatTime(double time)
 {
     std::stringstream ss;
-    ss << (int)time / 3600 << ':' << (int)time / 60 << ':' << (int)time % 60 << '.'
-       << int(time * 1000) % 1000;
+    int h = time / 3600, m = int(time / 60) % 60, s = int(time) % 60, ms = int(time * 1000) % 1000;
+    ss << std::setfill('0') << std::setw(2) << h << ':' << std::setw(2) << m << ':' << std::setw(2)
+       << s << '.' << std::setw(3) << ms;
     return ss.str();
 }
