@@ -8,9 +8,9 @@
 #include "UI/Game.hpp"
 #include "UI/Main.hpp"
 #include "UI/Settings.hpp"
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
-#include <RWidgets/Panes/RPaneRounded.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RPaneRounded.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 #include <cassert>
 
 std::shared_ptr<PauseMenu> pauseMenu;

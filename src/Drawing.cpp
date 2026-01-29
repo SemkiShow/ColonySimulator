@@ -62,7 +62,7 @@ void UpdateWindowSize()
     windowSize /= GetWindowScaleDPI();
 }
 
-void InitGPU()
+void LoadResources()
 {
     lockTexture = LoadTexture("resources/textures/lock.png");
     woodTexture = LoadTexture("resources/textures/wooden_log.png");

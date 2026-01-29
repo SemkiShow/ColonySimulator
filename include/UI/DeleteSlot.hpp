@@ -6,7 +6,7 @@
 
 #include "Progress.hpp"
 #include <RCore/Translations.hpp>
-#include <RWidgets/Windows/ROkCancelWindow.hpp>
+#include <RWidgets/ROkCancelWindow.hpp>
 
 class DeleteSlotMenu : public ROkCancelWindow
 {

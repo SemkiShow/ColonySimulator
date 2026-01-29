@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <RWidgets/Windows/RPopupPane.hpp>
+#include <RWidgets/RPopupPane.hpp>
 
 class AboutMenu : public RPopupPane
 {

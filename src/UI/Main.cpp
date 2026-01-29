@@ -8,9 +8,9 @@
 #include "UI/About.hpp"
 #include "UI/LoadMap.hpp"
 #include "UI/Settings.hpp"
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 
 std::shared_ptr<MainMenu> mainMenu;
 

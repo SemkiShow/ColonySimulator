@@ -4,8 +4,8 @@
 
 #include "UI/About.hpp"
 #include "Languages.hpp"
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 
 std::shared_ptr<AboutMenu> aboutMenu;
 

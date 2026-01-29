@@ -4,8 +4,8 @@
 
 #include "UI/EditIsland.hpp"
 #include "Languages.hpp"
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RGridLayout.hpp>
+#include <RWidgets/RGridLayout.hpp>
+#include <RWidgets/RLabel.hpp>
 
 std::shared_ptr<EditIslandMenu> editIslandMenu;
 

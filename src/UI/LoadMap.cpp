@@ -11,11 +11,11 @@
 #include "UI/Main.hpp"
 #include "UI/NewMap.hpp"
 #include "UI/Pause.hpp"
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RGridLayout.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
-#include <RWidgets/ScrollAreas/RScrollArea.hpp>
+#include <RWidgets/RGridLayout.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RScrollArea.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 
 std::shared_ptr<LoadMapMenu> loadMapMenu;
 

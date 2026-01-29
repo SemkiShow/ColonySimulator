@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Windows/RPopupWindow.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RPopupWindow.hpp>
 
 class VictoryMenu : public RPopupWindow
 {

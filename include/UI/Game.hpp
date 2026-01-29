@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <RWidgets/Layouts/RLayout.hpp>
-#include <RWidgets/Windows/RWindow.hpp>
+#include <RWidgets/RLayout.hpp>
+#include <RWidgets/RWindow.hpp>
 
 class GameMenu : public RWindow
 {

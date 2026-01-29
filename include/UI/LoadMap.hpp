@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <RWidgets/Layouts/RGridLayout.hpp>
-#include <RWidgets/Windows/RPopupPane.hpp>
+#include <RWidgets/RGridLayout.hpp>
+#include <RWidgets/RPopupPane.hpp>
 
 class LoadMapMenu : public RPopupPane
 {

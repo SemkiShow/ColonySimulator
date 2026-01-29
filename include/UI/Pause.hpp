@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Windows/RWindow.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RWindow.hpp>
 
 class PauseMenu : public RWindow
 {

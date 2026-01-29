@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include <RWidgets/Checkboxes/RCheckbox.hpp>
-#include <RWidgets/Sliders/RSlider.hpp>
-#include <RWidgets/Textboxes/RTextbox.hpp>
-#include <RWidgets/Textboxes/RTextboxInt.hpp>
-#include <RWidgets/Windows/RPopupPane.hpp>
+#include <RWidgets/RCheckbox.hpp>
+#include <RWidgets/RPopupPane.hpp>
+#include <RWidgets/RSlider.hpp>
+#include <RWidgets/RTextbox.hpp>
+#include <RWidgets/RTextboxInt.hpp>
 
 class NewMapMenu : public RPopupPane
 {

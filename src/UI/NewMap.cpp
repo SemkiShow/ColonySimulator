@@ -10,10 +10,10 @@
 #include "Settings.hpp"
 #include "UI/LoadMap.hpp"
 #include <RCore/Translations.hpp>
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RGridLayout.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <RWidgets/RGridLayout.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 
 std::shared_ptr<NewMapMenu> newMapMenu;
 

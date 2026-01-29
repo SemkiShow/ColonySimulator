@@ -30,7 +30,7 @@ int main()
     Load();
     InitUI();
     ReloadLabels();
-    InitGPU();
+    LoadResources();
 
     {
         auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)

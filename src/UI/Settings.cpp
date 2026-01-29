@@ -5,12 +5,12 @@
 #include "UI/Settings.hpp"
 #include "Languages.hpp"
 #include "Settings.hpp"
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Checkboxes/RCheckbox.hpp>
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/Layouts/RGridLayout.hpp>
-#include <RWidgets/Layouts/RHBoxLayout.hpp>
-#include <RWidgets/Sliders/RSlider.hpp>
+#include <RWidgets/RCheckbox.hpp>
+#include <RWidgets/RGridLayout.hpp>
+#include <RWidgets/RHBoxLayout.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RSlider.hpp>
 #include <raylib.h>
 
 std::shared_ptr<SettingsMenu> settingsMenu;

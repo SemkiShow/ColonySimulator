@@ -35,6 +35,6 @@ Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
 
 void UpdateWindowSize();
-void InitGPU();
+void LoadResources();
 void DrawFrame();
 void FreeResources();

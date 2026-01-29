@@ -5,8 +5,8 @@
 #pragma once
 
 #include "Island.hpp"
-#include <RWidgets/Sliders/RSlider.hpp>
-#include <RWidgets/Windows/RPopupWindow.hpp>
+#include <RWidgets/RPopupWindow.hpp>
+#include <RWidgets/RSlider.hpp>
 
 class EditIslandMenu : public RPopupWindow
 {

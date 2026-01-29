@@ -5,9 +5,9 @@
 #pragma once
 
 #include "UI.hpp"
-#include <RWidgets/Labels/RLabel.hpp>
-#include <RWidgets/ProgressBars/RProgressBar.hpp>
-#include <RWidgets/Windows/RWindow.hpp>
+#include <RWidgets/RLabel.hpp>
+#include <RWidgets/RProgressBar.hpp>
+#include <RWidgets/RWindow.hpp>
 #include <atomic>
 #include <raylib.h>
 #include <string>

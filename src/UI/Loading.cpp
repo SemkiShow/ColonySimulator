@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/Loading.hpp"
-#include <RWidgets/Layouts/RHBoxLayout.hpp>
-#include <RWidgets/Panes/RPane.hpp>
+#include <RWidgets/RHBoxLayout.hpp>
+#include <RWidgets/RPane.hpp>
 
 std::shared_ptr<LoadingScreen> loadingScreen;
 

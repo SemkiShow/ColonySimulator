@@ -8,8 +8,8 @@
 #include "Progress.hpp"
 #include "Settings.hpp"
 #include <RCore/Translations.hpp>
-#include <RWidgets/Buttons/RLabelButton.hpp>
-#include <RWidgets/Layouts/RVBoxLayout.hpp>
+#include <RWidgets/RLabelButton.hpp>
+#include <RWidgets/RVBoxLayout.hpp>
 #include <cassert>
 #include <raylib.h>
 

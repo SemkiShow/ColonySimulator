@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <RWidgets/Windows/RWindow.hpp>
+#include <RWidgets/RWindow.hpp>
 
 class MainMenu : public RWindow
 {
