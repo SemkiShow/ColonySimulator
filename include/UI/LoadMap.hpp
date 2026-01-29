@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "UI/PopupPane.hpp"
 #include <RWidgets/Layouts/RGridLayout.hpp>
+#include <RWidgets/Windows/RPopupPane.hpp>
 
-class LoadMapMenu : public PopupPane
+class LoadMapMenu : public RPopupPane
 {
   public:
     LoadMapMenu();

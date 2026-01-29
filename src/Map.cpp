@@ -4,11 +4,11 @@
 
 #include "Map.hpp"
 #include "Human.hpp"
-#include "Ship.hpp"
 #include "Island.hpp"
 #include "Languages.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Ship.hpp"
 #include "UI/Loading.hpp"
 #include <cfloat>
 #include <climits>

@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "UI/PopupPane.hpp"
+#include <RWidgets/Windows/RPopupPane.hpp>
 
-class SettingsMenu : public PopupPane
+class SettingsMenu : public RPopupPane
 {
   public:
     SettingsMenu();

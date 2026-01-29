@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include "UI/PopupPane.hpp"
 #include <RWidgets/Checkboxes/RCheckbox.hpp>
 #include <RWidgets/Sliders/RSlider.hpp>
 #include <RWidgets/Textboxes/RTextbox.hpp>
 #include <RWidgets/Textboxes/RTextboxInt.hpp>
+#include <RWidgets/Windows/RPopupPane.hpp>
 
-class NewMapMenu : public PopupPane
+class NewMapMenu : public RPopupPane
 {
   public:
     NewMapMenu();

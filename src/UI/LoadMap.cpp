@@ -118,5 +118,5 @@ void LoadMapMenu::Update()
         ReloadSlots();
     }
 
-    PopupPane::Update();
+    RPopupPane::Update();
 }
