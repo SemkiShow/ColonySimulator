@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cstdint>
+
 struct Vector2;
 
 extern bool vsync;
@@ -12,6 +14,8 @@ extern float panSensitivity;
 extern float wheelSensitivity;
 extern Vector2 mapSize;
 extern double bestTime;
+extern float musicVolume;
+extern float sfxVolume;
 
 void Save();
 void Load();

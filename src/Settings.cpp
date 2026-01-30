@@ -14,6 +14,8 @@ float panSensitivity = 500;
 float wheelSensitivity = 0.3f;
 Vector2 mapSize = {300, 300};
 double bestTime = -1;
+float musicVolume = 127;
+float sfxVolume = 127;
 
 std::vector<std::string> Split(std::string input, char delimiter = ' ')
 {
@@ -42,6 +44,8 @@ void Save()
     file << "wheel-sensitivity=" << wheelSensitivity << '\n';
     file << "language=" << currentLanguage << '\n';
     file << "best-time=" << bestTime << '\n';
+    file << "music-volume=" << musicVolume << '\n';
+    file << "sfx-volume=" << sfxVolume << '\n';
     file.close();
 }
 
@@ -59,6 +63,8 @@ void Load()
         if (label == "wheel-sensitivity") wheelSensitivity = stof(value);
         if (label == "language") currentLanguage = value;
         if (label == "best-time") bestTime = stod(value);
+        if (label == "music-volume") musicVolume = stof(value);
+        if (label == "sfx-volume") sfxVolume = stof(value);
     }
     file.close();
 

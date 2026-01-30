@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/Victory.hpp"
-#include "Drawing.hpp"
+#include "Sound.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
