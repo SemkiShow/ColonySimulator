@@ -98,19 +98,18 @@ SettingsMenu::SettingsMenu()
     musicVolumeLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(musicVolumeLabel);
 
-    auto musicVolumeSlider =
+    musicVolumeSlider =
         std::make_shared<RSlider>(musicVolume * 100, 0, 100, RSliderType::Rectangle);
     layout->AddWidget(musicVolumeSlider);
-    Connect([musicVolumeSlider] { return musicVolumeSlider->IsValueChanged(); },
-            [musicVolumeSlider] { musicVolume = musicVolumeSlider->GetValue() / 100; });
+    Connect([this] { return musicVolumeSlider->IsValueChanged(); },
+            [this] { musicVolume = musicVolumeSlider->GetValue() / 100; });
 
     auto sfxVolumeLabel = std::make_shared<RLabel>(_("sfx-volume"));
     sfxVolumeLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(sfxVolumeLabel);
 
-    auto sfxVolumeSlider =
-        std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
+    sfxVolumeSlider = std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
     layout->AddWidget(sfxVolumeSlider);
-    Connect([sfxVolumeSlider] { return sfxVolumeSlider->IsValueChanged(); },
-            [sfxVolumeSlider] { sfxVolume = sfxVolumeSlider->GetValue() / 100; });
+    Connect([this] { return sfxVolumeSlider->IsValueChanged(); },
+            [this] { sfxVolume = sfxVolumeSlider->GetValue() / 100; });
 }
