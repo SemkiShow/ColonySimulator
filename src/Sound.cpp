@@ -18,7 +18,7 @@ Sound victorySound;
 
 std::vector<Music> soundtracks;
 int soundtrackIdx = -1;
-float fadeTimer = FADE_TIME;
+float fadeTimer = 0;
 float delayTimer = DELAY_BETWEEN_TRACKS / 2.0f;
 
 const char* soundtrackFiles[] = {
