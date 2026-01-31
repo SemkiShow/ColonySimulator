@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Languages.hpp"
-#include "Drawing.hpp"
 #include "Progress.hpp"
+#include "Sound.hpp"
 #include "UI.hpp"
 #include <RCore/Translations.hpp>
 #include <algorithm>

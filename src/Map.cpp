@@ -186,7 +186,6 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
     // Add large enough islands to the main vector
     int minIslandArea = 125 / stepSize / stepSize;
     int passed = 0;
-    islands.clear();
     for (size_t i = 0; i < counter; i++)
     {
         loadingPercent += 1.0f / counter / stepsTotal * 100;
@@ -234,14 +233,22 @@ void BuildIslands(float& loadingPercent, std::atomic<bool>& finished, float step
     finished = true;
 }
 
+void ResetMapVariables()
+{
+    woodTotal = ironTotal = peopleTotal = 0;
+    perlinScale = DEFAULT_PERLIN_SCALE;
+    perlinOffset = {0, 0};
+    islands.clear();
+    people.clear();
+    ships.clear();
+}
+
 void BuildMap()
 {
     auto func = [](std::string& label, float& loadingPercent, std::atomic<bool>& finished)
     {
         label = _("Loading map...");
-        woodTotal = ironTotal = peopleTotal = 0;
-        people.clear();
-        ships.clear();
+        ResetMapVariables();
         BuildIslands(loadingPercent, finished, 0.1f);
     };
     ShowLoadingScreen(true, func);

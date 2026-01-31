@@ -6,6 +6,8 @@
 
 struct Vector2;
 
+#define DEFAULT_PERLIN_SCALE 0.12f
+
 float GetPerlin(Vector2 v);
 bool InsideMap(Vector2 pos);
 

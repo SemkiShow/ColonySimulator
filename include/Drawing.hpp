@@ -29,8 +29,6 @@ extern Font myFont;
 const float myFontSpacing = 1;
 extern std::shared_ptr<RFont> rayuiFont;
 
-extern Sound victorySound;
-
 Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
 

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "Sound.hpp"
 #include "UI.hpp"
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RProgressBar.hpp>
@@ -66,6 +67,8 @@ void ShowLoadingScreen(bool showProgressbar, Func&& f, Args&&... args)
         app->Draw();
 
         EndDrawing();
+
+        UpdateSounds();
     }
 
     loadingScreen->SetVisible(false);

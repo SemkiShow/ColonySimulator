@@ -8,6 +8,7 @@
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Sound.hpp"
 #include "UI.hpp"
 #include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
@@ -33,8 +34,6 @@ Texture shipTexture;
 
 Font myFont;
 std::shared_ptr<RFont> rayuiFont;
-
-Sound victorySound;
 
 Vector2 RaylibToGlsl(Vector2 v)
 {
@@ -106,6 +105,8 @@ void LoadResources()
         SetShaderValueV(perlinShader, GetShaderLocation(perlinShader, "uBiomeColor"), colors,
                         SHADER_UNIFORM_VEC4, biomeCount);
     }
+
+    LoadSounds();
 }
 
 void DrawFrame()
@@ -140,10 +141,14 @@ void DrawFrame()
     if (showFPS) DrawFPS(0, 0);
 
     EndDrawing();
+
+    UpdateSounds();
 }
 
 void FreeResources()
 {
+    FreeSounds();
+
     UnloadShader(perlinShader);
 
     UnloadTexture(lockTexture);
@@ -153,6 +158,4 @@ void FreeResources()
     UnloadTexture(shipTexture);
 
     UnloadFont(myFont);
-
-    UnloadSound(victorySound);
 }
