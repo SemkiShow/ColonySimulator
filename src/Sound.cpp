@@ -6,6 +6,7 @@
 #include "Settings.hpp"
 #include "UI/Game.hpp"
 #include "UI/Pause.hpp"
+#include "UI/Settings.hpp"
 #include <cstdlib>
 #include <raylib.h>
 #include <vector>
@@ -55,7 +56,7 @@ void UpdateSounds()
         }
     }
 
-    if (gameMenu->IsVisible() && !pauseMenu->IsVisible())
+    if ((gameMenu->IsVisible() && !pauseMenu->IsVisible()) || settingsMenu->musicVolumeSlider->IsSelected() || settingsMenu->musicVolumeSlider->IsMouseHovered())
     {
         fadeTimer += GetFrameTime();
         if (fadeTimer > FADE_TIME) fadeTimer = FADE_TIME;
