@@ -55,12 +55,6 @@ Vector2 GlslToRaylib(Vector2 v)
     return v;
 }
 
-void UpdateWindowSize()
-{
-    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
-    windowSize /= GetWindowScaleDPI();
-}
-
 void LoadResources()
 {
     lockTexture = LoadTexture("resources/textures/lock.png");
@@ -107,6 +101,12 @@ void LoadResources()
     }
 
     LoadSounds();
+}
+
+void UpdateWindowSize()
+{
+    windowSize = {(float)GetRenderWidth(), (float)GetRenderHeight()};
+    windowSize /= GetWindowScaleDPI();
 }
 
 void DrawFrame()

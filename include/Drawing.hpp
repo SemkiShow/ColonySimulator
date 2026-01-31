@@ -32,7 +32,7 @@ extern std::shared_ptr<RFont> rayuiFont;
 Vector2 RaylibToGlsl(Vector2 v);
 Vector2 GlslToRaylib(Vector2 v);
 
-void UpdateWindowSize();
 void LoadResources();
+void UpdateWindowSize();
 void DrawFrame();
 void FreeResources();
