@@ -105,7 +105,6 @@ void DrawGameMenu()
         if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) human.MoveToTarget(GetFrameTime());
         float scale = 0.0005f / perlinScale;
         Vector2 pos = GlslToRaylib(human.pos);
-        if (!InsideScreen(pos)) continue;
         DrawTexturePro(humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},
                        {pos.x, pos.y, humanTexture.width * scale, humanTexture.height * scale},
                        {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
@@ -130,7 +129,6 @@ void DrawGameMenu()
         if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ship.Move(GetFrameTime());
         float scale = 0.01f / perlinScale;
         Vector2 pos = GlslToRaylib(ship.pos);
-        if (!InsideScreen(pos)) continue;
         DrawTexturePro(shipTexture,
                        {0, 0, ship.flip * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
                        {pos.x, pos.y, shipTexture.width * scale, shipTexture.height * scale},
