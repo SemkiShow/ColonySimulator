@@ -70,10 +70,12 @@ void UpdateSounds()
         Music& currentTrack = soundtracks[soundtrackIdx];
         SetMusicVolume(currentTrack, musicVolume * (fadeTimer / FADE_TIME));
 
-        if (fadeTimer <= 0.0f) {
+        if (fadeTimer <= 0.0f)
+        {
             PauseMusicStream(currentTrack);
         }
-        else {
+        else
+        {
             if (!IsMusicStreamPlaying(currentTrack))
             {
                 PlayMusicStream(currentTrack);
