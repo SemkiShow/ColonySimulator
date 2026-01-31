@@ -4,6 +4,7 @@
 
 #include "Sound.hpp"
 #include "Settings.hpp"
+#include "UI/Game.hpp"
 #include "UI/Pause.hpp"
 #include <cstdlib>
 #include <raylib.h>
@@ -54,15 +55,15 @@ void UpdateSounds()
         }
     }
 
-    if (pauseMenu->IsVisible())
-    {
-        fadeTimer -= GetFrameTime();
-        if (fadeTimer < 0.0f) fadeTimer = 0.0f;
-    }
-    else
+    if (gameMenu->IsVisible() && !pauseMenu->IsVisible())
     {
         fadeTimer += GetFrameTime();
         if (fadeTimer > FADE_TIME) fadeTimer = FADE_TIME;
+    }
+    else
+    {
+        fadeTimer -= GetFrameTime();
+        if (fadeTimer < 0.0f) fadeTimer = 0.0f;
     }
 
     if (soundtrackIdx != -1)
