@@ -95,6 +95,7 @@ void SaveToSlot(int idx)
 void LoadFromSlot(int idx, bool generatePathMap)
 {
     assert(IsSlotValid(idx));
+    ResetMapVariables();
 
     currentSlot = idx;
     if (saveSlots[idx].seed == -1)

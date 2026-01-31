@@ -11,4 +11,5 @@
 std::vector<Vector2> GetBorderPoints(const std::vector<std::pair<int, int>>& islandPoints,
                                      float stepSize, float approxStepSize = 3);
 void BuildIslands(std::atomic<bool>& finished, float stepSize = 0.1f);
+void ResetMapVariables();
 void BuildMap();

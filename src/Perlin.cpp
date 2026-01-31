@@ -8,7 +8,7 @@
 #include <raymath.h>
 
 int perlinSeed = 0;
-float perlinScale = 0.12f;
+float perlinScale = DEFAULT_PERLIN_SCALE;
 Vector2 perlinOffset = {0, 0};
 
 // Fixed gradient vectors (8 directions)
