@@ -14,8 +14,8 @@ float panSensitivity = 500;
 float wheelSensitivity = 0.3f;
 Vector2 mapSize = {300, 300};
 double bestTime = -1;
-float musicVolume = 127;
-float sfxVolume = 127;
+float musicVolume = 1;
+float sfxVolume = 1;
 
 std::vector<std::string> Split(std::string input, char delimiter = ' ')
 {

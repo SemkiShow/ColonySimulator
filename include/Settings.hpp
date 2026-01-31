@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <cstdint>
-
 struct Vector2;
 
 extern bool vsync;
