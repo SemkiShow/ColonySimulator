@@ -24,8 +24,9 @@ int main()
     SetConfigFlags(flags);
 
     InitWindow(windowSize.x, windowSize.y, "Colony Simulator");
-    InitAudioDevice();
     SetExitKey(-1);
+    InitAudioDevice();
+    SetAudioStreamBufferSizeDefault(8192);
 
     Load();
     InitUI();
