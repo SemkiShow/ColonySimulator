@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-31 13:31+0100\n"
+"POT-Creation-Date: 2026-01-31 16:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,29 +17,29 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Languages.cpp:33
-msgid "Empty slot"
-msgstr ""
-
-#: src/Map.cpp:241
-msgid "Loading map..."
-msgstr ""
-
-#: src/Progress.cpp:109 src/main.cpp:38
-msgid "Loading progress..."
-msgstr ""
-
-#: src/UI/About.cpp:17 src/UI/Main.cpp:22
+#: src/UI/About.cpp:18 src/UI/Main.cpp:22
 msgid "Colony Simulator"
 msgstr ""
 
-#: src/UI/About.cpp:22
-msgid ""
-"Lead Developer: SemkiShow\n"
-"Developer: jaraslauzaitsau"
+#: src/UI/About.cpp:36
+msgid "Programming:"
 msgstr ""
 
-#: src/UI/About.cpp:27
+#: src/UI/About.cpp:37
+msgid ""
+"SemkiShow\n"
+"jaraslauzaitsau"
+msgstr ""
+
+#: src/UI/About.cpp:38
+msgid "Music:"
+msgstr ""
+
+#: src/UI/About.cpp:39
+msgid "jaraslauzaitsau"
+msgstr ""
+
+#: src/UI/About.cpp:41
 msgid "This game is licensed under GPL v3.0"
 msgstr ""
 
@@ -120,6 +120,18 @@ msgstr ""
 msgid "Time elapsed: "
 msgstr ""
 
+#: src/UI/Victory.cpp:27
+msgid "Ok"
+msgstr ""
+
+#: src/UI/Victory.cpp:41
+msgid "You won!"
+msgstr ""
+
+#: src/UI/Victory.cpp:42
+msgid "Best time: "
+msgstr ""
+
 #: src/UI/Settings.cpp:24
 msgid "vsync"
 msgstr ""
@@ -144,24 +156,24 @@ msgstr ""
 msgid "music-volume"
 msgstr ""
 
-#: src/UI/Settings.cpp:106
+#: src/UI/Settings.cpp:107
 msgid "sfx-volume"
 msgstr ""
 
-#: src/UI/Victory.cpp:27
-msgid "Ok"
-msgstr ""
-
-#: src/UI/Victory.cpp:41
-msgid "You won!"
-msgstr ""
-
-#: src/UI/Victory.cpp:42
-msgid "Best time: "
+#: src/main.cpp:38 src/Progress.cpp:110
+msgid "Loading progress..."
 msgstr ""
 
 #: src/main.cpp:54
 msgid "Saving progress..."
+msgstr ""
+
+#: src/Languages.cpp:33
+msgid "Empty slot"
+msgstr ""
+
+#: src/Map.cpp:250
+msgid "Loading map..."
 msgstr ""
 
 #: include/UI/DeleteSlot.hpp:19

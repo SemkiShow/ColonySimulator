@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-31 13:31+0100\n"
-"PO-Revision-Date: 2026-01-31 13:33+0100\n"
+"POT-Creation-Date: 2026-01-31 16:56+0100\n"
+"PO-Revision-Date: 2026-01-31 16:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -18,31 +18,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.8\n"
 
-#: src/Languages.cpp:33
-msgid "Empty slot"
-msgstr "Pusty slot"
-
-#: src/Map.cpp:241
-msgid "Loading map..."
-msgstr "Generowanie mapy..."
-
-#: src/Progress.cpp:109 src/main.cpp:38
-msgid "Loading progress..."
-msgstr "Wczytywanie stanu gry..."
-
-#: src/UI/About.cpp:17 src/UI/Main.cpp:22
+#: src/UI/About.cpp:18 src/UI/Main.cpp:22
 msgid "Colony Simulator"
 msgstr "Symulator Kolonizacji"
 
-#: src/UI/About.cpp:22
-msgid ""
-"Lead Developer: SemkiShow\n"
-"Developer: jaraslauzaitsau"
-msgstr ""
-"Główny programista: SemkiShow\n"
-"Programista: jaraslauzaitsau"
+#: src/UI/About.cpp:36
+msgid "Programming:"
+msgstr "Programowanie:"
 
-#: src/UI/About.cpp:27
+#: src/UI/About.cpp:37
+msgid ""
+"SemkiShow\n"
+"jaraslauzaitsau"
+msgstr ""
+"SemkiShow\n"
+"jaraslauzaitsau"
+
+#: src/UI/About.cpp:38
+msgid "Music:"
+msgstr "Muzyka:"
+
+#: src/UI/About.cpp:39
+msgid "jaraslauzaitsau"
+msgstr "jaraslauzaitsau"
+
+#: src/UI/About.cpp:41
 msgid "This game is licensed under GPL v3.0"
 msgstr "Gra wydana na licencji GPL v3.0"
 
@@ -123,6 +123,18 @@ msgstr "Przejdź do menu głównego"
 msgid "Time elapsed: "
 msgstr "Aktualny czas: "
 
+#: src/UI/Victory.cpp:27
+msgid "Ok"
+msgstr "Ok"
+
+#: src/UI/Victory.cpp:41
+msgid "You won!"
+msgstr "Wygrałeś!"
+
+#: src/UI/Victory.cpp:42
+msgid "Best time: "
+msgstr "Rekord: "
+
 #: src/UI/Settings.cpp:24
 msgid "vsync"
 msgstr "synchronizacja-pionowa"
@@ -147,29 +159,32 @@ msgstr "język"
 msgid "music-volume"
 msgstr "głośność-muzyki"
 
-#: src/UI/Settings.cpp:106
+#: src/UI/Settings.cpp:107
 msgid "sfx-volume"
 msgstr "głośność-sfx"
 
-#: src/UI/Victory.cpp:27
-msgid "Ok"
-msgstr "Ok"
-
-#: src/UI/Victory.cpp:41
-msgid "You won!"
-msgstr "Wygrałeś!"
-
-#: src/UI/Victory.cpp:42
-msgid "Best time: "
-msgstr "Rekord: "
+#: src/main.cpp:38 src/Progress.cpp:110
+msgid "Loading progress..."
+msgstr "Wczytywanie stanu gry..."
 
 #: src/main.cpp:54
 msgid "Saving progress..."
 msgstr "Zapisywanie postępów..."
 
+#: src/Languages.cpp:33
+msgid "Empty slot"
+msgstr "Pusty slot"
+
+#: src/Map.cpp:250
+msgid "Loading map..."
+msgstr "Generowanie mapy..."
+
 #: include/UI/DeleteSlot.hpp:19
 msgid "Are you sure you want to delete map "
 msgstr "Czy na pewno chcesz usunąć mapę "
+
+#~ msgid "Development:"
+#~ msgstr "Programowanie:"
 
 #~ msgid "Slot"
 #~ msgstr "Slot"
