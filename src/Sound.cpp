@@ -5,8 +5,8 @@
 #include "Sound.hpp"
 #include "Settings.hpp"
 #include <cstdlib>
-#include <vector>
 #include <raylib.h>
+#include <vector>
 
 const float DELAY_BETWEEN_TRACKS = 5.0f;
 
@@ -24,7 +24,8 @@ void LoadSounds()
 {
     if (!IsAudioDeviceReady()) InitAudioDevice();
 
-    if (!IsSoundValid(victorySound)) victorySound = LoadSound("resources/sounds/youve_got_mail.mp3");
+    if (!IsSoundValid(victorySound))
+        victorySound = LoadSound("resources/sounds/youve_got_mail.mp3");
 
     if (soundtracks.empty())
     {

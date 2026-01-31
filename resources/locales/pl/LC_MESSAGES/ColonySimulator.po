@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-26 20:34+0100\n"
-"PO-Revision-Date: 2026-01-26 20:36+0100\n"
+"POT-Creation-Date: 2026-01-31 13:31+0100\n"
+"PO-Revision-Date: 2026-01-31 13:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl\n"
@@ -22,7 +22,11 @@ msgstr ""
 msgid "Empty slot"
 msgstr "Pusty slot"
 
-#: src/Progress.cpp:117 src/main.cpp:38
+#: src/Map.cpp:241
+msgid "Loading map..."
+msgstr "Generowanie mapy..."
+
+#: src/Progress.cpp:109 src/main.cpp:38
 msgid "Loading progress..."
 msgstr "Wczytywanie stanu gry..."
 
@@ -63,7 +67,7 @@ msgstr "Nowa mapa"
 msgid "Play"
 msgstr "Graj"
 
-#: src/UI/Main.cpp:42 src/UI/Pause.cpp:49
+#: src/UI/Main.cpp:42 src/UI/Pause.cpp:50
 msgid "Settings"
 msgstr "Ustawienia"
 
@@ -103,19 +107,19 @@ msgstr "rozmiar mapy y"
 msgid "Create map"
 msgstr "Utwórz mapę"
 
-#: src/UI/Pause.cpp:37
+#: src/UI/Pause.cpp:38
 msgid "Return to game"
 msgstr "Wróć do gry"
 
-#: src/UI/Pause.cpp:56
+#: src/UI/Pause.cpp:57
 msgid "Save game"
 msgstr "Zapisz grę"
 
-#: src/UI/Pause.cpp:63
+#: src/UI/Pause.cpp:64
 msgid "Go to the main menu"
 msgstr "Przejdź do menu głównego"
 
-#: src/UI/Pause.cpp:80 src/UI/Victory.cpp:38
+#: src/UI/Pause.cpp:82 src/UI/Victory.cpp:41
 msgid "Time elapsed: "
 msgstr "Aktualny czas: "
 
@@ -139,25 +143,29 @@ msgstr "czułość-kółka-myszy"
 msgid "language"
 msgstr "język"
 
-#: src/UI/Victory.cpp:26
+#: src/UI/Settings.cpp:97
+msgid "music-volume"
+msgstr "głośność-muzyki"
+
+#: src/UI/Settings.cpp:106
+msgid "sfx-volume"
+msgstr "głośność-sfx"
+
+#: src/UI/Victory.cpp:27
 msgid "Ok"
 msgstr "Ok"
 
-#: src/UI/Victory.cpp:38
+#: src/UI/Victory.cpp:41
 msgid "You won!"
 msgstr "Wygrałeś!"
 
-#: src/UI/Victory.cpp:39
+#: src/UI/Victory.cpp:42
 msgid "Best time: "
 msgstr "Rekord: "
 
 #: src/main.cpp:54
 msgid "Saving progress..."
 msgstr "Zapisywanie postępów..."
-
-#: src/Map.cpp:241
-msgid "Loading map..."
-msgstr "Generowanie mapy..."
 
 #: include/UI/DeleteSlot.hpp:19
 msgid "Are you sure you want to delete map "

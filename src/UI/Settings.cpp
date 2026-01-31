@@ -98,7 +98,8 @@ SettingsMenu::SettingsMenu()
     musicVolumeLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(musicVolumeLabel);
 
-    auto musicVolumeSlider = std::make_shared<RSlider>(musicVolume * 100, 0, 100, RSliderType::Rectangle);
+    auto musicVolumeSlider =
+        std::make_shared<RSlider>(musicVolume * 100, 0, 100, RSliderType::Rectangle);
     layout->AddWidget(musicVolumeSlider);
     Connect([musicVolumeSlider] { return musicVolumeSlider->IsValueChanged(); },
             [musicVolumeSlider] { musicVolume = musicVolumeSlider->GetValue() / 100; });
@@ -107,7 +108,8 @@ SettingsMenu::SettingsMenu()
     sfxVolumeLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(sfxVolumeLabel);
 
-    auto sfxVolumeSlider = std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
+    auto sfxVolumeSlider =
+        std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
     layout->AddWidget(sfxVolumeSlider);
     Connect([sfxVolumeSlider] { return sfxVolumeSlider->IsValueChanged(); },
             [sfxVolumeSlider] { sfxVolume = sfxVolumeSlider->GetValue() / 100; });

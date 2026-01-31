@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/Victory.hpp"
-#include "Sound.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
+#include "Sound.hpp"
 #include <RCore/Translations.hpp>
 #include <RWidgets/RLabelButton.hpp>
 #include <RWidgets/RVBoxLayout.hpp>

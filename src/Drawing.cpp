@@ -5,10 +5,10 @@
 
 #include "Drawing.hpp"
 #include "Drawing/Game.hpp"
-#include "Sound.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include "Settings.hpp"
+#include "Sound.hpp"
 #include "UI.hpp"
 #include "UI/EditIsland.hpp"
 #include "UI/Game.hpp"
