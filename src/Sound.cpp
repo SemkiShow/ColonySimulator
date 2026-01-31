@@ -56,7 +56,8 @@ void UpdateSounds()
         }
     }
 
-    if ((gameMenu->IsVisible() && !pauseMenu->IsVisible()) || settingsMenu->musicVolumeSlider->IsSelected() || settingsMenu->musicVolumeSlider->IsMouseHovered())
+    if ((gameMenu->IsVisible() && !pauseMenu->IsVisible()) ||
+        settingsMenu->IsMusicVolumeSliderActive())
     {
         fadeTimer += GetFrameTime();
         if (fadeTimer > FADE_TIME) fadeTimer = FADE_TIME;

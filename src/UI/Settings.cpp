@@ -108,8 +108,7 @@ SettingsMenu::SettingsMenu()
     sfxVolumeLabel->SetAlignment(RAlign::VCenter);
     layout->AddWidget(sfxVolumeLabel);
 
-    sfxVolumeSlider =
-        std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
+    sfxVolumeSlider = std::make_shared<RSlider>(sfxVolume * 100, 0, 100, RSliderType::Rectangle);
     layout->AddWidget(sfxVolumeSlider);
     Connect([this] { return sfxVolumeSlider->IsValueChanged(); },
             [this] { sfxVolume = sfxVolumeSlider->GetValue() / 100; });

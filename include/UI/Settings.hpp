@@ -13,6 +13,9 @@ class SettingsMenu : public RPopupPane
   public:
     SettingsMenu();
 
+    bool IsMusicVolumeSliderActive() { return musicVolumeSlider->IsSelected(); }
+
+  private:
     std::shared_ptr<RSlider> musicVolumeSlider;
     std::shared_ptr<RSlider> sfxVolumeSlider;
 };
