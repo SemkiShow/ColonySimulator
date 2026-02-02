@@ -22,14 +22,15 @@ struct Human
     float speed = 0, rotationSpeed = 0;
     int angleMultiplier = 1;
 
-    Human() = default;
+    Human() {}
     Human(Vector2 pos, int islandIdx) : pos(pos), islandIdx(islandIdx)
     {
         speed = GetRandomFloat(MIN_SPEED, MAX_SPEED);
         rotationSpeed = GetRandomFloat(MIN_ROT_SPEED, MAX_ROT_SPEED);
     }
 
-    void MoveToTarget(double deltaTime);
+    void Update();
+    void Draw();
 
     Json ToJSON();
     static Human LoadJSON(Json& json);

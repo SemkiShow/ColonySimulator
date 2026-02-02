@@ -23,7 +23,9 @@ struct Ship
 
     Ship() = default;
     Ship(int sourceIndex, int targetIndex, int peopleCount = 1);
-    void Move(float deltaTime);
+
+    void Update();
+    void Draw();
 
     Json ToJSON();
     static Ship LoadJSON(Json& json);

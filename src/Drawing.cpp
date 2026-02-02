@@ -7,6 +7,7 @@
 #include "Drawing/Game.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
+#include "Progress.hpp"
 #include "Settings.hpp"
 #include "Sound.hpp"
 #include "UI.hpp"
@@ -126,6 +127,8 @@ void DrawFrame()
     if (gameMenu->IsVisible() && !pauseMenu->IsVisible() && !editIslandMenu->IsVisible() &&
         !victoryMenu->IsVisible())
     {
+        if (IsSlotValid(currentSlot)) saveSlots[currentSlot].time += GetFrameTime();
+
         ProcessPlayerInput();
     }
 

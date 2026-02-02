@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Human.hpp"
+#include "Drawing.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
 #include <raymath.h>
@@ -12,8 +13,10 @@
 
 std::vector<Human> people;
 
-void Human::MoveToTarget(double deltaTime)
+void Human::Update()
 {
+    double deltaTime = GetFrameTime();
+
     Vector2 delta = Vector2Rotate({speed, 0}, rotation) * deltaTime;
     bool found = false;
     for (size_t i = 0; i < 5; i++)
@@ -32,6 +35,16 @@ void Human::MoveToTarget(double deltaTime)
     if (angle < MIN_ANGLE) angleMultiplier = 1;
     if (angle > MAX_ANGLE) angleMultiplier = -1;
     angle = fmax(MIN_ANGLE, fmin(MAX_ANGLE, angle));
+}
+
+void Human::Draw()
+{
+    float scale = 0.0005f / perlinScale;
+    Vector2 position = GlslToRaylib(pos);
+    DrawTexturePro(
+        humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},
+        {position.x, position.y, humanTexture.width * scale, humanTexture.height * scale},
+        {humanTexture.width * scale / 2.0f, humanTexture.height * scale}, angle, WHITE);
 }
 
 Json Human::ToJSON()

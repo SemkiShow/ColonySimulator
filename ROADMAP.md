@@ -70,6 +70,6 @@ Every island that hasn't been colonized yet has a lock icon in the middle of it 
 - [ ] Replace UI hardcoding with more RayUI usage
 - [ ] Separate in-game PB times into categories based on map size
 
-### Joke features (probably not worth implementing)
+### Joke features
 
 - [x] When the cursor is placed on snow (the peak of a mountain), a text appears saying "Snow (obviously)" as a reference to that one Geography lesson

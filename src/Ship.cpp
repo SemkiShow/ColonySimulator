@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "Ship.hpp"
+#include "Drawing.hpp"
 #include "Island.hpp"
 #include "Pathfinding.hpp"
 #include "Perlin.hpp"
@@ -36,10 +37,10 @@ Ship::Ship(int sourceIndex, int targetIndex, int peopleCount)
     nextPointDir = Vector2Normalize(path[0] - pos);
 }
 
-void Ship::Move(float deltaTime)
+void Ship::Update()
 {
     if (reached) return;
-    Vector2 nextPos = pos + nextPointDir * SHIP_SPEED * deltaTime;
+    Vector2 nextPos = pos + nextPointDir * SHIP_SPEED * GetFrameTime();
     if (Vector2Distance(pos, path[nextPointIdx]) > Vector2Distance(nextPos, path[nextPointIdx]))
     {
         pos = nextPos;
@@ -57,6 +58,15 @@ void Ship::Move(float deltaTime)
         if (nextPointDir.x > 0.1) flip = 1;
         if (nextPointDir.x < -0.1) flip = -1;
     }
+}
+
+void Ship::Draw()
+{
+    float scale = 0.01f / perlinScale;
+    Vector2 position = GlslToRaylib(pos);
+    DrawTexturePro(shipTexture, {0, 0, flip * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
+                   {position.x, position.y, shipTexture.width * scale, shipTexture.height * scale},
+                   {shipTexture.width * scale / 2.0f, shipTexture.height * scale}, 0, WHITE);
 }
 
 Json Ship::ToJSON()

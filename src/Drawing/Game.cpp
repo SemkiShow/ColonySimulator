@@ -8,7 +8,6 @@
 #include "Human.hpp"
 #include "Island.hpp"
 #include "Perlin.hpp"
-#include "Progress.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
 #include "UI/Game.hpp"
@@ -102,13 +101,8 @@ void DrawGameMenu()
     // Draw people
     for (auto& human: people)
     {
-        if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) human.MoveToTarget(GetFrameTime());
-        float scale = 0.0005f / perlinScale;
-        Vector2 pos = GlslToRaylib(human.pos);
-        DrawTexturePro(humanTexture, {0, 0, humanTexture.width * 1.0f, humanTexture.height * 1.0f},
-                       {pos.x, pos.y, humanTexture.width * scale, humanTexture.height * scale},
-                       {humanTexture.width * scale / 2.0f, humanTexture.height * scale},
-                       human.angle, WHITE);
+        if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) human.Update();
+        human.Draw();
     }
 
     // Remove ships that reached their target
@@ -126,15 +120,11 @@ void DrawGameMenu()
     // Draw ships
     for (auto& ship: ships)
     {
-        if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ship.Move(GetFrameTime());
-        float scale = 0.01f / perlinScale;
-        Vector2 pos = GlslToRaylib(ship.pos);
-        DrawTexturePro(shipTexture,
-                       {0, 0, ship.flip * shipTexture.width * 1.0f, shipTexture.height * 1.0f},
-                       {pos.x, pos.y, shipTexture.width * scale, shipTexture.height * scale},
-                       {shipTexture.width * scale / 2.0f, shipTexture.height * scale}, 0, WHITE);
+        if (gameMenu->IsVisible() && !pauseMenu->IsVisible()) ship.Update();
+        ship.Draw();
     }
 
+    // Draw islands' stats
     for (auto& island: islands)
     {
         island.DrawStats();
@@ -160,8 +150,6 @@ void DrawGameMenu()
 void ProcessPlayerInput()
 {
     double deltaTime = GetFrameTime();
-
-    if (IsSlotValid(currentSlot)) saveSlots[currentSlot].time += deltaTime;
 
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W))
         perlinOffset.y += panSensitivity * perlinScale * deltaTime;
