@@ -242,8 +242,11 @@ void Island::DrawStats()
         auto buttonRec = rui::FromRaylib(rec);
         buttonRec.width = buttonRec.height = buttonScale;
         buttonRec.x += rec.width;
-        editButton->SetVisible(true);
-        editButton->SetBounds(buttonRec);
+        if (editButton)
+        {
+            editButton->SetVisible(true);
+            editButton->SetBounds(buttonRec);
+        }
     }
 }
 
