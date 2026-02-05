@@ -8,13 +8,16 @@ if [ -z "$1" ]; then
     echo "Usage: $0 <VERSION>"
 fi
 
+# Generate bindings
+python3 tools/lua_bindings.py
+
 # Compile for Linux
-cmake -B build_release -DCMAKE_BUILD_TYPE=Release
+cmake -B build_release -DCMAKE_BUILD_TYPE=Release -DLUA_BINDINGS=ON
 cmake --build build_release -j$(nproc)
 cp build_release/bin/$executable_name .
 
 # Compile for Windows
-cmake -B build_release_windows -DCMAKE_TOOLCHAIN_FILE=mingw-w64-x86_64.cmake -DCMAKE_BUILD_TYPE=Release
+cmake -B build_release_windows -DCMAKE_TOOLCHAIN_FILE=mingw-w64-x86_64.cmake -DCMAKE_BUILD_TYPE=Release -DLUA_BINDINGS=ON
 cmake --build build_release_windows -j$(nproc)
 cp build_release_windows/bin/$executable_name.exe .
 
