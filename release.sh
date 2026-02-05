@@ -14,11 +14,13 @@ python3 tools/lua_bindings.py
 # Compile for Linux
 cmake -B build_release -DCMAKE_BUILD_TYPE=Release -DLUA_BINDINGS=ON
 cmake --build build_release -j$(nproc)
+strip build_release/bin/$executable_name
 cp build_release/bin/$executable_name .
 
 # Compile for Windows
 cmake -B build_release_windows -DCMAKE_TOOLCHAIN_FILE=mingw-w64-x86_64.cmake -DCMAKE_BUILD_TYPE=Release -DLUA_BINDINGS=ON
 cmake --build build_release_windows -j$(nproc)
+strip build_release_windows/bin/$executable_name.exe
 cp build_release_windows/bin/$executable_name.exe .
 
 # Zip the dependencies
