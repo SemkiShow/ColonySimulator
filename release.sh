@@ -23,7 +23,7 @@ cp build_release_windows/bin/$executable_name.exe .
 
 # Zip the dependencies
 archive_name=$executable_name-$1
-zip $archive_name.zip LICENSE README.md resources/**
+zip $archive_name.zip LICENSE README.md resources/** tools/colsimapi.lua
 
 # Create the Linux release
 cp $archive_name.zip $archive_name-linux-x86_64.zip

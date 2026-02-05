@@ -60,7 +60,7 @@ To create a mod, put mod-name.lua or mod-name/main.lua inside of the mods/ folde
 
 To get a global variable's value defined in C++ use `variable()`. To set the variable to a new value use `variable = value`  
 
-If you run `python3 tools/lua_bindings.py`, tools/colsimapi.lua will be generated, which is a meta file for the lua lsp  
+The release contains tools/colsimapi.lua, which is a meta file for the lua lsp  
 It can also serve as documentation, though pretty unreadable because of the size (5k+ lines)
 
 Example mod:

@@ -146,8 +146,8 @@ def parse_struct(node):
 
     def handle_method(child):
         name = sanitize_name(child.spelling)
-        ret = clean_type(child.result_type.get_canonical().spelling)
-        args = [clean_type(p.type.get_canonical().spelling) for p in child.get_arguments()]
+        ret = clean_type(child.result_type.spelling)
+        args = [clean_type(p.type.spelling) for p in child.get_arguments()]
         lua_args = [f"a{i}: {translate_type(t)}" for i, t in enumerate(args)]
 
         const_q = " const" if child.is_const_method() else ""
@@ -162,7 +162,7 @@ def parse_struct(node):
 
     def handle_field(child):
         name = sanitize_name(child.spelling)
-        raw_type = child.type.get_canonical().spelling
+        raw_type = child.type.spelling
 
         cpp_entries.append(f'"{name}", &{struct_name}::{name}')
         lua_data.append(f"---@field {name} {translate_type(child.type.spelling)}")
@@ -174,7 +174,7 @@ def parse_struct(node):
         if child.is_copy_constructor() or child.is_move_constructor():
             return
 
-        args_cpp = [clean_type(p.type.get_canonical().spelling) for p in child.get_arguments()]
+        args_cpp = [clean_type(p.type.spelling) for p in child.get_arguments()]
         args_lua = [
             f"{sanitize_name(p.spelling)}: {translate_type(p.type.spelling)}"
             for p in child.get_arguments()

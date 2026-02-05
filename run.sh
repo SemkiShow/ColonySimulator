@@ -9,6 +9,7 @@ cmake_flags=""
 run_wrapper=""
 is_windows=false
 use_perf=false
+lua_bindings=false
 
 print_help() {
     echo "Usage: $0 [OPTION]..."
@@ -25,16 +26,44 @@ print_help() {
     exit 0
 }
 
+debug_build() {
+    build_type="Debug"
+    build_dir="build_debug"
+    run_wrapper="gdb -ex run --args"
+}
+
+windows_build() {
+    build_dir="build_windows"
+    is_windows=true
+    cmake_flags="$cmake_flags -DCMAKE_TOOLCHAIN_FILE=$(pwd)/mingw-w64-x86_64.cmake"
+}
+
+profile_build() {
+    build_dir="build_profile"
+    use_perf=true
+    cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fno-omit-frame-pointer'"
+}
+
+memory_leak_build() {
+    build_dir="build_memory"
+    cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fsanitize=address'"
+}
+
+mods_build() {
+    lua_bindings=true
+    cmake_flags="$cmake_flags -DLUA_BINDINGS=ON"
+}
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --*) # Handle long flags
             case "$1" in
                 --help)         print_help ;;
-                --debug)        build_type="Debug"; build_dir="build_debug"; run_wrapper="gdb -ex run --args" ;;
-                --windows)      build_dir="build_windows"; is_windows=true; cmake_flags="$cmake_flags -DCMAKE_TOOLCHAIN_FILE=$(pwd)/mingw-w64-x86_64.cmake" ;;
-                --profile)      build_dir="build_profile"; use_perf=true; cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fno-omit-frame-pointer'" ;;
-                --memory-leak)  build_dir="build_memory"; cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fsanitize=address'" ;;
-                --mods)         cmake_flags="$cmake_flags -DLUA_BINDINGS=ON" ;;
+                --debug)        debug_build ;;
+                --windows)      windows_build ;;
+                --profile)      profile_build ;;
+                --memory-leak)  memory_leak_build ;;
+                --mods)         mods_build ;;
                 *) echo "Unknown option: $1"; print_help ;;
             esac
             shift
@@ -48,12 +77,11 @@ while [[ $# -gt 0 ]]; do
                 char="${flags:i:1}"
                 case "$char" in
                     h) print_help ;;
-                    d) build_type="Debug"; build_dir="build_debug"; run_wrapper="gdb -ex run --args" ;;
-                    w) build_dir="build_windows"; is_windows=true; cmake_flags="$cmake_flags -DCMAKE_TOOLCHAIN_FILE=$(pwd)/mingw-w64-x86_64.cmake" ;;
-                    p) build_dir="build_profile"; use_perf=true; cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fno-omit-frame-pointer'" ;;
-                    m) build_dir="build_memory"; cmake_flags="$cmake_flags -DCMAKE_CXX_FLAGS='-fsanitize=address'" ;;
-                    M) cmake_flags="$cmake_flags -DLUA_BINDINGS=ON" ;;
-                    c) rm -rf build build_debug build_windows build_profile build_memory ;;
+                    d) debug_build ;;
+                    w) windows_build ;;
+                    p) profile_build ;;
+                    m) memory_leak_build ;;
+                    M) mods_build ;;
                     *) echo "Unknown flag: -$char"; print_help ;;
                 esac
             done
@@ -65,6 +93,10 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+if [ "$lua_bindings" = true ]; then
+    build_dir="${build_dir}_mods"
+fi
 
 clear
 cmake -B "$build_dir" -DCMAKE_build_type="$build_type" $cmake_flags

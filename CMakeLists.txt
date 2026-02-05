@@ -30,6 +30,9 @@ if (LUA_BINDINGS)
     target_compile_options(lua-bindings PRIVATE -O0)
     target_link_libraries(lua-bindings raylib RayUI lua sol2)
     target_precompile_headers(lua-bindings PRIVATE tools/Includes.hpp)
+    if(WIN32 OR MINGW)
+        target_compile_options(lua-bindings PRIVATE "-Wa,-mbig-obj")
+    endif()
 endif() # LUA_BINDINGS
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
