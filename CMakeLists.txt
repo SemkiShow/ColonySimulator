@@ -13,12 +13,35 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/raylib ${CMAKE_BINARY_DIR}/_deps
 # RayUI
 add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/RayUI ${CMAKE_BINARY_DIR}/_deps/RayUI-build SYSTEM)
 
+if (LUA_BINDINGS)
+    # lua
+    file(GLOB LUA_SOURCES thirdparty/lua/*.c)
+    list(REMOVE_ITEM LUA_SOURCES thirdparty/lua/lua.c thirdparty/lua/luac.c)
+    add_library(lua STATIC ${LUA_SOURCES})
+    target_include_directories(lua PUBLIC thirdparty/lua)
+
+    # sol2
+    add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/sol2 ${CMAKE_BINARY_DIR}/_deps/sol2-build SYSTEM)
+
+    # lua-bindings
+    file(GLOB_RECURSE LUA_BINDINGS_SOURCES tools/*.cpp)
+    add_library(lua-bindings STATIC ${LUA_BINDINGS_SOURCES})
+    target_include_directories(lua-bindings PUBLIC include/ tools/)
+    target_compile_options(lua-bindings PRIVATE -O0)
+    target_link_libraries(lua-bindings raylib RayUI lua sol2)
+    target_precompile_headers(lua-bindings PRIVATE tools/Includes.hpp)
+endif() # LUA_BINDINGS
+
 file(GLOB_RECURSE SOURCES src/*.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PRIVATE include/)
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -static)
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib RayUI)
+if (LUA_BINDINGS)
+    target_link_libraries(${PROJECT_NAME} PRIVATE lua sol2 lua-bindings)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE LUA_BINDINGS)
+endif()
 
 # Disable the console on a Windows release build
 if(WIN32)

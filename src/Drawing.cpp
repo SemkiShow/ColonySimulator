@@ -19,6 +19,9 @@
 #include <ctime>
 #include <raylib.h>
 #include <raymath.h>
+#ifdef LUA_BINDINGS
+#include "Mods.hpp"
+#endif
 
 bool shouldClose = false;
 
@@ -142,6 +145,10 @@ void DrawFrame()
     app->Draw();
 
     if (showFPS) DrawFPS(0, 0);
+
+#ifdef LUA_BINDINGS
+    if (modLoader) modLoader->Update();
+#endif
 
     EndDrawing();
 

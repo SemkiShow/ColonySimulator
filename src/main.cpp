@@ -11,6 +11,9 @@
 #include "UI/Loading.hpp"
 #include <RCore/Translations.hpp>
 #include <ctime>
+#ifdef LUA_BINDINGS
+#include "Mods.hpp"
+#endif
 
 int main()
 {
@@ -43,6 +46,10 @@ int main()
         };
         ShowLoadingScreen(false, func);
     }
+
+#ifdef LUA_BINDINGS
+    modLoader = std::make_shared<ModLoader>();
+#endif
 
     while (!shouldClose && !WindowShouldClose())
     {

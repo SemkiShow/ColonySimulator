@@ -6,3 +6,11 @@
 	path = thirdparty/RayUI
 	url = https://github.com/SemkiShow/RayUI
 	shallow = true
+[submodule "thirdparty/sol2"]
+	path = thirdparty/sol2
+	url = https://github.com/ThePhD/sol2
+	shallow = true
+[submodule "thirdparty/lua"]
+	path = thirdparty/lua
+	url = https://github.com/lua/lua
+	shallow = true
