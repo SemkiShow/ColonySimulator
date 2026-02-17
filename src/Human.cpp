@@ -47,7 +47,7 @@ void Human::Draw()
         {humanTexture.width * scale / 2.0f, humanTexture.height * scale}, angle, WHITE);
 }
 
-Json Human::ToJSON()
+Json Human::ToJson()
 {
     Json json;
 
@@ -61,7 +61,7 @@ Json Human::ToJSON()
     return json;
 }
 
-Human Human::LoadJSON(Json& json)
+Human Human::LoadJson(Json& json)
 {
     Human human;
 

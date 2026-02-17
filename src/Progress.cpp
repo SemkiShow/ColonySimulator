@@ -21,7 +21,7 @@
 std::vector<SaveSlot> saveSlots;
 int currentSlot = -1;
 
-Json SaveSlot::ToJSON()
+Json SaveSlot::ToJson()
 {
     Json json;
 
@@ -29,15 +29,15 @@ Json SaveSlot::ToJSON()
     json["name"] = name;
     for (auto& island: this->islands)
     {
-        json["islands"].push_back(island.ToJSON());
+        json["islands"].push_back(island.ToJson());
     }
     for (auto& ship: this->ships)
     {
-        json["ships"].push_back(ship.ToJSON());
+        json["ships"].push_back(ship.ToJson());
     }
     for (auto& human: this->people)
     {
-        json["people"].push_back(human.ToJSON());
+        json["people"].push_back(human.ToJson());
     }
     json["woodTotal"] = this->woodTotal;
     json["ironTotal"] = this->ironTotal;
@@ -48,25 +48,25 @@ Json SaveSlot::ToJSON()
     return json;
 }
 
-void SaveSlot::LoadJSON(Json& json)
+void SaveSlot::LoadJson(Json& json)
 {
     seed = json["seed"].GetDouble();
     name = json["name"].GetString();
     this->islands.clear();
     for (size_t i = 0; i < json["islands"].size(); i++)
     {
-        this->islands.push_back(Island::LoadJSON(json["islands"][i]));
+        this->islands.push_back(Island::LoadJson(json["islands"][i]));
         this->islands.back().index = i;
     }
     this->ships.clear();
     for (size_t i = 0; i < json["ships"].size(); i++)
     {
-        this->ships.push_back(Ship::LoadJSON(json["ships"][i]));
+        this->ships.push_back(Ship::LoadJson(json["ships"][i]));
     }
     this->people.clear();
     for (size_t i = 0; i < json["people"].size(); i++)
     {
-        this->people.push_back(Human::LoadJSON(json["people"][i]));
+        this->people.push_back(Human::LoadJson(json["people"][i]));
     }
     this->woodTotal = json["woodTotal"].GetInt();
     this->ironTotal = json["ironTotal"].GetInt();
@@ -165,7 +165,7 @@ void SaveProgress()
         if (!saveSlots[i].opened) continue;
 
         Json json;
-        json = saveSlots[i].ToJSON();
+        json = saveSlots[i].ToJson();
         json["version"] = 3;
         json.Save(GetSlotPath(i));
     }
@@ -211,7 +211,7 @@ void LoadSavesJson()
     for (size_t i = 0; i < json["saves"].size(); i++)
     {
         saveSlots.emplace_back();
-        saveSlots.back().LoadJSON(json["saves"][i]);
+        saveSlots.back().LoadJson(json["saves"][i]);
 
         if (version == 0)
         {
@@ -238,7 +238,7 @@ SaveSlot LoadFile(const std::filesystem::path& path)
 
     int version = json["version"].GetInt();
 
-    slot.LoadJSON(json);
+    slot.LoadJson(json);
 
     if (version == 0)
     {

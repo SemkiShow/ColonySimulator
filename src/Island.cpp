@@ -250,7 +250,7 @@ void Island::DrawStats()
     }
 }
 
-Json Island::ToJSON()
+Json Island::ToJson()
 {
     Json json;
 
@@ -280,7 +280,7 @@ Json Island::ToJSON()
     return json;
 }
 
-Island Island::LoadJSON(Json& json)
+Island Island::LoadJson(Json& json)
 {
     Island island;
     island.p1 = JsonToVector2(json["p1"]);

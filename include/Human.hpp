@@ -32,8 +32,8 @@ struct Human
     void Update();
     void Draw();
 
-    Json ToJSON();
-    static Human LoadJSON(Json& json);
+    Json ToJson();
+    static Human LoadJson(Json& json);
 };
 
 extern std::vector<Human> people;

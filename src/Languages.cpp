@@ -16,6 +16,7 @@ std::vector<std::string> languages;
 void GetAllLanguages()
 {
     languages.clear();
+    languages.push_back("en");
     for (auto& file: std::filesystem::directory_iterator("resources/locales"))
     {
         if (!file.is_directory()) continue;

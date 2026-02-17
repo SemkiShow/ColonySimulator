@@ -53,8 +53,8 @@ struct Island
     void GrowthTick();
     void DrawStats();
 
-    Json ToJSON();
-    static Island LoadJSON(Json& json);
+    Json ToJson();
+    static Island LoadJson(Json& json);
 };
 
 extern std::vector<Biome> biomes;

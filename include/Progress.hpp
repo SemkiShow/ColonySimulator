@@ -23,8 +23,8 @@ struct SaveSlot
     bool deleteLater = false, opened = false;
     double time = 0;
 
-    Json ToJSON();
-    void LoadJSON(Json& json);
+    Json ToJson();
+    void LoadJson(Json& json);
 };
 
 extern std::vector<SaveSlot> saveSlots;

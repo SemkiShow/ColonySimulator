@@ -27,8 +27,8 @@ struct Ship
     void Update();
     void Draw();
 
-    Json ToJSON();
-    static Ship LoadJSON(Json& json);
+    Json ToJson();
+    static Ship LoadJson(Json& json);
 };
 
 extern std::vector<Ship> ships;

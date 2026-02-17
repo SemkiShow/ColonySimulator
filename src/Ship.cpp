@@ -69,7 +69,7 @@ void Ship::Draw()
                    {shipTexture.width * scale / 2.0f, shipTexture.height * scale}, 0, WHITE);
 }
 
-Json Ship::ToJSON()
+Json Ship::ToJson()
 {
     Json json;
     json["sourceIndex"] = sourceIndex;
@@ -90,7 +90,7 @@ Json Ship::ToJSON()
     return json;
 }
 
-Ship Ship::LoadJSON(Json& json)
+Ship Ship::LoadJson(Json& json)
 {
     Ship ship;
     ship.sourceIndex = json["sourceIndex"].GetInt();
