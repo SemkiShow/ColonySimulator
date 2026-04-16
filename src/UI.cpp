@@ -4,18 +4,18 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI.hpp"
-#include "UI/About.hpp"
-#include "UI/DeleteSlot.hpp"
-#include "UI/EditIsland.hpp"
-#include "UI/Game.hpp"
-#include "UI/LoadMap.hpp"
-#include "UI/Loading.hpp"
-#include "UI/Main.hpp"
-#include "UI/Mods.hpp"
-#include "UI/NewMap.hpp"
-#include "UI/Pause.hpp"
-#include "UI/Settings.hpp"
-#include "UI/Victory.hpp"
+#include "UI/AboutMenu.hpp"
+#include "UI/DeleteSlotMenu.hpp"
+#include "UI/EditIslandMenu.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/LoadMapMenu.hpp"
+#include "UI/LoadingMenu.hpp"
+#include "UI/MainMenu.hpp"
+#include "UI/ModsMenu.hpp"
+#include "UI/NewMapMenu.hpp"
+#include "UI/PauseMenu.hpp"
+#include "UI/SettingsMenu.hpp"
+#include "UI/VictoryMenu.hpp"
 
 std::shared_ptr<RApplication> app;
 

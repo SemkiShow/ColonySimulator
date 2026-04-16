@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/EditIsland.hpp"
+#include "UI/EditIslandMenu.hpp"
 #include "Languages.hpp"
 #include <RWidgets/RGridLayout.hpp>
 #include <RWidgets/RLabel.hpp>

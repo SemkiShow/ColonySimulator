@@ -9,7 +9,7 @@
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Ship.hpp"
-#include "UI/Victory.hpp"
+#include "UI/VictoryMenu.hpp"
 #include "Utils.hpp"
 #include <RCore/Conversions.hpp>
 #include <cassert>

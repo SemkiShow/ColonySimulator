@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/DeleteSlot.hpp"
+#include "UI/DeleteSlotMenu.hpp"
 #include "Languages.hpp"
 
 std::shared_ptr<DeleteSlotMenu> deleteSlotMenu;

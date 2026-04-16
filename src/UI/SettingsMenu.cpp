@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Settings.hpp"
+#include "UI/SettingsMenu.hpp"
 #include "Languages.hpp"
 #include "Settings.hpp"
 #include <RWidgets/RCheckbox.hpp>

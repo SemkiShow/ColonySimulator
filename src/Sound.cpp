@@ -4,9 +4,9 @@
 
 #include "Sound.hpp"
 #include "Settings.hpp"
-#include "UI/Game.hpp"
-#include "UI/Pause.hpp"
-#include "UI/Settings.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/PauseMenu.hpp"
+#include "UI/SettingsMenu.hpp"
 #include <cstdlib>
 #include <raylib.h>
 #include <vector>

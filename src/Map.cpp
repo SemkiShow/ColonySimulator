@@ -9,7 +9,7 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI/Loading.hpp"
+#include "UI/LoadingMenu.hpp"
 #include <cfloat>
 #include <climits>
 #include <cmath>

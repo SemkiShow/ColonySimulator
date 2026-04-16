@@ -2,10 +2,10 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Game.hpp"
+#include "UI/GameMenu.hpp"
 #include "Drawing/Game.hpp"
 #include "Island.hpp"
-#include "UI/EditIsland.hpp"
+#include "UI/EditIslandMenu.hpp"
 
 std::shared_ptr<GameMenu> gameMenu;
 

@@ -11,10 +11,10 @@
 #include "Settings.hpp"
 #include "Sound.hpp"
 #include "UI.hpp"
-#include "UI/EditIsland.hpp"
-#include "UI/Game.hpp"
-#include "UI/Pause.hpp"
-#include "UI/Victory.hpp"
+#include "UI/EditIslandMenu.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/PauseMenu.hpp"
+#include "UI/VictoryMenu.hpp"
 #include <RCore/Conversions.hpp>
 #include <ctime>
 #include <raylib.h>

@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Pause.hpp"
+#include "UI/PauseMenu.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
-#include "UI/Game.hpp"
-#include "UI/Main.hpp"
-#include "UI/Mods.hpp"
-#include "UI/Settings.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/MainMenu.hpp"
+#include "UI/ModsMenu.hpp"
+#include "UI/SettingsMenu.hpp"
 #include <RWidgets/RLabelButton.hpp>
 #include <RWidgets/RPaneRounded.hpp>
 #include <RWidgets/RVBoxLayout.hpp>

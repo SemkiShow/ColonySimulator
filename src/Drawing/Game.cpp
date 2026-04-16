@@ -10,8 +10,8 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI/Game.hpp"
-#include "UI/Pause.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/PauseMenu.hpp"
 #include <algorithm>
 #include <raylib.h>
 #include <raymath.h>

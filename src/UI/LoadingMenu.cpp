@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Loading.hpp"
+#include "UI/LoadingMenu.hpp"
 #include <RWidgets/RHBoxLayout.hpp>
 #include <RWidgets/RPane.hpp>
 

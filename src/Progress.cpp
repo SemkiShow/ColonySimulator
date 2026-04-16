@@ -11,9 +11,9 @@
 #include "Perlin.hpp"
 #include "Settings.hpp"
 #include "Ship.hpp"
-#include "UI/Game.hpp"
-#include "UI/LoadMap.hpp"
-#include "UI/Loading.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/LoadMapMenu.hpp"
+#include "UI/LoadingMenu.hpp"
 #include <cassert>
 #include <ctime>
 #include <filesystem>

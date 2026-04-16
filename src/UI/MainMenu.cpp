@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Main.hpp"
+#include "UI/MainMenu.hpp"
 #include "Drawing.hpp"
 #include "Languages.hpp"
-#include "UI/About.hpp"
-#include "UI/LoadMap.hpp"
-#include "UI/Mods.hpp"
-#include "UI/Settings.hpp"
+#include "UI/AboutMenu.hpp"
+#include "UI/LoadMapMenu.hpp"
+#include "UI/ModsMenu.hpp"
+#include "UI/SettingsMenu.hpp"
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RLabelButton.hpp>
 #include <RWidgets/RVBoxLayout.hpp>

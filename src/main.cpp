@@ -8,7 +8,7 @@
 #include "Progress.hpp"
 #include "Settings.hpp"
 #include "UI.hpp"
-#include "UI/Loading.hpp"
+#include "UI/LoadingMenu.hpp"
 #include <RCore/Translations.hpp>
 #include <ctime>
 

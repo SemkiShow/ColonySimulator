@@ -2,15 +2,15 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/LoadMap.hpp"
+#include "UI/LoadMapMenu.hpp"
 #include "Drawing.hpp"
 #include "Languages.hpp"
 #include "Progress.hpp"
-#include "UI/DeleteSlot.hpp"
-#include "UI/Game.hpp"
-#include "UI/Main.hpp"
-#include "UI/NewMap.hpp"
-#include "UI/Pause.hpp"
+#include "UI/DeleteSlotMenu.hpp"
+#include "UI/GameMenu.hpp"
+#include "UI/MainMenu.hpp"
+#include "UI/NewMapMenu.hpp"
+#include "UI/PauseMenu.hpp"
 #include <RWidgets/RGridLayout.hpp>
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RLabelButton.hpp>

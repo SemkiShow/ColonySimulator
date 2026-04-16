@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/NewMap.hpp"
+#include "UI/NewMapMenu.hpp"
 #include "Languages.hpp"
 #include "Map.hpp"
 #include "Perlin.hpp"
 #include "Progress.hpp"
 #include "Settings.hpp"
-#include "UI/LoadMap.hpp"
+#include "UI/LoadMapMenu.hpp"
 #include <RCore/Translations.hpp>
 #include <RWidgets/RGridLayout.hpp>
 #include <RWidgets/RLabel.hpp>

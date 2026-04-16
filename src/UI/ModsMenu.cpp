@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: GPL-3.0-only
 
-#include "UI/Mods.hpp"
+#include "UI/ModsMenu.hpp"
 #include "Languages.hpp"
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RScrollArea.hpp>
