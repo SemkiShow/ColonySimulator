@@ -7,6 +7,7 @@
 #include "Progress.hpp"
 #include "UI/Game.hpp"
 #include "UI/Main.hpp"
+#include "UI/Mods.hpp"
 #include "UI/Settings.hpp"
 #include <RWidgets/RLabelButton.hpp>
 #include <RWidgets/RPaneRounded.hpp>
@@ -53,6 +54,13 @@ PauseMenu::PauseMenu()
     layout->AddWidget(settings);
 
     Connect([settings] { return settings->IsClicked(); }, [] { settingsMenu->SetVisible(true); });
+
+    auto mods = std::make_shared<RLabelButton>(_("Mods"));
+    mods->SetMaxWidth(buttonWidth);
+    mods->SetAlignment(RAlign::HCenter);
+    layout->AddWidget(mods);
+
+    Connect([mods] { return mods->IsClicked(); }, [] { modsMenu->SetVisible(true); });
 
     auto save = std::make_shared<RLabelButton>(_("Save game"));
     save->SetMaxWidth(buttonWidth);

@@ -11,6 +11,7 @@
 #include "UI/LoadMap.hpp"
 #include "UI/Loading.hpp"
 #include "UI/Main.hpp"
+#include "UI/Mods.hpp"
 #include "UI/NewMap.hpp"
 #include "UI/Pause.hpp"
 #include "UI/Settings.hpp"
@@ -60,6 +61,10 @@ void InitUI()
     settingsMenu = std::make_shared<SettingsMenu>();
     settingsMenu->SetVisible(false);
     app->AddWindow(settingsMenu);
+
+    modsMenu = std::make_shared<ModsMenu>();
+    modsMenu->SetVisible(false);
+    app->AddWindow(modsMenu);
 
     loadingScreen = std::make_shared<LoadingScreen>();
     loadingScreen->SetVisible(false);

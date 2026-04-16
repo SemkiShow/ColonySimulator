@@ -7,6 +7,7 @@
 #include "Languages.hpp"
 #include "UI/About.hpp"
 #include "UI/LoadMap.hpp"
+#include "UI/Mods.hpp"
 #include "UI/Settings.hpp"
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RLabelButton.hpp>
@@ -54,6 +55,14 @@ MainMenu::MainMenu()
 
     Connect([aboutButton] { return aboutButton->IsClicked(); }, [] { aboutMenu->SetVisible(true); },
             aboutButton);
+
+    auto modsButton = std::make_shared<RLabelButton>(_("Mods"));
+    modsButton->SetMaxWidth(buttonWidth);
+    modsButton->SetAlignment(RAlign::HCenter);
+    buttonLayout->AddWidget(modsButton);
+
+    Connect([modsButton] { return modsButton->IsClicked(); }, [] { modsMenu->SetVisible(true); },
+            modsButton);
 
     auto exitButton = std::make_shared<RLabelButton>(_("Exit"));
     exitButton->SetMaxWidth(buttonWidth);

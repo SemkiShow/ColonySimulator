@@ -16,16 +16,25 @@
 class ModLoader
 {
   public:
-    ModLoader();
-    ~ModLoader() = default;
+    struct Mod
+    {
+        std::string name;
+        sol::environment env;
+        bool enabled = true;
+    };
 
+    ModLoader();
+    ~ModLoader();
+
+    void Save();
+    void Load();
     void Update();
+
+    std::vector<Mod> mods;
 
   private:
     sol::state lua;
-    std::vector<sol::environment> mods;
 
-    void CreateRayUIBindings();
     void CreateBindings();
 
     void LoadMod(const std::filesystem::path& path);

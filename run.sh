@@ -99,8 +99,8 @@ if [ "$lua_bindings" = true ]; then
 fi
 
 clear
-cmake -B "$build_dir" -DCMAKE_build_type="$build_type" $cmake_flags
-cmake --build "$build_dir" -j$(nproc 2>/dev/null || sysctl -n hw.ncpu)
+cmake -B "$build_dir" -DCMAKE_BUILD_TYPE="$build_type" $cmake_flags
+cmake --build "$build_dir" -j$(nproc)
 
 binary_path="./$build_dir/bin/$executable_name"
 [ "$is_windows" = true ] && binary_path="${binary_path}.exe"

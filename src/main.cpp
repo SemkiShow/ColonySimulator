@@ -9,8 +9,10 @@
 #include "Settings.hpp"
 #include "UI.hpp"
 #include "UI/Loading.hpp"
+#include "UI/Mods.hpp"
 #include <RCore/Translations.hpp>
 #include <ctime>
+
 #ifdef LUA_BINDINGS
 #include "Mods.hpp"
 #endif
@@ -49,6 +51,7 @@ int main()
 
 #ifdef LUA_BINDINGS
     modLoader = std::make_shared<ModLoader>();
+    modsMenu->ReloadModsList();
 #endif
 
     while (!shouldClose && !WindowShouldClose())
@@ -63,6 +66,9 @@ int main()
             loadingPercent = 0;
             Save();
             SaveProgress();
+#ifdef LUA_BINDINGS
+            modLoader->Save();
+#endif
             finished = true;
         };
         ShowLoadingScreen(false, func);

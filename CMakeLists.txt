@@ -19,6 +19,13 @@ if (LUA_BINDINGS)
     list(REMOVE_ITEM LUA_SOURCES thirdparty/lua/lua.c thirdparty/lua/luac.c)
     add_library(lua STATIC ${LUA_SOURCES})
     target_include_directories(lua PUBLIC thirdparty/lua)
+    if(WIN32)
+        target_compile_definitions(lua PRIVATE LUA_USE_WINDOWS)
+    elseif(APPLE)
+        target_compile_definitions(lua PRIVATE LUA_USE_MACOSX)
+    elseif(UNIX)
+        target_compile_definitions(lua PRIVATE LUA_USE_LINUX)
+    endif()
 
     # sol2
     add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/sol2 ${CMAKE_BINARY_DIR}/_deps/sol2-build SYSTEM)

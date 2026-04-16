@@ -8,3 +8,4 @@ saves/
 mods/
 tools/Bindings*
 tools/colsimapi.lua
+core.dump
