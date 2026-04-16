@@ -14,3 +14,6 @@
 	path = thirdparty/lua
 	url = https://github.com/lua/lua
 	shallow = true
+[submodule "thirdparty/JsonFormat"]
+	path = thirdparty/JsonFormat
+	url = https://github.com/SemkiShow/JsonFormat

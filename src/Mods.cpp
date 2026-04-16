@@ -6,7 +6,7 @@
 
 #include "Mods.hpp"
 #include "Bindings.hpp"
-#include "Json.hpp"
+#include "JsonFormat.hpp"
 #include <iostream>
 #include <raylib.h>
 

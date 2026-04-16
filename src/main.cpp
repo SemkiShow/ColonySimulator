@@ -9,7 +9,6 @@
 #include "Settings.hpp"
 #include "UI.hpp"
 #include "UI/Loading.hpp"
-#include "UI/Mods.hpp"
 #include <RCore/Translations.hpp>
 #include <ctime>
 

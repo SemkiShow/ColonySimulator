@@ -13,6 +13,9 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/raylib ${CMAKE_BINARY_DIR}/_deps
 # RayUI
 add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/RayUI ${CMAKE_BINARY_DIR}/_deps/RayUI-build SYSTEM)
 
+# JsonFormat
+add_subdirectory(${CMAKE_SOURCE_DIR}/thirdparty/JsonFormat ${CMAKE_BINARY_DIR}/_deps/JsonFormat-build SYSTEM)
+
 if (LUA_BINDINGS)
     # lua
     file(GLOB LUA_SOURCES thirdparty/lua/*.c)
@@ -50,7 +53,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wall -Wextra>
 )
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib RayUI)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib RayUI JsonFormat)
 if (LUA_BINDINGS)
     target_link_libraries(${PROJECT_NAME} PRIVATE lua sol2 lua-bindings)
     target_compile_definitions(${PROJECT_NAME} PRIVATE LUA_BINDINGS)

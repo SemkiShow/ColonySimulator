@@ -3,10 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 #include "UI/Mods.hpp"
-#include "Drawing.hpp"
 #include "Languages.hpp"
-#include "Mods.hpp"
-#include <RWidgets/RCheckbox.hpp>
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RScrollArea.hpp>
 #include <RWidgets/RVBoxLayout.hpp>
