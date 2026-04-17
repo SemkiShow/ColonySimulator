@@ -21,6 +21,7 @@ class ModLoader
         std::string name;
         sol::environment env;
         bool enabled = true;
+        bool loaded = false;
     };
 
     ModLoader();

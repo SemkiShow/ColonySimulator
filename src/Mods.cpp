@@ -65,7 +65,7 @@ void ModLoader::Update()
 {
     for (auto& mod: mods)
     {
-        if (!mod.enabled) continue;
+        if (!mod.enabled || !mod.loaded) continue;
 
         auto updateFunc = mod.env["Update"];
 
@@ -101,6 +101,7 @@ void ModLoader::LoadMod(const std::filesystem::path& path)
 
         sol::environment env(lua, sol::create, lua.globals());
         mod.env = env;
+        mod.loaded = true;
 
         // Setup mod path
         std::string modDirectory = path.parent_path().string();
