@@ -14,6 +14,7 @@
 
 #ifdef LUA_BINDINGS
 #include "Mods.hpp"
+#include "UI/ModsMenu.hpp"
 #endif
 
 int main()

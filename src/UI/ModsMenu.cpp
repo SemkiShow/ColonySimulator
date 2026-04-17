@@ -8,6 +8,12 @@
 #include <RWidgets/RScrollArea.hpp>
 #include <RWidgets/RVBoxLayout.hpp>
 
+#ifdef LUA_BINDINGS
+#include "Drawing.hpp"
+#include "Mods.hpp"
+#include <RWidgets/RCheckbox.hpp>
+#endif
+
 std::shared_ptr<ModsMenu> modsMenu;
 
 ModsMenu::ModsMenu()

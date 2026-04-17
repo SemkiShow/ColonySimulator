@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT_PATH = Path(__file__).parent.parent
 
-INCLUDE_PATH = ["include", "thirdparty/raylib/src", "thirdparty/RayUI/include"]
+INCLUDE_PATH = ["include", "thirdparty/raylib/src", "thirdparty/RayUI/include", "thirdparty/JsonFormat/include"]
 
 HEADERS = [
     "include/**/*.hpp",
