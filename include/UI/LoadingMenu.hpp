@@ -4,13 +4,11 @@
 
 #pragma once
 
-#include "Sound.hpp"
-#include "UI.hpp"
+#include "Drawing.hpp"
 #include <RWidgets/RLabel.hpp>
 #include <RWidgets/RProgressBar.hpp>
 #include <RWidgets/RWindow.hpp>
 #include <atomic>
-#include <raylib.h>
 #include <string>
 #include <thread>
 
@@ -56,19 +54,10 @@ void ShowLoadingScreen(bool showProgressbar, Func&& f, Args&&... args)
 
     while (!finished)
     {
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-
         loadingScreen->SetLabel(label);
         loadingScreen->SetPercent(loadingPercent);
 
-        app->Update();
-        app->Draw();
-
-        EndDrawing();
-
-        UpdateSounds();
+        DrawFrame();
     }
 
     loadingScreen->SetVisible(false);

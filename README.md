@@ -53,7 +53,7 @@ chmod +x run.sh
 ## Modding
 
 > [!WARNING]
-> Mods you download may contain viruses. The author is not responsible for any damage caused by using third-party mods
+> Mods you download may contain malware. The author is not responsible for any damage caused by using third-party mods
 
 Pretty much all functions accessible in C++ can be accessed in Lua.  
 To create a mod, put mod-name.lua or mod-name/main.lua inside of the mods/ folder (it may need to be created first).  
