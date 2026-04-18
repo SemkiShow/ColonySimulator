@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "JsonFormat.hpp"
 #include "Utils.hpp"
+#include <JsonFormat.hpp>
 #include <raylib.h>
 
 #define MIN_SPEED 0.2f
